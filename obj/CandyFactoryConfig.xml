@@ -32,7 +32,6 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Documents and Settings\OJT\Github\Candy Factory\src</path-element>
       <path-element>C:\Documents and Settings\OJT\Github\Candy Factory\system</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
@@ -43,7 +42,7 @@
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Documents and Settings\OJT\Github\Candy Factory\src\CandyFactory_Mobile.as</path-element>
+    <path-element>C:\Documents and Settings\OJT\Github\Candy Factory\com\poddcorp\candyfactory\CandyFactory_Mobile.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>60</default-frame-rate>
