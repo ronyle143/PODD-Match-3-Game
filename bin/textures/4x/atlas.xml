@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:31ec341df3825c24c3bb51c4ae3371bc:ac3f400dd85fc32c8ef3883dff4aac7d:6a6e6fa3f501222eca20c86df75dc199$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="btn_close" x="1764" y="1454" width="196" height="192" frameX="-2" frameY="-3" frameWidth="200" frameHeight="200"/>
+    <SubTexture name="btn_mainmenu" x="1446" y="2" width="534" height="176" frameX="-9" frameY="-8" frameWidth="550" frameHeight="200"/>
+    <SubTexture name="btn_option" x="1764" y="1648" width="188" height="186" frameX="-5" frameY="-3" frameWidth="200" frameHeight="200"/>
+    <SubTexture name="btn_play" x="1286" y="1050" width="388" height="176" frameX="-4" frameY="-9" frameWidth="400" frameHeight="200"/>
+    <SubTexture name="btn_resume" x="1446" y="180" width="524" height="176" frameX="-9" frameY="-8" frameWidth="550" frameHeight="200"/>
+    <SubTexture name="clipboard" x="1446" y="358" width="492" height="690" frameX="-10" frameY="-73" frameWidth="520" frameHeight="780"/>
+    <SubTexture name="clipboard_compact" x="644" y="1600" width="492" height="420" frameX="-10" frameY="-73" frameWidth="520" frameHeight="780"/>
+    <SubTexture name="icon_HD" x="644" y="2" width="800" height="800"/>
+    <SubTexture name="img_bg" x="2" y="964" width="640" height="960"/>
+    <SubTexture name="img_box_checked" x="1764" y="1252" width="200" height="200"/>
+    <SubTexture name="img_box_empty" x="1764" y="1050" width="200" height="200"/>
+    <SubTexture name="img_title" x="1138" y="1600" width="624" height="332" frameX="0" frameY="-4" frameWidth="626" frameHeight="336"/>
+    <SubTexture name="logo" x="1286" y="804" width="146" height="146" frameX="-3" frameY="-3" frameWidth="152" frameHeight="152"/>
+    <SubTexture name="stage_bg" x="2" y="2" width="640" height="960"/>
+    <SubTexture name="stage_container" x="644" y="804" width="640" height="794" frameX="0" frameY="-146" frameWidth="640" frameHeight="960"/>
+</TextureAtlas>

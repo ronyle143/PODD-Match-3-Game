@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:31ec341df3825c24c3bb51c4ae3371bc:ac3f400dd85fc32c8ef3883dff4aac7d:6a6e6fa3f501222eca20c86df75dc199$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="btn_close" x="887" y="734" width="98" height="96" frameX="-1" frameY="-2" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="btn_mainmenu" x="726" y="2" width="267" height="88" frameX="-5" frameY="-4" frameWidth="275" frameHeight="100"/>
+    <SubTexture name="btn_option" x="887" y="832" width="94" height="92" frameX="-3" frameY="-2" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="btn_play" x="646" y="530" width="194" height="88" frameX="-2" frameY="-4" frameWidth="200" frameHeight="100"/>
+    <SubTexture name="btn_resume" x="726" y="92" width="263" height="88" frameX="-4" frameY="-4" frameWidth="275" frameHeight="100"/>
+    <SubTexture name="clipboard" x="726" y="182" width="246" height="346" frameX="-5" frameY="-36" frameWidth="260" frameHeight="390"/>
+    <SubTexture name="clipboard_compact" x="324" y="804" width="246" height="210" frameX="-5" frameY="-37" frameWidth="260" frameHeight="390"/>
+    <SubTexture name="icon_HD" x="324" y="2" width="400" height="400"/>
+    <SubTexture name="img_bg" x="2" y="484" width="320" height="480"/>
+    <SubTexture name="img_box_checked" x="887" y="632" width="100" height="100"/>
+    <SubTexture name="img_box_empty" x="887" y="530" width="100" height="100"/>
+    <SubTexture name="img_title" x="572" y="804" width="313" height="166" frameX="0" frameY="-2" frameWidth="313" frameHeight="168"/>
+    <SubTexture name="logo" x="646" y="404" width="74" height="74" frameX="-1" frameY="-1" frameWidth="76" frameHeight="76"/>
+    <SubTexture name="stage_bg" x="2" y="2" width="320" height="480"/>
+    <SubTexture name="stage_container" x="324" y="404" width="320" height="398" frameX="0" frameY="-72" frameWidth="320" frameHeight="480"/>
+</TextureAtlas>

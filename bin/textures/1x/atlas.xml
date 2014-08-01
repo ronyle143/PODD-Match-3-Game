@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:31ec341df3825c24c3bb51c4ae3371bc:ac3f400dd85fc32c8ef3883dff4aac7d:6a6e6fa3f501222eca20c86df75dc199$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="btn_close" x="375" y="424" width="50" height="48" frameX="0" frameY="-1" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="btn_mainmenu" x="366" y="2" width="136" height="44" frameX="-1" frameY="-2" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="btn_option" x="427" y="424" width="48" height="46" frameX="0" frameY="-1" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="btn_play" x="375" y="378" width="98" height="44" frameX="0" frameY="-2" frameWidth="100" frameHeight="50"/>
+    <SubTexture name="btn_resume" x="366" y="48" width="132" height="44" frameX="-2" frameY="-2" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="clipboard" x="366" y="94" width="124" height="173" frameX="-2" frameY="-18" frameWidth="130" frameHeight="195"/>
+    <SubTexture name="clipboard_compact" x="375" y="269" width="124" height="107" frameX="-2" frameY="-17" frameWidth="130" frameHeight="195"/>
+    <SubTexture name="icon_HD" x="164" y="2" width="200" height="200"/>
+    <SubTexture name="img_bg" x="2" y="244" width="160" height="240"/>
+    <SubTexture name="img_box_checked" x="323" y="458" width="50" height="50"/>
+    <SubTexture name="img_box_empty" x="323" y="406" width="50" height="50"/>
+    <SubTexture name="img_title" x="164" y="406" width="157" height="84"/>
+    <SubTexture name="logo" x="326" y="204" width="38" height="38"/>
+    <SubTexture name="stage_bg" x="2" y="2" width="160" height="240"/>
+    <SubTexture name="stage_container" x="164" y="204" width="160" height="200" frameX="0" frameY="-35" frameWidth="160" frameHeight="240"/>
+</TextureAtlas>
