@@ -18,6 +18,7 @@ package
 		public function ScreenPlay() 
 		{
 			GameAPI.note("!", "Switched to ScreenPlay");
+			GameAPI.init();
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		

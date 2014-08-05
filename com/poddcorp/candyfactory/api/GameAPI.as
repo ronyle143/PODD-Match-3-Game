@@ -13,6 +13,11 @@ package api
 		static private var 		noteOn			:Boolean 	= true;
 		public static var 		paused			:Boolean 	= false;
 		
+		public static function init():void 
+		{
+			paused = false;
+		}
+		
 		public static function note(x:String, y:String):void {
 				if (noteOn) {
 				trace("["+x+"] - "+y+".");
