@@ -104,4 +104,4 @@ echo.
 echo Installing the app on the device failed
 
 :end
-timeout 3
+timeout 0
