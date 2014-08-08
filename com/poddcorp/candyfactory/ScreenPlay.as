@@ -2,6 +2,7 @@ package
 {
 	import api.Constants;
 	import api.GameAPI;
+	import api.GameData;
 	import flash.display.GradientType;
 	import starling.display.Button;
 	import starling.display.Image;
@@ -19,6 +20,7 @@ package
 		{
 			GameAPI.note("!", "Switched to ScreenPlay");
 			GameAPI.init();
+			GameData.init();
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		

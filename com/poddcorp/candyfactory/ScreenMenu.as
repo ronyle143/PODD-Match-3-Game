@@ -2,6 +2,8 @@ package
 {
 	import api.Constants;
 	import api.GameAPI;
+	import starling.animation.Tween;
+	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -34,7 +36,8 @@ package
 			
 			_imgmenutitle = new Image(CandyFactory.assets.getTexture("img_title"));
 			_imgmenutitle.width = Constants.STAGE_WIDTH;
-			_imgmenutitle.height = Constants.STAGE_HEIGHT/3;
+			_imgmenutitle.height = Constants.STAGE_HEIGHT / 3;
+			_imgmenutitle.y = _imgmenutitle.height;
             this.addChild(_imgmenutitle);
 			
 			_btnstart = new Button(CandyFactory.assets.getTexture("btn_play"));
@@ -56,6 +59,29 @@ package
 			_option = new TabOption();
 			this.addChild(_option);
 			
+			animateMenu();
+		}
+		
+		public function animateMenu():void 
+		{
+			_imgmenutitle.y = Constants.STAGE_HEIGHT/2;
+			_imgmenutitle.alpha = 0;
+			var popup0:Tween = new Tween(_imgmenutitle, 1, "easeOut");
+			popup0.fadeTo(1);
+			popup0.moveTo(0,0);
+			Starling.juggler.add(popup0);
+			
+			_btnstart.y = Constants.STAGE_HEIGHT/2;
+			var popup1:Tween = new Tween(_btnstart, 1, "easeOut");
+			popup1.moveTo((Constants.STAGE_WIDTH - (_btnstart.width + _btnoptions.width)) * 0.5, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.75);
+			popup1.fadeTo(1);
+			Starling.juggler.add(popup1);
+			
+			_btnoptions.y = Constants.STAGE_HEIGHT/2;
+			var popup2:Tween = new Tween(_btnoptions, 1, "easeOut");
+			popup2.moveTo(_btnstart.x + _btnstart.width, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.75);
+			popup2.fadeTo(1);
+			Starling.juggler.add(popup2);
 		}
 		
 		private function onButtonClickStart(e:Event):void 

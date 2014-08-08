@@ -2,6 +2,7 @@ package
 {
 	import api.Constants;
 	import api.GameAPI;
+	import api.GameData;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -13,14 +14,17 @@ package
 	public class Grid extends Sprite
 	{
 		private var _imgstagecontainer:Image;
-		private var ary:Array = new Array(8);
+		private var ary:Array = new Array(9);
 		private var i:int;
 		private var picked:Array = [];
 		private var nullary:Array = [];
 		private var idle:Boolean = true;
 		private var clear:Button;
 		private var clearNull:Button;
+		private var rem:Button;
 		public var addd:Button;
+		
+		public var _displayUI:DisplayUI;
 		
 		public function Grid()
 		{
@@ -37,7 +41,7 @@ package
 			_imgstagecontainer.height = Constants.STAGE_HEIGHT;
 			this.addChild(_imgstagecontainer);
 			
-			addd = new Button(CandyFactory.assets.getTexture("btn_option"));
+			addd = new Button(CandyFactory.assets.getTexture("btn_blank"));
 			addd.height = Constants.STAGE_WIDTH / 8;
 			addd.width = addd.height;
 			addd.text = "Add";
@@ -46,20 +50,37 @@ package
             addd.x = 0;
             addd.y = this.height - addd.height;
 			this.addChild(addd);
-			
 			addd.addEventListener(Event.TRIGGERED, adddStack);
+			
+			rem = new Button(CandyFactory.assets.getTexture("btn_blank"));
+			rem.height = Constants.STAGE_WIDTH / 8;
+			rem.width = rem.height;
+			rem.text = "Del";
+			rem.fontSize *= 1.5;
+			rem.fontName = "Showcard Gothic";
+            rem.x = rem.width;
+            rem.y = this.height - addd.height;
+			this.addChild(rem);
+			rem.addEventListener(Event.TRIGGERED, deleteAll);
 			
 			for (i = 0; i < ary.length; i++)
 			{
 				ary[i] = [];
 			}
 			
-			addCustomStack([ 1, 1, 3, 3, 3, 1, 1, 1, 1]);
-			addCustomStack([ 1, 2, 2, 3, 2, 2, 1]);
-			addCustomStack([ 1, 1, 2, 3, 2, 1, 1]);
-			addCustomStack([ 1, 1, 2, 3, 2, 1, 1]);
-			addCustomStack([ 1, 1, 1, 3, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
+			addCustomStack([ 1, 1, 2, 2, 3, 2, 2, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 1, 3, 1, 1, 1, 1, 1]);//*/
+			/*addStack();
+			addStack();
+			addStack();
+			addStack();//*/
 			
+			_displayUI = new DisplayUI();
+			addChild(_displayUI);
+			_displayUI.init();
 		}
 		
 		private function adddStack(e:Event):void 
@@ -77,7 +98,7 @@ package
 		
 		private function addCustomStack(x:Array):void
 		{
-			while (x.array <= 8) {
+			while (x.array <= ary.length) {
 				x.push(0);
 			}
 			for (i = 0; i < ary.length; i++)
@@ -139,7 +160,7 @@ package
 				try{
 					if (yy + 1 < ary[xx].length) // check if not off course
 					{
-						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+xx+", "+(yy+1)+"]");
+						GameAPI.note("!", "[" + xx + "," + yy + "] checked: [" + xx + ", " + (yy + 1) + "]");
 						if (ary[xx][yy + 1].type == type) //check if the type is the same
 						{
 							tmp = check(xx, yy + 1, type); 
@@ -311,70 +332,129 @@ package
 			trace(picked);
 			var counter:int = picked.length;
 			var deleted:int = 0;
-			if(idle){
-				idle = false;
-				var min:int = 3;
-				if(picked.length >= min){
-					var str:String = "To be deleted: ";
-					for (i = picked.length-1; i >= 0 ; i--) {
-						var xx:int = picked[i][0];
-						var yy:int = picked[i][1];
-						str += "[" + xx + ", " + yy + "]";
-						try {
-							//ary[xx][yy].visible = false;
-							if (ary[xx][yy] != null) {
-								deleted ++;
-								trace("deletion at [" + xx + "," + yy + "]");
-								ary[xx][yy].removeFromParent(true); 
-							}else {
-								trace("problem at [" + xx + "," + yy + "] - null reference");
-								ary[xx].splice(yy, 1);
-								ary[xx][yy].visible = false;
-							}
-							try {
-								ary[xx].splice(yy, 1);
-							}catch (err:Error)
-							{
-								trace(picked[i]," - Splicing - ",err.message);
-							}
-						}catch (err:Error)
-						{
-							trace(picked[i]," - Removing - ",err.message);
+			var min:int = 3;
+			if(picked.length >= min){
+				var str:String = "To be deleted: ";
+				for (i = picked.length-1; i >= 0 ; i--) {
+					var xx:int = picked[i][0];
+					var yy:int = picked[i][1];
+					str += "[" + xx + ", " + yy + "]";
+					try {
+						//ary[xx][yy].visible = false;
+						if (ary[xx][yy] != null) {
+							deleted ++;
+							trace("deletion at [" + xx + "," + yy + "]");
+							ary[xx][yy].removeFromParent(true); 
+						}else {
+							trace("problem at [" + xx + "," + yy + "] - null reference");
+							ary[xx].splice(yy, 1);
+							ary[xx][yy].visible = false;
 						}
+						ary[xx].splice(yy, 1);
+					}catch (err:Error)
+					{
+						trace(picked[i], " - Removing - ", err.message);
 					}
-					arrange();
-					//trace(str);
 				}
-				idle = true;
+				for (var t:int = 0; t < ary.length; t++) {
+					giveWay();
+				}
+				arrange();
+				GameData.updateScore((deleted - 2) * 10);
+				_displayUI.updateData();
 			}
-			trace("Deleted "+deleted+"/"+picked.length+" objects");
+			trace("Deleted " + deleted + "/" + picked.length + " objects");
+			
+			
+		}
+		
+		private function giveWay():void {
+			try {
+				var p:int = 0;
+				var missing:int = 0;
+				for (p = ary.length-1; p >=0; p--) {
+					if (ary[p].length == 0 ) {
+						ary.splice(p,1);
+						ary.push([]);
+						missing++;
+					}
+				}
+				missing /= 2;
+				for (; missing > 0; missing--) {
+					ary.pop();
+					ary.unshift([]);
+				}
+				/*for (p = 3; p >= 0; p--) {
+					if (ary[p].length == 0 ) {
+						ary.splice(p,1);
+						ary.unshift([]);
+					}
+				}
+				for (p = 4; p < 8; p++) {
+					if (ary[p].length == 0 ) {
+						ary.splice(p,1);
+						ary.push([]);
+					}
+				}
+				if (ary[3].length == 0 && ary[5].length != 0) {
+					ary.splice(1,1);
+					ary.push([]);
+				}
+				if (ary[4].length == 0 && ary[2].length != 0) {
+					ary.splice(7,1);
+					ary.unshift([]);
+				}//*/
+			}catch (err:Error)
+			{
+				
+			}
 		}
 		
 		private function arrange():void
 		{
-			var gap:Number = Constants.STAGE_WIDTH * 0.166;
-			var objSize:Number = Constants.STAGE_WIDTH / 12;
-			var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
-			var x:int;
-			var y:int;
-			var str:String = "ary: [";
-			for (x = 0; x < ary.length && ary.length != 0; x++)
-			{
-				for (y = 0; y < ary[x].length && ary[x].length != 0; y++)
+			if(idle){
+				idle = false;
+				var gap:Number = Constants.STAGE_WIDTH * 0.166;
+				var objSize:Number = Constants.STAGE_WIDTH / 13.5;
+				var baseY:Number = Constants.STAGE_HEIGHT * 0.78;
+				var x:int;
+				var y:int;
+				var str:String = "ary: [";
+				for (x = 0; x < ary.length && ary.length != 0; x++)
 				{
-					if (ary[x][y] == null) {
-						ary[x].splice(y, 1);
+					for (y = 0; y < ary[x].length && ary[x].length != 0; y++)
+					{
+						if (ary[x][y] == null) {
+							ary[x].splice(y, 1);
+						}
+						ary[x][y].setXY(x, y);
+						var popup:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
+						popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
+						Starling.juggler.add(popup);
+						str += " " + ary[x][y];
+						//var glow:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
+						//popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
 					}
-					ary[x][y].setXY(x, y);
-					var popup:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
-					popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
-					Starling.juggler.add(popup);
-					str += " " + ary[x][y];
-					//var glow:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
-					//popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
 				}
+				idle = true;
 			}
 		}
+		
+		/*private function deliver(x:int, y:int):void {
+			var gap:Number = Constants.STAGE_WIDTH * 0.166;
+			var objSize:Number = Constants.STAGE_WIDTH / 13.5;
+			var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
+			_imgcrate = new Image(CandyFactory.assets.getTexture("btn_blank_watermarked"));
+			_imgcrate.width = Constants.STAGE_WIDTH/12;
+			_imgcrate.height = Constants.STAGE_HEIGHT / 12;
+			_imgcrate.x = gap + (objSize * x);
+			_imgcrate.y = baseY - (objSize * y);
+			addChild(_imgcrate);
+			var popup0:Tween = new Tween(_imgcrate, 1, "easeOut");
+			popup0.fadeTo(1);
+			popup0.moveTo(0,0);
+			Starling.juggler.add(popup0);
+		}//*/
 		
 		private function deleteAll():void {
 			if(idle){

@@ -56,6 +56,9 @@ package
 		private function displayScreen(e:EnterFrameEvent):void 
 		{
 			if (GameAPI.StateChange && GameAPI.GameState == 1) {
+				nav.removeScreen(SCREEN_MENU);
+				mainMenu = new ScreenNavigatorItem(new ScreenMenu, null, null);
+				nav.addScreen(SCREEN_MENU, mainMenu);
 				nav.showScreen(SCREEN_MENU);
 				GameAPI.StateChange = false;
 			}
