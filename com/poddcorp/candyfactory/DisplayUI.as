@@ -9,17 +9,22 @@ package
 	import starling.events.EnterFrameEvent;
 	import starling.filters.BlurFilter;
 	import starling.text.TextField;
+	import starling.utils.Color;
 	
 	public class DisplayUI extends Sprite 
 	{
 		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 48, 0xFFFFFF);
 		private var _txtCPM  :TextField = new TextField(Constants.STAGE_WIDTH*0.6,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 48, 0xFFFFFF);
+		private var txxt1:TextField = new TextField(Constants.STAGE_WIDTH / 8,Constants.STAGE_WIDTH / 6, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
 		private var _timebar:Quad;
 		private var _imgscoregoal:Image;
 		private var _imgcpm:Image;
 		private var _imggauge:Image;
+		private var _imgscreenmask:Quad;
 		public var timeInit:int;
 		public var timeNow:int;
+		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.058*8);
+		private var txxt:TextField;
 		
 		public function DisplayUI() 
 		{
@@ -71,11 +76,27 @@ package
 			this.addChild(_timebar);
 			
 			_imggauge = new Image(CandyFactory.assets.getTexture("gauge"));
-			_imggauge.width = Constants.STAGE_HEIGHT * 0.070	;
+			_imggauge.width = Constants.STAGE_HEIGHT * 0.070;
 			_imggauge.height = _imggauge.width * 8;
 			_imggauge.x = Constants.STAGE_WIDTH - _imggauge.width;
 			_imggauge.y = Constants.STAGE_HEIGHT * 0.9-  _imggauge.height;
 			addChild(_imggauge);
+			
+			_imgscreenmask = new Quad(objX, objY, 0xFF8888, true);
+			_imgscreenmask.width = Constants.STAGE_HEIGHT * 0.058;
+			_imgscreenmask.height = -_imgscreenmask.width*8;
+			_imgscreenmask.y = Constants.STAGE_HEIGHT * 0.808;
+			_imgscreenmask.x = (Constants.STAGE_WIDTH - Constants.STAGE_HEIGHT * 0.0655);
+			_imgscreenmask.color = Color.RED;
+			//_imgscreenmask.pivotY = Constants.STAGE_HEIGHT * 0.058;
+			
+			txxt1.text = "x" + GameData.multiplier;
+			txxt1.x = Constants.STAGE_WIDTH - txxt1.width;
+			txxt1.y = Constants.STAGE_HEIGHT * 0.25;
+			addChild(txxt1);
+			
+			_imgscreenmask.alpha = 0.5;
+			addChild(_imgscreenmask);
 			
 			timeInit = 600;
 			timeNow = (timeInit / GameData.production * 60);
@@ -96,6 +117,10 @@ package
 			_timebar.width = (Constants.STAGE_WIDTH * 0.673) / (timeneeded / timeNow);
 			timeNow++;
 			}
+			_imgscreenmask.height = gaugehieght / 100 * GameData.gauge;
+			GameData.checkGauge();
+			txxt1.text = "x" + GameData.multiplier;
+			trace(GameData.gauge);
 		}
 		
 		public function updateData():void {

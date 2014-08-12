@@ -65,7 +65,7 @@ package
 			addd.fontName = "Showcard Gothic";
             addd.x = 0;
             addd.y = this.height - addd.height;
-			this.addChild(addd);
+			//this.addChild(addd);
 			addd.addEventListener(Event.TRIGGERED, adddStack);
 			
 			rem = new Button(CandyFactory.assets.getTexture("btn_blank"));
@@ -76,7 +76,7 @@ package
 			rem.fontName = "Showcard Gothic";
             rem.x = rem.width;
             rem.y = this.height - addd.height;
-			this.addChild(rem);
+			//this.addChild(rem);
 			rem.addEventListener(Event.TRIGGERED, deleteAll);
 			
 			//--------------------------------------------------------------
@@ -357,7 +357,7 @@ package
 			var min:int = 3;
 			if (picked.length >= min) {
 				deliver(delivery[0], delivery[1]);
-				pointShow(delivery[0], delivery[1],""+(picked.length-2)*10);
+				pointShow(delivery[0], delivery[1],""+((picked.length-2)*10)*GameData.multiplier);
 				var str:String = "To be deleted: ";
 				for (i = picked.length-1; i >= 0 ; i--) {
 					var xx:int = picked[i][0];
@@ -385,9 +385,11 @@ package
 				}
 				arrange();
 				GameData.updateScore((deleted - 2) * 10);
+				GameData.gauge += (deleted - 2)*GameData.multiplier;
 				_displayUI.updateData();
 			}else {
-				
+				GameData.multiplier = 1;
+				GameData.gauge = 0;
 				_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
 			}
 			

@@ -27,6 +27,7 @@ package api
 		}
 		
 		
+		
 		public static function updateScore(x:int):int {
 			var res:int = x * multiplier;
 			score += res;
@@ -34,6 +35,20 @@ package api
 		}
 		public static function getScore():int {
 			return score;
+		}
+		
+		public static function checkGauge():void 
+		{
+			//trace("checking goal: " + score + "/" + goal);
+			if (gauge >= 100) {
+				increaseMultiplier();
+				gauge = 0;
+			}
+		}
+		
+		static private function increaseMultiplier():void 
+		{
+			multiplier++;
 		}
 		
 		public static function checkGoal():void 
