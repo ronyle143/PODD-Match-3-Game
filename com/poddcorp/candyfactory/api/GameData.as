@@ -13,15 +13,17 @@ package api
 		public static var		multiplier		:int		= 1;
 		public static var		production		:int		= 50;
 		public static var		goal			:int		= 500;
-			
+		public static var		increment		:int		= 30;
 		
 		public static function init():void 
 		{
 			score = 0;
 			gauge = 0;
 			multiplier = 1;
-			production = 50;
+			production = 60;
 			goal = 500;
+			increment = 30;
+			
 		}
 		
 		
@@ -36,12 +38,22 @@ package api
 		
 		public static function checkGoal():void 
 		{
-			
+			//trace("checking goal: " + score + "/" + goal);
+			if (score >= goal) {
+				increaseGoal();
+				increaseProduction();
+			}
+		}
+		
+		static private function increaseGoal():int 
+		{
+			goal = goal * 1.5;
+			return goal;
 		}
 		
 		public static function increaseProduction():int 
 		{
-			production += 10;
+			production += increment;
 			return production;
 		}
 	}

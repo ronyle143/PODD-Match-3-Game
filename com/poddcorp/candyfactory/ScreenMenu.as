@@ -8,6 +8,7 @@ package
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.filters.BlurFilter;
 	
 	public class ScreenMenu extends Sprite 
 	{
@@ -66,6 +67,7 @@ package
 		{
 			_imgmenutitle.y = Constants.STAGE_HEIGHT/2;
 			_imgmenutitle.alpha = 0;
+			_imgmenutitle.filter = BlurFilter.createDropShadow();
 			var popup0:Tween = new Tween(_imgmenutitle, 1, "easeOut");
 			popup0.fadeTo(1);
 			popup0.moveTo(0,0);
@@ -75,12 +77,14 @@ package
 			var popup1:Tween = new Tween(_btnstart, 1, "easeOut");
 			popup1.moveTo((Constants.STAGE_WIDTH - (_btnstart.width + _btnoptions.width)) * 0.5, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.75);
 			popup1.fadeTo(1);
+			_btnstart.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup1);
 			
 			_btnoptions.y = Constants.STAGE_HEIGHT/2;
 			var popup2:Tween = new Tween(_btnoptions, 1, "easeOut");
 			popup2.moveTo(_btnstart.x + _btnstart.width, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.75);
 			popup2.fadeTo(1);
+			_btnoptions.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup2);
 		}
 		

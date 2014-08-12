@@ -10,6 +10,8 @@ package
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
 	import starling.events.Event;
+	import starling.filters.BlurFilter;
+	import starling.text.TextField;
 	
 	public class Grid extends Sprite
 	{
@@ -18,10 +20,13 @@ package
 		private var i:int;
 		private var picked:Array = [];
 		private var nullary:Array = [];
+		private var delivery:Array = [];
 		private var idle:Boolean = true;
 		private var clear:Button;
 		private var clearNull:Button;
 		private var rem:Button;
+		private var gib:Array = [];
+		private var _imgtank:Image;
 		public var addd:Button;
 		
 		public var _displayUI:DisplayUI;
@@ -36,10 +41,21 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
+			_imgtank = new Image(CandyFactory.assets.getTexture("tank"));
+			_imgtank.width = Constants.STAGE_HEIGHT * 0.1
+			_imgtank.height = _imgtank.width * 2;
+			this.addChild(_imgtank);
+			_imgtank.x = Constants.STAGE_WIDTH - _imgtank.width*1.5;
+			_imgtank.y = Constants.STAGE_HEIGHT * 0.87 -  _imgtank.height;
+			_imgtank.filter = BlurFilter.createDropShadow();
+			
 			_imgstagecontainer = new Image(CandyFactory.assets.getTexture("stage_container"));
 			_imgstagecontainer.width = Constants.STAGE_WIDTH;
 			_imgstagecontainer.height = Constants.STAGE_HEIGHT;
 			this.addChild(_imgstagecontainer);
+			_imgstagecontainer.filter = BlurFilter.createDropShadow();
+			
+			//-----------------------------------------------------------
 			
 			addd = new Button(CandyFactory.assets.getTexture("btn_blank"));
 			addd.height = Constants.STAGE_WIDTH / 8;
@@ -63,17 +79,19 @@ package
 			this.addChild(rem);
 			rem.addEventListener(Event.TRIGGERED, deleteAll);
 			
+			//--------------------------------------------------------------
+			
 			for (i = 0; i < ary.length; i++)
 			{
 				ary[i] = [];
 			}
 			
-			addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
+			/*addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 2, 2, 3, 2, 2, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 3, 1, 1, 1, 1, 1]);//*/
-			/*addStack();
+			addStack();
 			addStack();
 			addStack();
 			addStack();//*/
@@ -81,6 +99,8 @@ package
 			_displayUI = new DisplayUI();
 			addChild(_displayUI);
 			_displayUI.init();
+			
+			addEventListener(EnterFrameEvent.ENTER_FRAME, looop);
 		}
 		
 		private function adddStack(e:Event):void 
@@ -88,12 +108,13 @@ package
 			addStack();
 		}
 		
-		private function addStack():void
+		public function addStack():void
 		{
 			for (i = 0; i < ary.length; i++)
 			{
 				addBlock(i,0);
 			}
+			arrange();
 		}
 		
 		private function addCustomStack(x:Array):void
@@ -105,6 +126,7 @@ package
 			{
 				addBlock(i,x[i]);
 			}
+			arrange();
 		}
 		
 		private function addBlock(x:int,type:int):void
@@ -123,7 +145,6 @@ package
 						clickedObject(_obj.xx, _obj.yy, _obj.type);
 					});
 			}
-			arrange();
 		}
 		
 		private function clickedObject(xx:int, yy:int, type:String): void {
@@ -228,6 +249,7 @@ package
 					trace(picked[i] + " - 1st Check - right    " + err.message);
 				}//*/
 					idle = true;
+					delivery = [xx, yy];
 					clearBlock(picked);
 				trace("[" + picked.length + "] " + picked);
 				
@@ -333,7 +355,9 @@ package
 			var counter:int = picked.length;
 			var deleted:int = 0;
 			var min:int = 3;
-			if(picked.length >= min){
+			if (picked.length >= min) {
+				deliver(delivery[0], delivery[1]);
+				pointShow(delivery[0], delivery[1],""+(picked.length-2)*10);
 				var str:String = "To be deleted: ";
 				for (i = picked.length-1; i >= 0 ; i--) {
 					var xx:int = picked[i][0];
@@ -362,7 +386,11 @@ package
 				arrange();
 				GameData.updateScore((deleted - 2) * 10);
 				_displayUI.updateData();
+			}else {
+				
+				_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
 			}
+			
 			trace("Deleted " + deleted + "/" + picked.length + " objects");
 			
 			
@@ -424,37 +452,76 @@ package
 				{
 					for (y = 0; y < ary[x].length && ary[x].length != 0; y++)
 					{
-						if (ary[x][y] == null) {
-							ary[x].splice(y, 1);
+						
+						if (checkMax(y + 1)) {
+							if (ary[x][y] == null) {
+								ary[x].splice(y, 1);
+							}
+							ary[x][y].setXY(x, y);
+							var popup:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
+							popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
+							Starling.juggler.add(popup);
+							str += " " + ary[x][y];
+							//var glow:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
+							//popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
 						}
-						ary[x][y].setXY(x, y);
-						var popup:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
-						popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
-						Starling.juggler.add(popup);
-						str += " " + ary[x][y];
-						//var glow:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
-						//popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
 					}
 				}
 				idle = true;
 			}
 		}
 		
-		/*private function deliver(x:int, y:int):void {
+		private function checkMax(cols:int):Boolean 
+		{
+			var checkingMax:Boolean = true;
+			if (cols > 15) {
+				GameAPI.checktheMax = true;
+				checkingMax = false
+			}
+			return checkingMax;
+		}
+		
+		private function pointShow(x:int, y:int,str:String):void {
 			var gap:Number = Constants.STAGE_WIDTH * 0.166;
 			var objSize:Number = Constants.STAGE_WIDTH / 13.5;
 			var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
-			_imgcrate = new Image(CandyFactory.assets.getTexture("btn_blank_watermarked"));
+			var txxt:TextField = new TextField(objSize*2,objSize*2, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFF5555);
+			txxt.x = gap + (objSize * x);
+			txxt.y = baseY - (objSize * y);
+			txxt.text = "" + str;
+			addChild(txxt);
+			var popup0:Tween = new Tween(txxt, 2, "easeOut");
+			popup0.fadeTo(0);
+			popup0.moveTo(txxt.x,txxt.y-(objSize*5));
+			Starling.juggler.add(popup0);
+			gib.push(txxt);
+		}
+		
+		private function deliver(x:int, y:int):void {
+			var gap:Number = Constants.STAGE_WIDTH * 0.166;
+			var objSize:Number = Constants.STAGE_WIDTH / 13.5;
+			var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
+			var _imgcrate:Image = new Image(CandyFactory.assets.getTexture("Crate"));
 			_imgcrate.width = Constants.STAGE_WIDTH/12;
-			_imgcrate.height = Constants.STAGE_HEIGHT / 12;
+			_imgcrate.height = _imgcrate.width;
 			_imgcrate.x = gap + (objSize * x);
 			_imgcrate.y = baseY - (objSize * y);
 			addChild(_imgcrate);
 			var popup0:Tween = new Tween(_imgcrate, 1, "easeOut");
-			popup0.fadeTo(1);
-			popup0.moveTo(0,0);
+			popup0.fadeTo(0);
+			popup0.moveTo(Constants.STAGE_WIDTH * 0.95,Constants.STAGE_HEIGHT * 0.9);
 			Starling.juggler.add(popup0);
-		}//*/
+			gib.push(_imgcrate);
+		}
+		
+		private function looop(e:EnterFrameEvent):void 
+		{
+			if (gib.length > 0) {
+				if (gib[0].alpha <= 0) {
+					gib.splice(0, 1);
+				}
+			}
+		}
 		
 		private function deleteAll():void {
 			if(idle){

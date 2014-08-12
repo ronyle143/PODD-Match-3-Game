@@ -1,6 +1,7 @@
 package
 {
 	import api.Constants;
+	import api.GameAPI;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -17,8 +18,8 @@ package
 		
 		public function Candies(pickednumber:int)
 		{
-			obj = new Button(CandyFactory.assets.getTexture("all_white"));
-			var randomnum:int = Math.random() * 3 + 1;
+			obj = new Button(CandyFactory.assets.getTexture("mesh_candy_holder"));
+			var randomnum:int = Math.random() * GameAPI.difficulty + 1;
 			if (pickednumber != 0) {
 				randomnum = pickednumber;
 			}else {
@@ -37,37 +38,32 @@ package
 			var txtt:Image
 			if (randomnum == 1)
 			{
-				txtt = new Image(CandyFactory.assets.getTexture("all_white"));
-				txtt.color = Color.RED;
-				obj.addChild(txtt);
+				txtt = new Image(CandyFactory.assets.getTexture("candy_red"));
+				//txtt.color = Color.RED;
 			}
 			if (randomnum == 2)
 			{
-				txtt = new Image(CandyFactory.assets.getTexture("all_white"));
-				txtt.color = Color.BLUE;
-				obj.addChild(txtt);
+				txtt = new Image(CandyFactory.assets.getTexture("candy_blue"));
+				//txtt.color = Color.BLUE;
 			}
 			if (randomnum == 3)
 			{
-				txtt = new Image(CandyFactory.assets.getTexture("all_white"));
-				txtt.color = Color.GREEN;
-				obj.addChild(txtt);
+				txtt = new Image(CandyFactory.assets.getTexture("candy_green"));
+				//txtt.color = Color.GREEN;
 			}
 			if (randomnum == 4)
 			{
-				txtt = new Image(CandyFactory.assets.getTexture("all_white"));
-				txtt.color = Color.YELLOW;
-				obj.addChild(txtt);
+				txtt = new Image(CandyFactory.assets.getTexture("candy_yellow"));
+				//txtt.color = Color.YELLOW;
 			}
 			if (randomnum == 5)
 			{
-				txtt = new Image(CandyFactory.assets.getTexture("all_white"));
-				txtt.color = Color.WHITE;
-				obj.addChild(txtt);
+				txtt = new Image(CandyFactory.assets.getTexture("candy_orange"));
+				//txtt.color = Color.WHITE;
 			}
-			txtt.alpha = 0.5;
-			
-			obj.text = "" + pickednumber;
+			//txtt.alpha = 0.5;
+			obj.addChild(txtt);
+			//obj.text = "" + pickednumber;
 			obj.fontSize *= 3;
 		}
 		
