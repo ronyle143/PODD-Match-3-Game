@@ -19,6 +19,7 @@ package
 		private var grid:Grid;
 		private var gameOver:GameOver;
 		private var Crate01:Image;
+		private var Crate02:Image;
 		
 		public function ScreenPlay() 
 		{
@@ -54,8 +55,17 @@ package
 			Crate01.width = Constants.STAGE_WIDTH/7;
 			Crate01.height = Crate01.width;
 			Crate01.x = Constants.STAGE_WIDTH - (Crate01.width);
-			Crate01.y = Constants.STAGE_HEIGHT * 0.9;
+			Crate01.y = Constants.STAGE_HEIGHT * 0.87;
+			Crate01.filter = BlurFilter.createDropShadow();
             this.addChild(Crate01);
+			
+			Crate02 = new Image(CandyFactory.assets.getTexture("Crate"));
+			Crate02.width = Constants.STAGE_WIDTH/9;
+			Crate02.height = Crate02.width;
+			Crate02.x = Constants.STAGE_WIDTH - (Crate02.width*1.5);
+			Crate02.y = Constants.STAGE_HEIGHT * 0.90;
+			Crate02.filter = BlurFilter.createDropShadow(4, 0.285);
+            this.addChild(Crate02);
 			
 			option = new TabOption();
 			this.addChild(option);
