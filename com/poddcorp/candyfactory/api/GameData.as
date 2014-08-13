@@ -1,6 +1,10 @@
 package api  
 {
 	import api.Constants;
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	//import com.adobe.serialization.json.JSON;
 	
 	public class GameData 
 	{
@@ -20,6 +24,19 @@ package api
 		
 		public static function init():void 
 		{
+
+			/*var myRequest:URLRequest = new URLRequest("staff.txt");
+			var myLoader:URLLoader = new URLLoader();
+			myLoader.addEventListener(Event.COMPLETE, onload);
+			myLoader.load(myRequest);
+
+			function onload(evt:Event):void
+			{
+			var myData:Object = JSON.decode(myLoader.data);
+
+			trace(myData.staff[0].firstName);
+			}//*/
+			
 			score = 0;
 			gauge = 0;
 			multiplier = 1;

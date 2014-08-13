@@ -13,9 +13,9 @@ package
 	
 	public class DisplayUI extends Sprite 
 	{
-		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 48, 0xFFFFFF);
-		private var _txtCPM  :TextField = new TextField(Constants.STAGE_WIDTH*0.6,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 48, 0xFFFFFF);
-		private var txxt1:TextField = new TextField(Constants.STAGE_WIDTH / 8,Constants.STAGE_WIDTH / 6, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
+		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 48, 0xFF6666);
+		private var _txtCPM  :TextField = new TextField(Constants.STAGE_WIDTH*0.6,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 48, 0xFF6666);
+		private var txxt1:TextField = new TextField(Constants.STAGE_WIDTH / 8,Constants.STAGE_WIDTH / 6, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFF6666);
 		private var _timebar:Quad;
 		private var _imgscoregoal:Image;
 		private var _imgcpm:Image;
@@ -54,14 +54,14 @@ package
 			_txtScore.text = "" + GameData.score + " / " + GameData.goal;
 			_txtScore.x = _imgscoregoal.x;
 			_txtScore.y = _imgscoregoal.y;
-			_txtScore.filter = BlurFilter.createDropShadow();
+			//_txtScore.filter = BlurFilter.createDropShadow();
 			//_txtScore.border = true;
 			addChild(_txtScore);
 			
 			_txtCPM.text = ""+GameData.production;
 			_txtCPM.x = _imgcpm.x;
 			//_txtCPM.border = true;
-			_txtCPM.filter = BlurFilter.createDropShadow();
+			//_txtCPM.filter = BlurFilter.createDropShadow();
 			_txtCPM.y = _imgcpm.y;
 			addChild(_txtCPM);
 			
@@ -93,6 +93,7 @@ package
 			txxt1.text = "x" + GameData.multiplier;
 			txxt1.x = Constants.STAGE_WIDTH - txxt1.width;
 			txxt1.y = Constants.STAGE_HEIGHT * 0.25;
+			//txxt1.filter = BlurFilter.createDropShadow();
 			addChild(txxt1);
 			
 			_imgscreenmask.alpha = 0.5;
