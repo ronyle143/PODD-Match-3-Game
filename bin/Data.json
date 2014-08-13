@@ -1,0 +1,10 @@
+{
+    "values": [
+        {
+            "initialProduction": "60",
+            "initialGoal": "500",
+            "productionIncrement": "30",
+			"goalIncrement": "1.5"
+        }
+    ]
+}

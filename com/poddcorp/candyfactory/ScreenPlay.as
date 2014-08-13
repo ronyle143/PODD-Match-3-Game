@@ -87,6 +87,14 @@ package
 				grid.addStack();
 				GameAPI.checktheBlock = false;
 			}
+			if (GameAPI.GameState==1 && GameAPI.StateChange) {
+				destroy();
+			}
+		}
+		
+		private function destroy():void 
+		{
+			grid.removeFromParent(true);
 		}
 		
 		private function onButtonClickOption(e:Event):void 

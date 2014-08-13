@@ -86,12 +86,12 @@ package
 				ary[i] = [];
 			}
 			
-			/*addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 2, 2, 3, 2, 2, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 3, 1, 1, 1, 1, 1]);//*/
-			addStack();
+			/*addStack();
 			addStack();
 			addStack();
 			addStack();//*/
@@ -148,18 +148,20 @@ package
 		}
 		
 		private function clickedObject(xx:int, yy:int, type:String): void {
-			if (GameAPI.powerType == "BURST") {
-				clickBurst(xx, yy, type);
-			}
-			if (GameAPI.powerType == "TASTER") {
-				clickTaster(xx, yy, type);
-			}
-			if (GameAPI.powerType == "REJECT") {
+			if(idle){
+				if (GameAPI.powerType == "BURST") {
+					clickBurst(xx, yy, type);
+				}
+				if (GameAPI.powerType == "TASTER") {
+					clickTaster(xx, yy, type);
+				}
+				if (GameAPI.powerType == "REJECT") {
+					
+				}
+				GameAPI.powerType == "BURST";
 				
+				trace("=========================================");
 			}
-			GameAPI.powerType == "BURST";
-			
-			trace("=========================================");
 		}
 		
 		private function clickTaster(xx:int, yy:int, type:String):void 
@@ -181,6 +183,7 @@ package
 				try{
 					if (yy + 1 < ary[xx].length) // check if not off course
 					{
+						ary[xx][yy+1].ping();
 						GameAPI.note("!", "[" + xx + "," + yy + "] checked: [" + xx + ", " + (yy + 1) + "]");
 						if (ary[xx][yy + 1].type == type) //check if the type is the same
 						{
@@ -199,6 +202,7 @@ package
 				{
 					if (yy - 1 >= 0) // check if not off course
 					{
+						ary[xx][yy-1].ping();
 						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+xx+", "+(yy-1)+"]");
 						if (ary[xx][yy - 1].type == type) //check if the type is the same
 						{
@@ -215,8 +219,9 @@ package
 				}
 				try
 				{
-					if (xx - 1 >= 0) // check if not off course
+					if (xx - 1 >= 0 && ary[xx-1].length > yy) // check if not off course
 					{
+						ary[xx-1][yy].ping();
 						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+(xx-1)+", "+yy+"]");
 						if (ary[xx - 1][yy].type == type) //check if the type is the same
 						{
@@ -233,8 +238,9 @@ package
 				}
 				try
 				{
-					if (xx + 1 < ary.length) // check if not off course
+					if (xx + 1 < ary.length && ary[xx+1].length > yy) // check if not off course
 					{
+						ary[xx+1][yy].ping();
 						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+(xx+1)+", "+yy+"]");
 						if (ary[xx + 1][yy].type == type) //check if the type is the same
 						{
@@ -252,7 +258,6 @@ package
 					delivery = [xx, yy];
 					clearBlock(picked);
 				trace("[" + picked.length + "] " + picked);
-				
 			}
 		}
 		
@@ -274,6 +279,7 @@ package
 				{
 					if (yy + 1 < ary[xx].length) // check if not off course
 					{
+						ary[xx][yy+1].ping();
 						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+xx+", "+(yy+1)+"]");
 						if (ary[xx][yy + 1].type == type) //check if the type is the same
 						{
@@ -292,6 +298,7 @@ package
 				{
 					if (yy - 1 >= 0) // check if not off course
 					{
+						ary[xx][yy-1].ping();
 						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+xx+", "+(yy-1)+"]");
 						if (ary[xx][yy - 1].type == type) //check if the type is the same
 						{
@@ -308,8 +315,9 @@ package
 				}
 				try
 				{
-					if (xx - 1 >= 0) // check if not off course
+					if (xx - 1 >= 0 && ary[xx-1].length > yy) // check if not off course
 					{
+						ary[xx-1][yy].ping();
 						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+(xx-1)+", "+yy+"]");
 						if (ary[xx - 1][yy].type == type) //check if the type is the same
 						{
@@ -326,8 +334,9 @@ package
 				}
 				try
 				{
-					if (xx + 1 < ary.length) // check if not off course
+					if (xx + 1 < ary.length && ary[xx+1].length > yy) // check if not off course
 					{
+						ary[xx+1][yy].ping();
 						GameAPI.note("!", "["+xx+","+yy+"] checked: ["+(xx+1)+", "+yy+"]");
 						if (ary[xx + 1][yy].type == type) //check if the type is the same
 						{
@@ -384,11 +393,13 @@ package
 					giveWay();
 				}
 				arrange();
-				GameData.updateScore((deleted - 2) * 10);
+				GameData.updateScore(((deleted - 2) * 10)*GameData.multiplier);
 				GameData.gauge += (deleted - 2)*GameData.multiplier;
 				_displayUI.updateData();
 			}else {
-				GameData.multiplier = 1;
+				if (GameData.multiplier > 1) {
+					GameData.multiplier--;
+				};
 				GameData.gauge = 0;
 				_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
 			}
@@ -456,11 +467,12 @@ package
 					{
 						
 						if (checkMax(y + 1)) {
+							ary[x][y].ping();
 							if (ary[x][y] == null) {
 								ary[x].splice(y, 1);
 							}
 							ary[x][y].setXY(x, y);
-							var popup:Tween = new Tween(ary[x][y], 0.5, "easeOutBounce");
+							var popup:Tween = new Tween(ary[x][y], 0.4, "easeOutBounce");
 							popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
 							Starling.juggler.add(popup);
 							str += " " + ary[x][y];

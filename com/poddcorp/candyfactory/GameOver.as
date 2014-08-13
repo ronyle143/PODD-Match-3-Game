@@ -63,7 +63,7 @@ package
 			_btnretry.x = (Constants.STAGE_WIDTH - _btnretry.width)/2;
 			_btnretry.y = _btnmainmenu.y - _btnmainmenu.height;
 			this.addChild(_btnretry);
-			_btnretry.addEventListener(Event.TRIGGERED, onButtonClickClose);
+			_btnretry.addEventListener(Event.TRIGGERED, optionRetry);
 			
 			_Score.text = "Score:" ;
 			_Score.x = (this.width - _txtScore.width)/2;
@@ -78,11 +78,6 @@ package
 			addChild(_txtScore);
 		}
 		
-		private function onButtonClickClose(e:Event):void 
-		{
-			GameAPI.StateChange = true;
-		}
-		
 		public function popUp():void {
 			_txtScore.text = "" + GameData.score ;
 			if (GameAPI.GameState == 1) {
@@ -95,6 +90,11 @@ package
 			popup.moveTo(0,Constants.STAGE_HEIGHT*0.1);
 			Starling.juggler.add(popup);
 			_imgscreenmask.visible = true;
+		}
+		
+		private function optionRetry(e:Event):void 
+		{
+			GameAPI.StateChange = true;
 		}
 		
 		private function optionMenu(e:Event):void 

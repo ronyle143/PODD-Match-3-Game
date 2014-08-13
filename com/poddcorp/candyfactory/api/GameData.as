@@ -11,9 +11,12 @@ package api
 		public static var		score			:int		= 0;
 		public static var		gauge			:int		= 0;
 		public static var		multiplier		:int		= 1;
-		public static var		production		:int		= 50;
+		
+		public static var		production		:int		= 60;
 		public static var		goal			:int		= 500;
+		
 		public static var		increment		:int		= 30;
+		public static var		goalIncrement	:Number		= 1.5;
 		
 		public static function init():void 
 		{
@@ -22,8 +25,6 @@ package api
 			multiplier = 1;
 			production = 60;
 			goal = 500;
-			increment = 30;
-			
 		}
 		
 		
@@ -31,6 +32,7 @@ package api
 		public static function updateScore(x:int):int {
 			var res:int = x * multiplier;
 			score += res;
+			checkGoal();
 			return score
 		}
 		public static function getScore():int {
@@ -62,13 +64,15 @@ package api
 		
 		static private function increaseGoal():int 
 		{
-			goal = goal * 1.5;
+			goal = goal * goalIncrement;
 			return goal;
 		}
 		
 		public static function increaseProduction():int 
 		{
 			production += increment;
+			
+			trace(goalIncrement);
 			return production;
 		}
 	}

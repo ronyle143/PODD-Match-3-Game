@@ -57,6 +57,7 @@ package
 		{
 			if (GameAPI.StateChange && GameAPI.GameState == 1) {
 				nav.removeScreen(SCREEN_MENU);
+				
 				mainMenu = new ScreenNavigatorItem(new ScreenMenu, null, null);
 				nav.addScreen(SCREEN_MENU, mainMenu);
 				nav.showScreen(SCREEN_MENU);
@@ -64,6 +65,7 @@ package
 			}
 			else if (GameAPI.StateChange && GameAPI.GameState == 2) {
 				nav.removeScreen(SCREEN_PLAY);
+				//gameplay.removeFromParent(true);
 				gameplay = new ScreenNavigatorItem(new ScreenPlay, null, null);
 				nav.addScreen(SCREEN_PLAY, gameplay);
 				nav.showScreen(SCREEN_PLAY);

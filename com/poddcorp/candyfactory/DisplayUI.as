@@ -109,18 +109,18 @@ package
 			if (!GameAPI.paused) {
 				var timeneeded:Number = (timeInit / GameData.production * 60);
 				if (timeNow > timeneeded) {
-				timeNow = 0;
-				GameAPI.checktheBlock = true;
+					timeNow = 0;
+					GameAPI.checktheBlock = true;
+				}
+				_txtCPM.text = ""+GameData.production;
+				_timebar.width = (Constants.STAGE_WIDTH * 0.673) / (timeneeded / timeNow);
+				timeNow++;
 			}
 			GameData.checkGoal();
-			_txtCPM.text = ""+GameData.production;
-			_timebar.width = (Constants.STAGE_WIDTH * 0.673) / (timeneeded / timeNow);
-			timeNow++;
-			}
 			_imgscreenmask.height = gaugehieght / 100 * GameData.gauge;
 			GameData.checkGauge();
 			txxt1.text = "x" + GameData.multiplier;
-			trace(GameData.gauge);
+			//trace(GameData.gauge);
 		}
 		
 		public function updateData():void {
