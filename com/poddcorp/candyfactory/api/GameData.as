@@ -19,7 +19,7 @@ package api
 		public static var		production		:int		= 60;
 		public static var		goal			:int		= 500;
 		
-		public static var		increment		:int		= 30;
+		public static var		increment		:int		= 20;
 		public static var		goalIncrement	:Number		= 1.5;
 		
 		public static function init():void 
@@ -40,8 +40,8 @@ package api
 			score = 0;
 			gauge = 0;
 			multiplier = 1;
-			production = 60;
-			goal = 500;
+			production = 160;
+			goal = 3200;
 		}
 		
 		
@@ -59,7 +59,7 @@ package api
 		public static function checkGauge():void 
 		{
 			//trace("checking goal: " + score + "/" + goal);
-			if (gauge >= 100) {
+			if (gauge >= 50*multiplier) {
 				increaseMultiplier();
 				gauge = 0;
 			}

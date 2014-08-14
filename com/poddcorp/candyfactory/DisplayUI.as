@@ -25,6 +25,7 @@ package
 		public var timeNow:int;
 		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.058*8);
 		private var txxt:TextField;
+		private var powerUpUI:PowerUp;
 		
 		public function DisplayUI() 
 		{
@@ -96,6 +97,9 @@ package
 			//txxt1.filter = BlurFilter.createDropShadow();
 			addChild(txxt1);
 			
+			powerUpUI = new PowerUp();
+			addChild(powerUpUI);
+			
 			_imgscreenmask.alpha = 0.5;
 			addChild(_imgscreenmask);
 			
@@ -118,7 +122,7 @@ package
 				timeNow++;
 			}
 			GameData.checkGoal();
-			_imgscreenmask.height = gaugehieght / 100 * GameData.gauge;
+			_imgscreenmask.height = gaugehieght / (50*GameData.multiplier) * GameData.gauge;
 			GameData.checkGauge();
 			txxt1.text = "x" + GameData.multiplier;
 			//trace(GameData.gauge);

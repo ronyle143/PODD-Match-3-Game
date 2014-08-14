@@ -10,6 +10,9 @@ package
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
 	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.filters.BlurFilter;
 	import starling.text.TextField;
 	
@@ -86,12 +89,12 @@ package
 				ary[i] = [];
 			}
 			
-			addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
+			/*addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 2, 2, 3, 2, 2, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 3, 1, 1, 1, 1, 1]);//*/
-			/*addStack();
+			addStack();
 			addStack();
 			addStack();
 			addStack();//*/
@@ -140,11 +143,23 @@ package
 			_obj.y = (Constants.STAGE_HEIGHT * 0.77) + _obj.height;
 			if (_obj.getType() != "0")
 			{
-				_obj.addEventListener(Event.TRIGGERED, function rem():void
-					{						
-						clickedObject(_obj.xx, _obj.yy, _obj.type);
-					});
+				_obj.addEventListener(TouchEvent.TOUCH, 
+					function rem(event:TouchEvent):void {		
+						trace(_obj.xx,_obj.yy);
+						pass(event,_obj.xx, _obj.yy, _obj.type);
+					}
+				);
 			}
+		}
+		
+		private function pass(event:TouchEvent, xx:int, yy:int, type:String):void 
+		{
+			var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
+			if (touch)
+			{
+				clickedObject(xx, yy, type);
+			}
+			
 		}
 		
 		private function clickedObject(xx:int, yy:int, type:String): void {
@@ -160,14 +175,30 @@ package
 				}
 				GameAPI.powerType == "BURST";
 				
-				trace("=========================================");
+				trace("========================================="+ GameAPI.powerType);
 			}
 		}
 		
 		private function clickTaster(xx:int, yy:int, type:String):void 
 		{
-			if (idle) {
-				
+			if (idle) 
+			{
+				idle = false;
+				picked = [];
+				try 
+				{
+					var g:int = 0;
+					for (g = 0; g < ary[xx].length; g++) {
+						picked.push([xx,g]);
+					}
+				}catch (err:Error) 
+				{
+					
+				}
+				idle = true;
+				delivery = [xx, yy];
+				clearBlock(picked,2);
+				GameAPI.powerType = "BURST";
 			}
 		}
 		
@@ -256,7 +287,16 @@ package
 				}//*/
 					idle = true;
 					delivery = [xx, yy];
-					clearBlock(picked);
+					var min:int = 3;
+					if (picked.length >= min) {
+							clearBlock(picked);
+					}else {
+						if (GameData.multiplier > 1) {
+							GameData.multiplier--;
+						};
+						GameData.gauge = 0;
+						_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
+					}
 				trace("[" + picked.length + "] " + picked);
 			}
 		}
@@ -355,18 +395,17 @@ package
 			return arry;
 		} //*/
 		
-		private function clearBlock(picked:Array):void 
+		private function clearBlock(picked:Array,bonus:int=0):void 
 		{
 			trace(picked);
-			picked.sort();
+			picked.sortOn(["0","1"], Array.NUMERIC);
 			trace("-------------");
 			trace(picked);
 			var counter:int = picked.length;
 			var deleted:int = 0;
-			var min:int = 3;
-			if (picked.length >= min) {
+			//if (picked.length >= min) {
 				deliver(delivery[0], delivery[1]);
-				pointShow(delivery[0], delivery[1],""+((picked.length-2)*10)*GameData.multiplier);
+				pointShow(delivery[0], delivery[1],""+((picked.length-2+bonus)*10)*GameData.multiplier);
 				var str:String = "To be deleted: ";
 				for (i = picked.length-1; i >= 0 ; i--) {
 					var xx:int = picked[i][0];
@@ -386,7 +425,7 @@ package
 						ary[xx].splice(yy, 1);
 					}catch (err:Error)
 					{
-						trace(picked[i], " - Removing - ", err.message);
+						trace("Removing"+ " @ "+picked[i], " - ", err.message);
 					}
 				}
 				for (var t:int = 0; t < ary.length; t++) {
@@ -396,14 +435,6 @@ package
 				GameData.updateScore(((deleted - 2) * 10)*GameData.multiplier);
 				GameData.gauge += (deleted - 2)*GameData.multiplier;
 				_displayUI.updateData();
-			}else {
-				if (GameData.multiplier > 1) {
-					GameData.multiplier--;
-				};
-				GameData.gauge = 0;
-				_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
-			}
-			
 			trace("Deleted " + deleted + "/" + picked.length + " objects");
 			
 			
@@ -472,7 +503,7 @@ package
 								ary[x].splice(y, 1);
 							}
 							ary[x][y].setXY(x, y);
-							var popup:Tween = new Tween(ary[x][y], 0.4, "easeOutBounce");
+							var popup:Tween = new Tween(ary[x][y], 0.3, "easeOutBounce");
 							popup.moveTo(gap + (objSize * x),baseY - (objSize * y));
 							Starling.juggler.add(popup);
 							str += " " + ary[x][y];
