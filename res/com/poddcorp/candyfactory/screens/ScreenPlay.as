@@ -1,5 +1,6 @@
 package  com.poddcorp.candyfactory.screens
 {
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import com.poddcorp.candyfactory.popups.GameOver;
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
@@ -85,10 +86,6 @@ package  com.poddcorp.candyfactory.screens
 			if (GameAPI.checktheMax == true) {
 				gameOver.popUp();
 				GameAPI.checktheMax = false;
-			}
-			if (GameAPI.checktheBlock == true) {
-				grid.addStack();
-				GameAPI.checktheBlock = false;
 			}
 			if (GameAPI.GameState == 1 && GameAPI.StateChange) {
 				GameData.saveData();

@@ -5,6 +5,7 @@ package  com.poddcorp.candyfactory.popups
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
 	import com.poddcorp.candyfactory.api.GameData;
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;

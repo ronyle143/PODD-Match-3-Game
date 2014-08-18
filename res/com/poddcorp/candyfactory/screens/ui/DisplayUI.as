@@ -3,6 +3,7 @@ package  com.poddcorp.candyfactory.screens.ui
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
 	import com.poddcorp.candyfactory.api.GameData;
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
@@ -22,7 +23,7 @@ package  com.poddcorp.candyfactory.screens.ui
 		private var _imggauge:Image;
 		private var _imgscreenmask:Quad;
 		public var timeInit:int;
-		public var timeNow:int;
+		public var timeNow:Number;
 		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.058*8);
 		private var txxt:TextField;
 		public var powerUpUI:PowerUp;
@@ -119,7 +120,7 @@ package  com.poddcorp.candyfactory.screens.ui
 				}
 				_txtCPM.text = ""+GameData.production;
 				_timebar.width = (Constants.STAGE_WIDTH * 0.673) / (timeneeded / timeNow);
-				timeNow++;
+				timeNow += GameData.timeMod;
 			}
 			GameData.checkGoal();
 			_imgscreenmask.height = gaugehieght / (50*GameData.multiplier) * GameData.gauge;

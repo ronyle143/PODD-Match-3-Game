@@ -3,12 +3,16 @@ package com.poddcorp.candyfactory.screens.ui
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
 	import com.poddcorp.candyfactory.api.GameData;
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import com.poddcorp.candyfactory.entities.Candies;
 	import com.poddcorp.candyfactory.screens.ui.DisplayUI;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
 	import starling.events.Event;
@@ -32,7 +36,10 @@ package com.poddcorp.candyfactory.screens.ui
 		private var rem:Button;
 		private var gib:Array = [];
 		private var _imgtank:Image;
+		private var _imgscreenmask:Quad;
 		public var addd:Button;
+		private var _timerTxt:TextField = new TextField(Constants.STAGE_WIDTH*0.2,Constants.STAGE_HEIGHT*0.3, "3", "Showcard Gothic", Constants.STAGE_HEIGHT / 5, 0xFFFFFF);
+		private var timeEstaato:Number;
 		
 		public var _displayUI:DisplayUI;
 		
@@ -70,7 +77,7 @@ package com.poddcorp.candyfactory.screens.ui
 			addd.fontName = "Showcard Gothic";
             addd.x = 0;
             addd.y = this.height - addd.height;
-			this.addChild(addd);
+			//this.addChild(addd);
 			addd.addEventListener(Event.TRIGGERED, adddStack);
 			
 			rem = new Button(CandyFactory.assets.getTexture("btn_blank"));
@@ -91,12 +98,12 @@ package com.poddcorp.candyfactory.screens.ui
 				ary[i] = [];
 			}
 			
-			/*addCustomStack([ 1, 1, 1, 3, 3, 3, 1, 1, 1, 1]);
-			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+			/*addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 2, 2, 3, 2, 2, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 3, 1, 1, 1, 1, 1]);//*/
-			addStack();
+			/*addStack();
 			addStack();
 			addStack();
 			addStack();//*/
@@ -106,11 +113,42 @@ package com.poddcorp.candyfactory.screens.ui
 			_displayUI.init();
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, looop);
+			
+			_imgscreenmask = new Quad(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT * 2, 0x000000, true);
+			_imgscreenmask.alpha = 0.5;
+			this.addChild(_imgscreenmask);
+			
+			timeEstaato = 3;
+			_timerTxt.text = ""+timeEstaato;
+			_timerTxt.x = (Constants.STAGE_WIDTH - _timerTxt.width) / 2;
+			_timerTxt.y = (Constants.STAGE_HEIGHT - _timerTxt.height) / 2;
+			//_timerTxt.filter = BlurFilter.createDropShadow();
+			//_timerTxt.border = true;
+			addChild(_timerTxt);
+			
+			GameAPI.paused = true;
+			var myTimer:Timer = new Timer(1000, 3);
+			myTimer.addEventListener(TimerEvent.TIMER, timerListener);
+			function timerListener (e:TimerEvent):void{
+				timeEstaato--;
+				_timerTxt.text = "" + timeEstaato;
+				if (timeEstaato == 0) {
+					_timerTxt.text = "";
+				}
+			}
+			myTimer.start();
+			myTimer.addEventListener(TimerEvent.TIMER_COMPLETE, estaato);
+		}
+		
+		private function estaato(e:TimerEvent):void 
+		{
+			GameAPI.paused = false;
+			_imgscreenmask.removeFromParent(true);
+			_timerTxt.removeFromParent(true);
 		}
 		
 		private function adddStack(e:Event):void 
 		{
-			//addStack();
 			GameData.useTaster++;
 			GameData.saveData();
 		}
@@ -409,40 +447,45 @@ package com.poddcorp.candyfactory.screens.ui
 			trace(picked);
 			var counter:int = picked.length;
 			var deleted:int = 0;
-			//if (picked.length >= min) {
-				deliver(delivery[0], delivery[1]);
-				pointShow(delivery[0], delivery[1],""+((picked.length-2+bonus)*10)*GameData.multiplier);
-				var str:String = "To be deleted: ";
-				for (i = picked.length-1; i >= 0 ; i--) {
-					var xx:int = picked[i][0];
-					var yy:int = picked[i][1];
-					str += "[" + xx + ", " + yy + "]";
-					try {
-						//ary[xx][yy].visible = false;
-						if (ary[xx][yy] != null) {
-							deleted ++;
-							trace("deletion at [" + xx + "," + yy + "]");
-							ary[xx][yy].removeFromParent(true); 
-						}else {
-							trace("problem at [" + xx + "," + yy + "] - null reference");
-							ary[xx].splice(yy, 1);
-							ary[xx][yy].visible = false;
-						}
+			deliver(delivery[0], delivery[1]);
+			pointShow(delivery[0], delivery[1],""+((picked.length-2+bonus)*10)*GameData.multiplier);
+			var str:String = "To be deleted: ";
+			for (i = picked.length-1; i >= 0 ; i--) {
+				var xx:int = picked[i][0];
+				var yy:int = picked[i][1];
+				str += "[" + xx + ", " + yy + "]";
+				try {
+					//ary[xx][yy].visible = false;
+					if (ary[xx][yy] != null) {
+						deleted ++;
+						trace("deletion at [" + xx + "," + yy + "]");
+						ary[xx][yy].removeFromParent(true); 
+					}else {
+						trace("problem at [" + xx + "," + yy + "] - null reference");
 						ary[xx].splice(yy, 1);
-					}catch (err:Error)
-					{
-						trace("Removing"+ " @ "+picked[i], " - ", err.message);
+						ary[xx][yy].visible = false;
 					}
+					ary[xx].splice(yy, 1);
+				}catch (err:Error)
+				{
+					trace("Removing"+ " @ "+picked[i], " - ", err.message);
 				}
-				for (var t:int = 0; t < ary.length; t++) {
-					giveWay();
-				}
-				arrange();
-				GameData.updateScore(((deleted - 2) * 10)*GameData.multiplier);
-				GameData.gauge += (deleted - 2)*GameData.multiplier;
-				_displayUI.updateData();
+			}
+			for (var t:int = 0; t < ary.length; t++) {
+				giveWay();
+			}
+			arrange();
+			GameData.updateScore(((deleted - 2) * 10)*GameData.multiplier);
+			GameData.gauge += (deleted - 2)*GameData.multiplier;
+			_displayUI.updateData();
 			trace("Deleted " + deleted + "/" + picked.length + " objects");
 			
+			if (GameAPI.checktheBlock == true) {
+				trace("trigger",delivery[0], delivery[1]);
+				pointShow(delivery[0], delivery[1],"EXCELLENT!");
+				addStack();
+				GameAPI.checktheBlock = false;
+			}
 			
 		}
 		
@@ -550,6 +593,7 @@ package com.poddcorp.candyfactory.screens.ui
 			popup0.fadeTo(0);
 			popup0.moveTo(txxt.x,txxt.y-(objSize*5));
 			Starling.juggler.add(popup0);
+			txxt.touchable = false;
 			gib.push(txxt);
 		}
 		
@@ -567,13 +611,16 @@ package com.poddcorp.candyfactory.screens.ui
 			popup0.fadeTo(0);
 			popup0.moveTo(Constants.STAGE_WIDTH * 0.95,Constants.STAGE_HEIGHT * 0.9);
 			Starling.juggler.add(popup0);
+			_imgcrate.touchable = false;
 			gib.push(_imgcrate);
 		}
 		
 		private function looop(e:EnterFrameEvent):void 
 		{
+			//trace(gib.length);
 			if (gib.length > 0) {
-				if (gib[0].alpha <= 0) {
+				if (gib[0].alpha <= 0.25) {
+					gib[0].removeFromParent(true);
 					gib.splice(0, 1);
 				}
 			}

@@ -1,5 +1,6 @@
-package
+package 
 {
+	import com.poddcorp.candyfactory.core.CandyFactory
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
 	import flash.desktop.NativeApplication;

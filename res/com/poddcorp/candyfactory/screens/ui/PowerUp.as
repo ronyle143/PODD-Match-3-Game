@@ -3,6 +3,7 @@ package  com.poddcorp.candyfactory.screens.ui
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
 	import com.poddcorp.candyfactory.api.GameData;
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import starling.display.Button;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
@@ -17,6 +18,12 @@ package  com.poddcorp.candyfactory.screens.ui
 		
 		public function PowerUp() 
 		{
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+		
+		private function init(e:Event):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, init);
 			power1 = new Button(CandyFactory.assets.getTexture("all_white"));
 			power1.height = Constants.STAGE_WIDTH / 8;
 			power1.width = power1.height;
@@ -30,6 +37,7 @@ package  com.poddcorp.candyfactory.screens.ui
 			power1.filter = BlurFilter.createDropShadow();
 			power1.addEventListener(Event.TRIGGERED, power1Triggered);
 			_txtScore.text = "" + GameData.useTaster;
+			_txtScore.touchable = false;
 			addChild(_txtScore);
 			_txtScore.x = power1.x + power1.width / 3;
 			//_txtScore.border = true;

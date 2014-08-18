@@ -23,6 +23,7 @@ package com.poddcorp.candyfactory.api
 		
 		public static var		increment		:int		= 20;
 		public static var		goalIncrement	:Number		= 1.5;
+		public static var		timeMod			:Number		= Constants.GAME_TIME;
 		
 		public static var		useTaster		:int		= 3;
 		
@@ -49,6 +50,7 @@ package com.poddcorp.candyfactory.api
 			goal = 3200;
 			useTaster = 3;
 			useTaster = saveDataObject.data.UseTaster;
+			timeMod = Constants.GAME_TIME;
 		}
 		
 		public static function saveData():void {

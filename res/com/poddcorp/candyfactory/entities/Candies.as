@@ -2,6 +2,7 @@ package com.poddcorp.candyfactory.entities
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;

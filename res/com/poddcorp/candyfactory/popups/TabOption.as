@@ -3,6 +3,7 @@ package  com.poddcorp.candyfactory.popups
 	import com.poddcorp.candyfactory.api.GameAudio;
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -167,22 +168,21 @@ package  com.poddcorp.candyfactory.popups
 					_DSelect.x = _diff3.x;
 				}
 			}else {	
-				_btnresume = new Button(CandyFactory.assets.getTexture("btn_resume"));
-				_btnresume.height =_imgcheckbox1.height*1.2;
-				_btnresume.width = _btnresume.height*2.2;
-				_btnresume.x = (Constants.STAGE_WIDTH - _btnresume.width)/2;
-				_btnresume.y = Constants.STAGE_HEIGHT * 0.6;
-				this.addChild(_btnresume);
-				_btnresume.addEventListener(Event.TRIGGERED, onButtonClickClose);
-				
 				_btnmainmenu = new Button(CandyFactory.assets.getTexture("btn_mainmenu"));
-				_btnmainmenu.height =_btnresume.height;
-				_btnmainmenu.width = _btnresume.width;
-				_btnmainmenu.x = _btnresume.x;
-				_btnmainmenu.y = _btnresume.y-_btnmainmenu.height;
+				_btnmainmenu.height =_imgcheckbox1.height*1.2;
+				_btnmainmenu.width = _btnmainmenu.height*2.2;
+				_btnmainmenu.x = (Constants.STAGE_WIDTH - _btnmainmenu.width)/2;
+				_btnmainmenu.y = Constants.STAGE_HEIGHT * 0.6;
 				this.addChild(_btnmainmenu);
 				_btnmainmenu.addEventListener(Event.TRIGGERED, optionMenu);
 				
+				_btnresume = new Button(CandyFactory.assets.getTexture("btn_resume"));
+				_btnresume.height =_imgcheckbox1.height*1.2;
+				_btnresume.width = _btnresume.height*2.2;
+				_btnresume.x = _btnmainmenu.x
+				_btnresume.y = _btnmainmenu.y-_btnresume.height;
+				this.addChild(_btnresume);
+				_btnresume.addEventListener(Event.TRIGGERED, onButtonClickClose);
 			}
 			
 			

@@ -2,6 +2,7 @@ package  com.poddcorp.candyfactory.screens
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.core.CandyFactory;
 	import com.poddcorp.candyfactory.popups.TabOption;
 	import starling.animation.Tween;
 	import starling.core.Starling;
