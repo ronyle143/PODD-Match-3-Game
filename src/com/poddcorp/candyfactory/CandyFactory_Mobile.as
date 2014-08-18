@@ -1,4 +1,4 @@
-package 
+package com.poddcorp.candyfactory
 {
 	import com.poddcorp.candyfactory.core.CandyFactory
 	import com.poddcorp.candyfactory.api.Constants;
