@@ -13,6 +13,6 @@ package com.poddcorp.candyfactory.api
 		public static const GAME_SFX:Boolean = true;
 		public static const GAME_BMG:Boolean = true;
 		public static const GAME_VERSION:String = "v0.7.5"
-		public static const GAME_TIME:Number = 0.25;
+		public static const GAME_TIME:Number = 1;
     }
 }

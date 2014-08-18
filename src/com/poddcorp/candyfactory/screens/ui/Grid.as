@@ -126,6 +126,7 @@ package com.poddcorp.candyfactory.screens.ui
 			//_timerTxt.border = true;
 			addChild(_timerTxt);
 			
+			GameAPI.checktheBlock = false;
 			GameAPI.paused = true;
 			var myTimer:Timer = new Timer(1000, 3);
 			myTimer.addEventListener(TimerEvent.TIMER, timerListener);
@@ -205,7 +206,7 @@ package com.poddcorp.candyfactory.screens.ui
 		}
 		
 		private function clickedObject(xx:int, yy:int, type:String): void {
-			if(idle){
+			if(idle && !GameAPI.paused){
 				if (GameAPI.powerType == "BURST") {
 					clickBurst(xx, yy, type);
 				}
@@ -479,6 +480,16 @@ package com.poddcorp.candyfactory.screens.ui
 			GameData.gauge += (deleted - 2)*GameData.multiplier;
 			_displayUI.updateData();
 			trace("Deleted " + deleted + "/" + picked.length + " objects");
+			
+			var thalos:Boolean = false;
+			for ( var k:int = 0; k < ary.length; k++) {
+				if ( ary[k].length == 0) {
+					thalos = true;
+				}
+			}
+			if (thalos) {
+				GameAPI.checktheBlock = true
+			}
 			
 			if (GameAPI.checktheBlock == true) {
 				trace("trigger",delivery[0], delivery[1]);

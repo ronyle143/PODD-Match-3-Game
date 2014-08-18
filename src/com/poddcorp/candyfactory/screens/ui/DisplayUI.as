@@ -105,7 +105,7 @@ package  com.poddcorp.candyfactory.screens.ui
 			addChild(_imgscreenmask);
 			
 			timeInit = 600;
-			timeNow = (timeInit / GameData.production * 60);
+			timeNow = 0;
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, time);
 		}

@@ -87,6 +87,10 @@ package  com.poddcorp.candyfactory.screens
 				gameOver.popUp();
 				GameAPI.checktheMax = false;
 			}
+			if (GameAPI.checktheBlock == true) {
+				grid.addStack();
+				GameAPI.checktheBlock = false;
+			}
 			if (GameAPI.GameState == 1 && GameAPI.StateChange) {
 				GameData.saveData();
 				grid.deleteAll();
