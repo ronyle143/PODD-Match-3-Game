@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:7ad2ec6baf1157745603393c7b41c9fc:8d5722573928d5d499c1ebe29f9e85ff:6a6e6fa3f501222eca20c86df75dc199$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="Crate" x="698" y="725" width="50" height="50"/>
+    <SubTexture name="all_white" x="698" y="673" width="50" height="50"/>
+    <SubTexture name="bg_sunburst" x="2" y="2" width="512" height="384"/>
+    <SubTexture name="bg_sunburst_small" x="516" y="2" width="256" height="384"/>
+    <SubTexture name="bgm" x="698" y="621" width="50" height="50"/>
+    <SubTexture name="bgm_x" x="705" y="933" width="50" height="50"/>
+    <SubTexture name="bomb" x="447" y="974" width="46" height="48" frameX="-1" frameY="-1" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="btn_blank" x="705" y="881" width="50" height="50"/>
+    <SubTexture name="btn_blank_blue" x="572" y="870" width="100" height="50"/>
+    <SubTexture name="btn_blank_green" x="499" y="922" width="100" height="50"/>
+    <SubTexture name="btn_blank_orange" x="470" y="870" width="100" height="50"/>
+    <SubTexture name="btn_cart" x="674" y="829" width="50" height="50"/>
+    <SubTexture name="btn_close" x="646" y="777" width="50" height="50"/>
+    <SubTexture name="btn_mainmenu" x="263" y="974" width="130" height="48" frameX="-2" frameY="-1" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="btn_option" x="395" y="974" width="50" height="48" frameX="0" frameY="-1" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="btn_play" x="397" y="922" width="100" height="50"/>
+    <SubTexture name="btn_resume" x="263" y="922" width="132" height="50" frameX="-3" frameY="0" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="btn_retry" x="234" y="870" width="132" height="50" frameX="-4" frameY="0" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="btn_shop" x="368" y="870" width="100" height="50"/>
+    <SubTexture name="candy_blue" x="646" y="725" width="50" height="50"/>
+    <SubTexture name="candy_green" x="646" y="673" width="50" height="50"/>
+    <SubTexture name="candy_orange" x="646" y="621" width="50" height="50"/>
+    <SubTexture name="candy_red" x="930" y="564" width="50" height="50"/>
+    <SubTexture name="candy_yellow" x="878" y="564" width="50" height="50"/>
+    <SubTexture name="clipboard" x="646" y="388" width="126" height="179" frameX="-2" frameY="-15" frameWidth="130" frameHeight="195"/>
+    <SubTexture name="clipboard_compact" x="29" y="870" width="124" height="105" frameX="-1" frameY="-19" frameWidth="130" frameHeight="195"/>
+    <SubTexture name="game_over" x="155" y="955" width="106" height="67" frameX="-71" frameY="-26" frameWidth="250" frameHeight="117"/>
+    <SubTexture name="gauge" x="2" y="870" width="25" height="150"/>
+    <SubTexture name="img_bg" x="324" y="388" width="320" height="480"/>
+    <SubTexture name="img_box_checked" x="826" y="564" width="50" height="50"/>
+    <SubTexture name="img_box_empty" x="646" y="569" width="50" height="50"/>
+    <SubTexture name="img_title" x="774" y="394" width="225" height="168" frameX="-46" frameY="0" frameWidth="313" frameHeight="168"/>
+    <SubTexture name="logo" x="77" y="977" width="38" height="38"/>
+    <SubTexture name="mesh_candy_holder" x="705" y="569" width="50" height="50"/>
+    <SubTexture name="scoopUp" x="155" y="870" width="77" height="83" frameX="-2" frameY="0" frameWidth="79" frameHeight="83"/>
+    <SubTexture name="sfx" x="774" y="564" width="50" height="50"/>
+    <SubTexture name="sfx_x" x="653" y="922" width="50" height="50"/>
+    <SubTexture name="shuffle" x="601" y="922" width="50" height="50"/>
+    <SubTexture name="splash" x="2" y="388" width="320" height="480"/>
+    <SubTexture name="stage_container" x="774" y="2" width="248" height="390" frameX="-35" frameY="-71" frameWidth="320" frameHeight="480"/>
+    <SubTexture name="tank" x="495" y="974" width="30" height="46" frameX="0" frameY="-4" frameWidth="30" frameHeight="50"/>
+    <SubTexture name="timefreeze" x="29" y="977" width="46" height="44" frameX="-1" frameY="-5" frameWidth="50" frameHeight="50"/>
+</TextureAtlas>
