@@ -12,7 +12,7 @@ package com.poddcorp.candyfactory.api
 		public static const STATE_CHANGE:Boolean = true;
 		public static const GAME_SFX:Boolean = true;
 		public static const GAME_BMG:Boolean = true;
-		public static const GAME_VERSION:String = "v0.7.8b"
+		public static const GAME_VERSION:String = "v0.8.1"
 		public static const GAME_TIME:Number = 1;
 		
 		public static const CANDY1:int = 6;

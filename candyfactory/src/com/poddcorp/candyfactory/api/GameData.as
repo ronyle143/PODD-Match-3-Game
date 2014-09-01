@@ -49,9 +49,9 @@ package com.poddcorp.candyfactory.api
 			production = 160;
 			goal = 1600;
 			useTaster = 3;
-			useTaster = saveDataObject.data.UseTaster;
+			useTaster = 0+saveDataObject.data.UseTaster;
 			useFreeze = 3;
-			useFreeze = saveDataObject.data.UseFreeze;
+			useFreeze = 0+saveDataObject.data.UseFreeze;
 			timeMod = Constants.GAME_TIME;
 		}
 		

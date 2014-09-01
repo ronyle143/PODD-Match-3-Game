@@ -34,10 +34,11 @@ package com.poddcorp.candyfactory.core
         {
             sAssets = assets;
 			
-			[Embed(source="/../assets/splash.png")]
+			/*[Embed(source="/../assets/splash.png")]
 			const Splash:Class
 			var bg:Image = Image.fromBitmap(new Splash(), false, 1);;
-			addChild(bg);
+			addChild(bg);*/
+			
             assets.loadQueue(function onProgress(ratio:Number):void
             {
                 if (ratio == 1)

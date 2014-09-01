@@ -2,12 +2,14 @@ package  com.poddcorp.candyfactory.screens
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.api.GameData;
 	import com.poddcorp.candyfactory.core.CandyFactory;
 	import com.poddcorp.candyfactory.popups.TabOption;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.filters.BlurFilter;
@@ -24,6 +26,7 @@ package  com.poddcorp.candyfactory.screens
 		private var _option:TabOption;
 		private var _spriteholdertitle:Sprite;
 		private var _btnshop:Button;
+		private var _btnHighScore:Button;
 		
 		public function ScreenMenu() 
 		{
@@ -77,6 +80,16 @@ package  com.poddcorp.candyfactory.screens
             _btnshop.y = _btnstart.y + (_btnshop.height * 1.2);
 			this.addChild(_btnshop);
 			
+			_btnHighScore = new Button(CandyFactory.assets.getTexture("btn_highscore"));
+			_btnHighScore.fontName = "Showcard Gothic"
+			_btnHighScore.fontSize *= 1.8;
+			_btnHighScore.fontColor = 0xFFFFFF;
+			_btnHighScore.height = Constants.STAGE_WIDTH / 6;
+			_btnHighScore.width = Constants.STAGE_WIDTH / 3;
+            _btnHighScore.x = _btnstart.x;
+            _btnHighScore.y = _btnstart.y + (_btnHighScore.height * 2.2);
+			this.addChild(_btnHighScore);
+			
 			_option = new TabOption();
 			this.addChild(_option);
 			
@@ -117,10 +130,19 @@ package  com.poddcorp.candyfactory.screens
 			_btnstart.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup3);
 			
+			_btnHighScore.alpha = 0;
+			_btnHighScore.y = Constants.STAGE_HEIGHT/2;
+			var popup4:Tween = new Tween(_btnHighScore, 1, "easeOut");
+			popup4.moveTo((Constants.STAGE_WIDTH - (_btnstart.width + _btnoptions.width)) * 0.5, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.95);
+			popup4.fadeTo(1);
+			_btnHighScore.filter = BlurFilter.createDropShadow();
+			Starling.juggler.add(popup4);
+			
 			popup0.onComplete = function():void {
 				_btnstart.addEventListener(Event.TRIGGERED, onButtonClickStart);
 				_btnoptions.addEventListener(Event.TRIGGERED, onButtonClickOption);
 				_btnshop.addEventListener(Event.TRIGGERED, onButtonClickShop);
+				_btnHighScore.addEventListener(Event.TRIGGERED, animateHS);
 			}
 			
 		}
@@ -144,7 +166,64 @@ package  com.poddcorp.candyfactory.screens
 			_option.popUp();
 		}
 		
-		
+		private function animateHS():void 
+		{
+			var _mask:Quad;
+			var placeholder:Sprite;
+			
+			_mask = new Quad(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT, 0x000000, true);
+			_mask.alpha = 0.5;
+			this.addChild(_mask);
+			
+			placeholder = new Sprite();
+			this.addChild(placeholder);
+			
+			///////score
+			
+			var _clip:Image = new Image(CandyFactory.assets.getTexture("clipboard_compact"));
+			_clip.width = Constants.STAGE_WIDTH*0.8;
+			_clip.height = Constants.STAGE_HEIGHT * 0.8;
+			_clip.x = (Constants.STAGE_WIDTH - _clip.width) / 2;
+			_clip.y = 0;
+            placeholder.addChild(_clip);
+			
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Your High score is: "+(0+GameData.saveDataObject.data.Highscore), "Showcard Gothic", Constants.STAGE_HEIGHT * 0.03, 0xFFFFFF);
+			txt_SFX.x = ((Constants.STAGE_WIDTH) - txt_SFX.width)/2;
+			txt_SFX.y = Constants.STAGE_HEIGHT * 0.3 - (txt_SFX.height/2);
+			placeholder.addChild(txt_SFX);
+			
+			var _imgcloseclipboard:Button = new Button(CandyFactory.assets.getTexture("btn_close"));
+			_imgcloseclipboard.height = Constants.STAGE_WIDTH / 8;
+			_imgcloseclipboard.width = _imgcloseclipboard.height;
+			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width)*0.8
+			_imgcloseclipboard.y = _imgcloseclipboard.width*1.3;
+			placeholder.addChild(_imgcloseclipboard);
+			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
+				{
+					_mask.visible = false;
+					var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
+					popup.moveTo(0,Constants.STAGE_HEIGHT);
+					Starling.juggler.add(popup);
+					popup.onComplete = function():void {
+						placeholder.visible = false;
+						placeholder.y = 0;
+						
+						_mask.removeFromParent(true);
+						placeholder.removeFromParent(true);
+					}
+				}
+			);
+			
+			/////////////////////////////////
+			placeholder.y = Constants.STAGE_HEIGHT
+			var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
+			popup.moveTo(0,Constants.STAGE_HEIGHT*0.1);
+			Starling.juggler.add(popup);
+			_imgcloseclipboard.alpha = 0.25;
+			popup.onComplete = function():void {
+				_imgcloseclipboard.alpha = 1;
+			}
+		}
 	}
 
 }

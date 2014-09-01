@@ -19,14 +19,14 @@ package  com.poddcorp.candyfactory.popups
 	
 	public class GameOver extends Sprite 
 	{
-		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 32, 0x000000);
-		private var _Score:TextField 	= new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.10, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 20, 0x000000);
+		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 32, 0xFFFFFF);
+		private var _Score:TextField 	= new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.10, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 20, 0xFFFFFF);
 		private var _imgscreenmask:Quad;
 		private var _imgclipboard:Image;
 		private var _btnmainmenu:Button;
 		private var _btnretry:Button;
-		private var _txtHScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 32, 0x000000);
-		private var _HScore:TextField 	= new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.10, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 20, 0x000000);
+		private var _txtHScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 32, 0xFFFFFF);
+		private var _HScore:TextField 	= new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.10, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 20, 0xFFFFFF);
 		private var _gameover:Image;
 		private var placeholder:Sprite;
 		
@@ -111,7 +111,7 @@ package  com.poddcorp.candyfactory.popups
 			this.visible = true;
 			placeholder.y = Constants.STAGE_HEIGHT;
 			_txtScore.text = "" + GameData.score ;
-			_txtHScore.text = "" + GameData.saveDataObject.data.Highscore ;
+			_txtHScore.text = "" + (0+GameData.saveDataObject.data.Highscore) ;
 			if (_txtHScore.text == "undefined") {
 				_txtHScore.text = "" + 0;
 			}
@@ -133,11 +133,15 @@ package  com.poddcorp.candyfactory.popups
 		
 		private function optionRetry(e:Event):void 
 		{
+			_btnmainmenu.visible = false;
+			_btnretry.visible = false;
 			GameAPI.StateChange = true;
 		}
 		
 		private function optionMenu(e:Event):void 
 		{
+			_btnretry.visible = false;
+			_btnmainmenu.visible = false;
 			GameAPI.GameState = 1;
 			GameAPI.StateChange = true;
 		}

@@ -2,11 +2,13 @@ package com.poddcorp.candyfactory.screens.ui
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.api.GameAudio;
 	import com.poddcorp.candyfactory.api.GameData;
 	import com.poddcorp.candyfactory.core.CandyFactory;
 	import com.poddcorp.candyfactory.entities.Candies;
 	import com.poddcorp.candyfactory.screens.ui.DisplayUI;
 	import flash.events.TimerEvent;
+	import flash.media.Sound;
 	import flash.utils.Timer;
 	import starling.animation.Tween;
 	import starling.core.Starling;
@@ -34,7 +36,6 @@ package com.poddcorp.candyfactory.screens.ui
 		private var clear:Button;
 		private var clearNull:Button;
 		private var rem:Button;
-		private var gib:Array = [];
 		private var _imgtank:Image;
 		private var _imgscreenmask:Quad;
 		public var addd:Button;
@@ -51,6 +52,7 @@ package com.poddcorp.candyfactory.screens.ui
 		
 		private function init(e:Event):void
 		{
+			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			_imgtank = new Image(CandyFactory.assets.getTexture("tank"));
@@ -126,9 +128,7 @@ package com.poddcorp.candyfactory.screens.ui
 			_displayUI = new DisplayUI();
 			this.addChild(_displayUI);
 			_displayUI.init();
-			
-			addEventListener(EnterFrameEvent.ENTER_FRAME, looop);
-			
+						
 			_imgscreenmask = new Quad(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT, 0x000000, true);
 			_imgscreenmask.alpha = 0.5;
 			this.addChild(_imgscreenmask);
@@ -355,6 +355,21 @@ package com.poddcorp.candyfactory.screens.ui
 					idle = true;
 					delivery = [xx, yy];
 					var min:int = 3;
+					if (picked.length >= 9) {
+							colorBomb(type);
+							pointShow(delivery[0], delivery[1]+ 1, "COLOR BOMB!");
+							clearBlock(picked);
+					}
+					else if (picked.length >= min) {
+							clearBlock(picked);
+					}else{
+							if (GameData.multiplier > 1) {
+								GameData.multiplier--;
+							};
+							GameData.gauge = 0;
+							_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
+					}
+					/*
 					if (picked.length >= min) {
 							clearBlock(picked);
 					}else {
@@ -363,7 +378,7 @@ package com.poddcorp.candyfactory.screens.ui
 						};
 						GameData.gauge = 0;
 						_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
-					}
+					}*/
 				trace("[" + picked.length + "] " + picked);
 			}
 		}
@@ -470,7 +485,7 @@ package com.poddcorp.candyfactory.screens.ui
 			trace(picked);
 			var counter:int = picked.length;
 			var deleted:int = 0;
-			deliver(delivery[0], delivery[1]);
+			//deliver(delivery[0], delivery[1]);
 			pointShow(delivery[0], delivery[1],""+((picked.length-2+bonus)*10)*GameData.multiplier);
 			var str:String = "To be deleted: ";
 			for (i = picked.length-1; i >= 0 ; i--) {
@@ -481,6 +496,8 @@ package com.poddcorp.candyfactory.screens.ui
 					//ary[xx][yy].visible = false;
 					if (ary[xx][yy] != null) {
 						deleted ++;
+						GameAudio.playSound("pop");
+						particle(ary[xx][yy]);
 						trace("deletion at [" + xx + "," + yy + "]");
 						ary[xx][yy].removeFromParent(true); 
 					}else {
@@ -511,7 +528,7 @@ package com.poddcorp.candyfactory.screens.ui
 			}
 			if (thalos) {
 				trace("trigger",delivery[0], delivery[1]);
-				pointShow(delivery[0], delivery[1], "EXCELLENT!");
+				pointShow(delivery[0], delivery[1]+ 1, "EXCELLENT!");
 				addStack();
 				GameAPI.checktheBlock = false;
 			}
@@ -594,10 +611,12 @@ package com.poddcorp.candyfactory.screens.ui
 				idle = true;
 				if (total == 0) {
 					
-					GameData.useTaster += 3;
-					GameData.useFreeze += 1;
-					pointShow( -2, 12, "+3");
-					pointShow(-2, 8, "+1");
+					//GameData.useTaster += 3;
+					//GameData.useFreeze += 1;
+					pointShow(delivery[0], delivery[1]+ 2, "+"+GameData.score/2);
+					GameData.score += GameData.production*GameData.multiplier;
+					//pointShow( -2, 12, "+3");
+					//pointShow(-2, 8, "+1");
 					GameData.saveData();
 				}
 			}
@@ -617,8 +636,9 @@ package com.poddcorp.candyfactory.screens.ui
 			var gap:Number = Constants.STAGE_WIDTH * 0.166;
 			var objSize:Number = Constants.STAGE_WIDTH / 13.5;
 			var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
-			var txxt:TextField = new TextField(objSize*2,objSize*2, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFF5555);
-			txxt.x = gap + (objSize * x);
+			var txxt:TextField = new TextField(Constants.STAGE_WIDTH/2,objSize*2, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
+			txxt.x = (gap + (objSize * x)) + objSize/2 - txxt.width / 2;
+			//txxt.border = true;
 			txxt.y = baseY - (objSize * y);
 			txxt.text = "" + str;
 			this.addChild(txxt);
@@ -627,34 +647,64 @@ package com.poddcorp.candyfactory.screens.ui
 			popup0.moveTo(txxt.x,txxt.y-(objSize*5));
 			Starling.juggler.add(popup0);
 			txxt.touchable = false;
-			gib.push(txxt);
+			
+			var pointkill:Timer = new Timer(1500, 1);
+			pointkill.addEventListener(TimerEvent.TIMER, PKtimer);
+			function PKtimer (e:TimerEvent):void{
+				txxt.removeFromParent(true);
+			}
+			pointkill.start();
 		}
 		
-		private function deliver(x:int, y:int):void {
-			var gap:Number = Constants.STAGE_WIDTH * 0.166;
-			var objSize:Number = Constants.STAGE_WIDTH / 13.5;
-			var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
-			var _imgcrate:Image = new Image(CandyFactory.assets.getTexture("Crate"));
-			_imgcrate.width = Constants.STAGE_WIDTH/12;
-			_imgcrate.height = _imgcrate.width;
-			_imgcrate.x = gap + (objSize * x);
-			_imgcrate.y = baseY - (objSize * y);
-			this.addChild(_imgcrate);
-			var popup0:Tween = new Tween(_imgcrate, 1, "easeOut");
-			popup0.fadeTo(0);
-			popup0.moveTo(Constants.STAGE_WIDTH * 0.95,Constants.STAGE_HEIGHT * 0.9);
-			Starling.juggler.add(popup0);
-			_imgcrate.touchable = false;
-			gib.push(_imgcrate);
+		private function particle(x:Candies):void {
+			/*var xx:Number = x.x;
+			var yy:Number = x.y;
+			var size:Number = x.size;*/
+			
+			var star:Image = new Image(CandyFactory.assets.getTexture("img_star"));
+			star.width = x.size;
+			star.height = x.size;
+			star.x = x.x;
+			star.y = x.y;
+			star.touchable = false;
+			this.addChild(star);
+			
+			var starTween:Tween = new Tween(star, 0.5, "easeOut");
+			starTween.fadeTo(0);
+			starTween.moveTo(star.x - (star.width*1.5), star.y - (star.height *1.5));
+			starTween.scaleTo(2);
+			Starling.juggler.add(starTween);
+			
+			var starkill:Timer = new Timer(1500, 1);
+			starkill.addEventListener(TimerEvent.TIMER, starTimer);
+			function starTimer (e:TimerEvent):void{
+				star.removeFromParent(true);
+			}
+			starkill.start();
 		}
 		
-		private function looop(e:EnterFrameEvent):void 
-		{
-			//trace(gib.length);
-			if (gib.length > 0) {
-				if (gib[0].alpha <= 0.25) {
-					gib[0].removeFromParent(true);
-					gib.splice(0, 1);
+		public function colorBomb(type:String):void {
+			for ( var ii:int = ary.length-1; ii >= 0; ii--) {
+				for ( var jj:int = ary[ii].length - 1; jj >= 0; jj--) {
+					
+					
+					
+					if (ary[ii][jj].type == type) {
+						
+						var hasThis:Boolean = false;
+						for (var iii:int = 0; iii < picked.length; iii++) {
+							if (picked[iii][0] == ii && picked[iii][1] == jj) {
+								hasThis = true;
+							}
+						}
+						if (!hasThis) {
+							picked.push([ii, jj]);
+						}
+					}
+					
+					
+					
+					
 				}
 			}
 		}

@@ -175,25 +175,44 @@ package  com.poddcorp.candyfactory.popups
 			placeholder.y = Constants.STAGE_HEIGHT;
 			if (GameAPI.GameState == 1) {
 				GameAPI.note("!", "Opened OptionsTab");
+				_imgcloseclipboard.alpha = 0.25;
 			}else {
 				GameAPI.note("!", "Game Paused");
 				GameAPI.paused = true;
+				_btnmainmenu.alpha = 0.25;
+				_btnresume.alpha = 0.25;
 			}
+			
+			_imgcheckbox1c.alpha = 0.25;
+			_imgcheckbox1.alpha = 0.25;
+			_imgcheckbox2c.alpha = 0.25;
+			_imgcheckbox2.alpha = 0.25;
+			
 			var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
 			popup.moveTo(0,Constants.STAGE_HEIGHT*0.1);
 			Starling.juggler.add(popup);
 			_imgscreenmask.visible = true;
 			
+			
+			
 			popup.onComplete = function():void {
+				_imgcheckbox1c.alpha = 1;
+				_imgcheckbox1.alpha = 1;
+				_imgcheckbox2c.alpha = 1;
+				_imgcheckbox2.alpha = 1;
+				
 				_imgcheckbox1c.addEventListener(Event.TRIGGERED, turnOffSFX);
 				_imgcheckbox1.addEventListener(Event.TRIGGERED, turnOnSFX);
 				_imgcheckbox2c.addEventListener(Event.TRIGGERED, turnOffBGM);
 				_imgcheckbox2.addEventListener(Event.TRIGGERED, turnOnBGM);
 				if (GameAPI.GameState == 1) {
 					_imgcloseclipboard.addEventListener(Event.TRIGGERED, onButtonClickClose);
+					_imgcloseclipboard.alpha = 1;
 				}else {
 					_btnmainmenu.addEventListener(Event.TRIGGERED, optionMenu);
 					_btnresume.addEventListener(Event.TRIGGERED, onButtonClickClose);
+					_btnmainmenu.alpha = 1;
+					_btnresume.alpha = 1;
 				}
 			}
 			
@@ -218,6 +237,7 @@ package  com.poddcorp.candyfactory.popups
 		
 		private function optionMenu(e:Event):void 
 		{
+			_btnresume.visible = false;
 			_btnmainmenu.visible = false;
 			GameAPI.GameState = 1;
 			GameAPI.StateChange = true;

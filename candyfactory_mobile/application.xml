@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/4.0">
   <id>com.poddcorp.candyfactory</id>
-  <versionNumber>0.7.4</versionNumber>
+  <versionNumber>0.8.1</versionNumber>
   <supportedProfiles>mobileDevice</supportedProfiles>
   <filename>CandyFactory</filename>
   <name>Candy Factory</name>

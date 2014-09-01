@@ -29,7 +29,7 @@ package
             var stageHeight:int  = Constants.STAGE_HEIGHT;
             var iOS:Boolean = Capabilities.manufacturer.indexOf("iOS") != -1;
             
-            Starling.multitouchEnabled = true; 
+            Starling.multitouchEnabled = false; 
             Starling.handleLostContext = !iOS; 
             
             var viewPort:Rectangle = RectangleUtil.fit(
@@ -37,7 +37,7 @@ package
                 new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight), 
                 ScaleMode.SHOW_ALL);
             
-            var scaleFactor:int = viewPort.width < (Constants.STAGE_WIDTH*1.5) ? 1 : 2; // midway between 320 and 640
+            var scaleFactor:int = viewPort.width < (Constants.STAGE_WIDTH*1.5) ? 1 : 2 ? 2 : 4; // midway between 320 and 640
             var appDir:File = File.applicationDirectory;
             var assets:AssetManager = new AssetManager(scaleFactor);
             
