@@ -39,7 +39,7 @@ package com.poddcorp.candyfactory.screens.ui
 		private var _imgtank:Image;
 		private var _imgscreenmask:Quad;
 		public var addd:Button;
-		private var _timerTxt:TextField = new TextField(Constants.STAGE_WIDTH*0.2,Constants.STAGE_HEIGHT*0.3, "3", "Showcard Gothic", Constants.STAGE_HEIGHT / 5, 0xFFFFFF);
+		private var _timerTxt:TextField = new TextField(Constants.STAGE_WIDTH*0.2,Constants.STAGE_HEIGHT*0.3, "3", "BubbleBud", Constants.STAGE_HEIGHT / 5, 0xFFFFFF);
 		private var timeEstaato:Number;
 		
 		public var _displayUI:DisplayUI;
@@ -65,7 +65,8 @@ package com.poddcorp.candyfactory.screens.ui
 			
 			_imgstagecontainer = new Image(CandyFactory.assets.getTexture("stage_container"));
 			_imgstagecontainer.width = Constants.STAGE_WIDTH;
-			_imgstagecontainer.height = Constants.STAGE_HEIGHT;
+			_imgstagecontainer.height = _imgstagecontainer.width*1.5;
+			_imgstagecontainer.y = Constants.STAGE_HEIGHT - _imgstagecontainer.height;
 			this.addChild(_imgstagecontainer);
 			_imgstagecontainer.filter = BlurFilter.createDropShadow();
 			
@@ -167,7 +168,6 @@ package com.poddcorp.candyfactory.screens.ui
 		{
 			GameData.useTaster++;
 			GameData.saveData();
-			
 		}
 		
 		public function addStack():void
@@ -177,6 +177,8 @@ package com.poddcorp.candyfactory.screens.ui
 				addBlock(i,0);
 			}
 			arrange();
+			
+			GameAudio.playSound("plop");
 		}
 		
 		private function addCustomStack(x:Array):void
@@ -229,6 +231,7 @@ package com.poddcorp.candyfactory.screens.ui
 				if (GameAPI.powerType == "TASTER" && GameData.useTaster > 0) {
 					clickTaster(xx, yy, type);
 					_displayUI.powerUpUI._power1.filter = BlurFilter.createDropShadow();
+					GameAudio.playSound("scoop-up");
 				}
 				if (GameAPI.powerType == "REJECT") {
 					
@@ -362,6 +365,7 @@ package com.poddcorp.candyfactory.screens.ui
 					}
 					else if (picked.length >= min) {
 							clearBlock(picked);
+							GameAudio.playSound("pop");
 					}else{
 							if (GameData.multiplier > 1) {
 								GameData.multiplier--;
@@ -496,7 +500,6 @@ package com.poddcorp.candyfactory.screens.ui
 					//ary[xx][yy].visible = false;
 					if (ary[xx][yy] != null) {
 						deleted ++;
-						GameAudio.playSound("pop");
 						particle(ary[xx][yy]);
 						trace("deletion at [" + xx + "," + yy + "]");
 						ary[xx][yy].removeFromParent(true); 
@@ -583,7 +586,7 @@ package com.poddcorp.candyfactory.screens.ui
 				var total:int = 0;
 				var gap:Number = Constants.STAGE_WIDTH * 0.166;
 				var objSize:Number = Constants.STAGE_WIDTH / 13.5;
-				var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
+				var baseY:Number = _imgstagecontainer.y+_imgstagecontainer.height * 0.77;
 				var x:int;
 				var y:int;
 				var str:String = "ary: [";
@@ -636,7 +639,7 @@ package com.poddcorp.candyfactory.screens.ui
 			var gap:Number = Constants.STAGE_WIDTH * 0.166;
 			var objSize:Number = Constants.STAGE_WIDTH / 13.5;
 			var baseY:Number = Constants.STAGE_HEIGHT * 0.77;
-			var txxt:TextField = new TextField(Constants.STAGE_WIDTH/2,objSize*2, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
+			var txxt:TextField = new TextField(Constants.STAGE_WIDTH/2,objSize*2, "0", "BubbleBud", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
 			txxt.x = (gap + (objSize * x)) + objSize/2 - txxt.width / 2;
 			//txxt.border = true;
 			txxt.y = baseY - (objSize * y);

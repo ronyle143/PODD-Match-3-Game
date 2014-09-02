@@ -15,15 +15,9 @@ package  com.poddcorp.candyfactory.screens.ui
 	import starling.utils.Color;
 	
 	public class DisplayUI extends Sprite 
-	{
-		//[Embed(source="../../../../../../../candyfactory_mobile/assets/Bobbleboddy.ttf")]
-		//[Embed(source="assets/Bobbleboddy.ttf", fontName="Bobblebud", embedAsCFF= "false")]
-		//private var myEmbeddedFont:Class;
-		[Embed(source="../../../../../../../candyfactory_mobile/assets/Bobbleboddy.ttf",fontName="BubbleBud",fontFamily="testfontfamily",mimeType="application/x-font",embedAsCFF="false")]
-		private var myEmbeddedFont:Class;
-		
-		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.1, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFFFFF); //0xFF6666
-		private var txxt1:TextField = new TextField(Constants.STAGE_WIDTH / 8,Constants.STAGE_WIDTH / 6, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
+	{		
+		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.1, "0", "BubbleBud", Constants.STAGE_HEIGHT / 24, 0xFFFFFF); //0xFF6666
+		private var txxt1:TextField = new TextField(Constants.STAGE_WIDTH / 8,Constants.STAGE_WIDTH / 6, "0", "BubbleBud", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
 		private var _timebar:Quad;
 		private var _imgscoregoal:Image;
 		private var _imgcpm:Image;
@@ -52,7 +46,7 @@ package  com.poddcorp.candyfactory.screens.ui
 			var gap:Number = Constants.STAGE_WIDTH * 0.166;
 			var objX:Number = Constants.STAGE_WIDTH * 0.673;
 			var objY:Number = Constants.STAGE_WIDTH * 0.04;
-			var baseY:Number = Constants.STAGE_HEIGHT * 0.88;
+			var baseY:Number = Constants.STAGE_HEIGHT -(Constants.STAGE_HEIGHT - (Constants.STAGE_WIDTH*1.5)) * 1.09;
 			_timebar = new Quad(objX, objY, 0xFF8888, true);
 			_timebar.x = gap;
 			_timebar.y = baseY ;
@@ -89,13 +83,6 @@ package  com.poddcorp.candyfactory.screens.ui
 			timeNow = 0;
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, time);
-			
-			
-		var _testCore:TextFieldTextRenderer = new TextFieldTextRenderer();
-		_testCore.textFormat = new TextFormat("testfontfamily", 14, 0xffffff, true);
-		_testCore.text = "Loading...";
-		_testCore.embedFonts = true;
-		//addChild(_testCore);
 		}
 		
 		private function time(e:EnterFrameEvent):void 

@@ -6,13 +6,13 @@ package com.poddcorp.candyfactory.api
     {
         public function Constants() { throw new AbstractClassError(); }
         
-        public static const STAGE_WIDTH:int  = 320;
-        public static const STAGE_HEIGHT:int = 480;
+        public static var STAGE_WIDTH:int  = 320;
+        public static var STAGE_HEIGHT:int = 480;
 		public static const GAME_STATE:int = 1;
 		public static const STATE_CHANGE:Boolean = true;
 		public static const GAME_SFX:Boolean = true;
 		public static const GAME_BMG:Boolean = true;
-		public static const GAME_VERSION:String = "v0.8.1"
+		public static const GAME_VERSION:String = "v0.8.2"
 		public static const GAME_TIME:Number = 1;
 		
 		public static const CANDY1:int = 6;

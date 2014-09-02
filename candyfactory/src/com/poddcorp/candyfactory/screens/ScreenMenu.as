@@ -2,6 +2,7 @@ package  com.poddcorp.candyfactory.screens
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.api.GameAudio;
 	import com.poddcorp.candyfactory.api.GameData;
 	import com.poddcorp.candyfactory.core.CandyFactory;
 	import com.poddcorp.candyfactory.popups.TabOption;
@@ -11,6 +12,7 @@ package  com.poddcorp.candyfactory.screens
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
+	import starling.events.EnterFrameEvent;
 	import starling.events.Event;
 	import starling.filters.BlurFilter;
 	import starling.text.TextField;
@@ -22,7 +24,7 @@ package  com.poddcorp.candyfactory.screens
 		private var _imgmenubg:Image;
 		private var _imgmenutitle:Image;
 		private var _btnstart:Button;
-		private var _btnoptions:Button;
+		
 		private var _option:TabOption;
 		private var _spriteholdertitle:Sprite;
 		private var _btnshop:Button;
@@ -49,7 +51,7 @@ package  com.poddcorp.candyfactory.screens
 			_imgmenutitle.width = Constants.STAGE_WIDTH;
 			_imgmenutitle.height = Constants.STAGE_HEIGHT / 3;
             _spriteholdertitle.addChild(_imgmenutitle);
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.5, Constants.STAGE_HEIGHT*0.05, ""+Constants.GAME_VERSION, "Showcard Gothic", Constants.STAGE_HEIGHT*0.03, 0xEEEEEE);
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.5, Constants.STAGE_HEIGHT*0.05, ""+Constants.GAME_VERSION, "BubbleBud", Constants.STAGE_HEIGHT*0.03, 0xEEEEEE);
 			txt_SFX.x = (_imgmenutitle.width - txt_SFX.width*1.15);
 			txt_SFX.y = _imgmenutitle.height*0.9;
 			txt_SFX.hAlign = "right";
@@ -58,20 +60,14 @@ package  com.poddcorp.candyfactory.screens
 			addChild(_spriteholdertitle)
 			
 			_btnstart = new Button(CandyFactory.assets.getTexture("btn_play"));
-			_btnoptions = new Button(CandyFactory.assets.getTexture("btn_option"));
 			_btnstart.width = Constants.STAGE_WIDTH/3;
 			_btnstart.height = Constants.STAGE_WIDTH / 6;
-			_btnoptions.height = _btnstart.height;
-			_btnoptions.width = _btnoptions.height;
-            _btnstart.x = (Constants.STAGE_WIDTH - (_btnstart.width+_btnoptions.width))*0.5;
+            _btnstart.x = (Constants.STAGE_WIDTH - (_btnstart.width))*0.5;
             _btnstart.y = (Constants.STAGE_HEIGHT - _btnstart.height)*0.65;
-            _btnoptions.x = _btnstart.x+_btnstart.width;
-            _btnoptions.y = _btnstart.y;
             this.addChild(_btnstart);
-			this.addChild(_btnoptions);
 			
 			_btnshop = new Button(CandyFactory.assets.getTexture("btn_shop"));
-			_btnshop.fontName = "Showcard Gothic"
+			_btnshop.fontName = "BubbleBud";
 			_btnshop.fontSize *= 1.8;
 			_btnshop.fontColor = 0xFFFFFF;
 			_btnshop.height = Constants.STAGE_WIDTH / 6;
@@ -81,7 +77,7 @@ package  com.poddcorp.candyfactory.screens
 			this.addChild(_btnshop);
 			
 			_btnHighScore = new Button(CandyFactory.assets.getTexture("btn_highscore"));
-			_btnHighScore.fontName = "Showcard Gothic"
+			_btnHighScore.fontName = "BubbleBud"
 			_btnHighScore.fontSize *= 1.8;
 			_btnHighScore.fontColor = 0xFFFFFF;
 			_btnHighScore.height = Constants.STAGE_WIDTH / 6;
@@ -109,23 +105,17 @@ package  com.poddcorp.candyfactory.screens
 			_btnstart.alpha = 0;
 			_btnstart.y = Constants.STAGE_HEIGHT/2;
 			var popup1:Tween = new Tween(_btnstart, 1, "easeOut");
-			popup1.moveTo((Constants.STAGE_WIDTH - (_btnstart.width + _btnoptions.width)) * 0.5, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.65);
+			popup1.moveTo(Constants.STAGE_WIDTH * 0.05, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.65);
 			popup1.fadeTo(1);
 			_btnstart.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup1);
 			
-			_btnoptions.alpha = 0;
-			_btnoptions.y = Constants.STAGE_HEIGHT/2;
-			var popup2:Tween = new Tween(_btnoptions, 1, "easeOut");
-			popup2.moveTo(_btnstart.x + _btnstart.width, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.65);
-			popup2.fadeTo(1);
-			_btnoptions.filter = BlurFilter.createDropShadow();
-			Starling.juggler.add(popup2);
+			
 			
 			_btnshop.alpha = 0;
 			_btnshop.y = Constants.STAGE_HEIGHT/2;
 			var popup3:Tween = new Tween(_btnshop, 1, "easeOut");
-			popup3.moveTo((Constants.STAGE_WIDTH - (_btnstart.width + _btnoptions.width)) * 0.5, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.80);
+			popup3.moveTo(Constants.STAGE_WIDTH * 0.05, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.80);
 			popup3.fadeTo(1);
 			_btnstart.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup3);
@@ -133,14 +123,13 @@ package  com.poddcorp.candyfactory.screens
 			_btnHighScore.alpha = 0;
 			_btnHighScore.y = Constants.STAGE_HEIGHT/2;
 			var popup4:Tween = new Tween(_btnHighScore, 1, "easeOut");
-			popup4.moveTo((Constants.STAGE_WIDTH - (_btnstart.width + _btnoptions.width)) * 0.5, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.95);
+			popup4.moveTo(Constants.STAGE_WIDTH * 0.05, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.95);
 			popup4.fadeTo(1);
 			_btnHighScore.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup4);
 			
 			popup0.onComplete = function():void {
 				_btnstart.addEventListener(Event.TRIGGERED, onButtonClickStart);
-				_btnoptions.addEventListener(Event.TRIGGERED, onButtonClickOption);
 				_btnshop.addEventListener(Event.TRIGGERED, onButtonClickShop);
 				_btnHighScore.addEventListener(Event.TRIGGERED, animateHS);
 			}
@@ -149,6 +138,7 @@ package  com.poddcorp.candyfactory.screens
 		
 		private function onButtonClickStart(e:Event):void 
 		{
+			GameAudio.playSound("pop");
 			GameAPI.GameState = 2;
 			GameAPI.StateChange = true;
 			this.removeFromParent(true);
@@ -156,18 +146,15 @@ package  com.poddcorp.candyfactory.screens
 		
 		private function onButtonClickShop(e:Event):void 
 		{
+			GameAudio.playSound("pop");
 			GameAPI.GameState = 4;
 			GameAPI.StateChange = true;
 			this.removeFromParent(true);
 		}
 		
-		private function onButtonClickOption(e:Event):void 
-		{
-			_option.popUp();
-		}
-		
 		private function animateHS():void 
 		{
+			GameAudio.playSound("pop");
 			var _mask:Quad;
 			var placeholder:Sprite;
 			
@@ -187,7 +174,7 @@ package  com.poddcorp.candyfactory.screens
 			_clip.y = 0;
             placeholder.addChild(_clip);
 			
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Your High score is: "+(0+GameData.saveDataObject.data.Highscore), "Showcard Gothic", Constants.STAGE_HEIGHT * 0.03, 0xFFFFFF);
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Your High score is: "+((1+GameData.saveDataObject.data.Highscore)-1), "BubbleBud", Constants.STAGE_HEIGHT * 0.03, 0xFFFFFF);
 			txt_SFX.x = ((Constants.STAGE_WIDTH) - txt_SFX.width)/2;
 			txt_SFX.y = Constants.STAGE_HEIGHT * 0.3 - (txt_SFX.height/2);
 			placeholder.addChild(txt_SFX);
@@ -200,6 +187,7 @@ package  com.poddcorp.candyfactory.screens
 			placeholder.addChild(_imgcloseclipboard);
 			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
 				{
+					GameAudio.playSound("pop");
 					_mask.visible = false;
 					var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
 					popup.moveTo(0,Constants.STAGE_HEIGHT);

@@ -2,6 +2,7 @@ package  com.poddcorp.candyfactory.screens
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.api.GameAudio;
 	import com.poddcorp.candyfactory.api.GameData;
 	import com.poddcorp.candyfactory.core.CandyFactory;
 	import com.poddcorp.candyfactory.popups.TabOption;
@@ -59,8 +60,8 @@ package  com.poddcorp.candyfactory.screens
 			_btnclose = new Button(CandyFactory.assets.getTexture("btn_close"));
 			_btnclose.width = Constants.STAGE_WIDTH / 6;
 			_btnclose.height = Constants.STAGE_WIDTH / 6;
-            _btnclose.x = Constants.STAGE_WIDTH - _btnclose.width;
-            _btnclose.y = 0;
+            _btnclose.x = (Constants.STAGE_WIDTH* 0.9) - _btnclose.width;
+            _btnclose.y = Constants.STAGE_HEIGHT * 0.1;
 			this.addChild(_btnclose);
 			
 			_power1 = new Image(CandyFactory.assets.getTexture("scoopUp"));
@@ -168,6 +169,8 @@ package  com.poddcorp.candyfactory.screens
 			var _imgclipboard:Image;
 			var placeholder:Sprite;
 			
+			GameAudio.playSound("buy");
+			
 			_imgscreenmask = new Quad(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT, 0x000000, true);
 			_imgscreenmask.alpha = 0.5;
 			this.addChild(_imgscreenmask);
@@ -195,6 +198,7 @@ package  com.poddcorp.candyfactory.screens
 			placeholder.addChild(_imgcloseclipboard);
 			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
 				{
+					GameAudio.playSound("pop");
 					_imgscreenmask.visible = false;
 					var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
 					popup.moveTo(0,Constants.STAGE_HEIGHT);
@@ -222,6 +226,7 @@ package  com.poddcorp.candyfactory.screens
 			_btnclose.visible = false;
 			GameAPI.GameState = 1;
 			GameAPI.StateChange = true;
+			GameAudio.playSound("pop");
 		}
 		
 		private function pointShow(x:Image,str:String):void {

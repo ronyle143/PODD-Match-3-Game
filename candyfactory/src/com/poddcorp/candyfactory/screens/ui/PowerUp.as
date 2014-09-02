@@ -17,9 +17,9 @@ package  com.poddcorp.candyfactory.screens.ui
 	public class PowerUp extends Sprite  
 	{
 		public var _power1:Button;
-		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 25, 0x000000F);
+		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT / 25, 0x000000F);
 		public var _power2:Button;
-		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 25, 0x000000F);
+		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT / 25, 0x000000F);
 		
 		public function PowerUp() 
 		{
@@ -35,7 +35,7 @@ package  com.poddcorp.candyfactory.screens.ui
 			//_power1.text = "Taster";
 			_power1.fontSize *= 0.8;
 			_power1.textHAlign = "center";
-			_power1.fontName = "Showcard Gothic";
+			_power1.fontName = "BubbleBud";
             _power1.x = Constants.STAGE_HEIGHT*0.007;
             _power1.y = Constants.STAGE_HEIGHT*0.35 - _power1.height;
 			addChild(_power1);
@@ -56,7 +56,7 @@ package  com.poddcorp.candyfactory.screens.ui
 			//_power2.text = "Freeze";
 			_power2.fontSize *= 0.8;
 			_power2.textHAlign = "center";
-			_power2.fontName = "Showcard Gothic";
+			_power2.fontName = "BubbleBud";
             _power2.x = Constants.STAGE_HEIGHT*0.007;
             _power2.y = Constants.STAGE_HEIGHT*0.4;
 			addChild(_power2);

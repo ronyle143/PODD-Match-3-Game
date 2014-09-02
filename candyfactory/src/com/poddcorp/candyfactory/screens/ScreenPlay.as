@@ -8,6 +8,8 @@ package  com.poddcorp.candyfactory.screens
 	import com.poddcorp.candyfactory.popups.TabOption;
 	import com.poddcorp.candyfactory.screens.ui.Grid;
 	import flash.display.GradientType;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -18,7 +20,7 @@ package  com.poddcorp.candyfactory.screens
 	public class ScreenPlay extends Sprite 
 	{
 		private var img_stage_bg:Image;
-		private var btn_options:Button;
+		//private var btn_options:Button;
 		private var option:TabOption;
 		private var grid:Grid;
 		private var gameOver:GameOver;
@@ -45,22 +47,24 @@ package  com.poddcorp.candyfactory.screens
 			addChild(grid);
 			
 			
-			btn_options = new Button(CandyFactory.assets.getTexture("btn_option"));
-			btn_options.height = Constants.STAGE_WIDTH / 8;
-			btn_options.width = btn_options.height;
-            btn_options.x = this.width - btn_options.width;
-            btn_options.y = 0;
-			btn_options.filter = BlurFilter.createDropShadow();
-			this.addChild(btn_options);
+			
 			
 			option = new TabOption();
+			option.visible = false;
 			this.addChild(option);
 			
 			gameOver = new GameOver();
 			this.addChild(gameOver);
 			
-			btn_options.addEventListener(Event.TRIGGERED, onButtonClickOption);
+			//btn_options.addEventListener(Event.TRIGGERED, onButtonClickOption);
 			addEventListener(EnterFrameEvent.ENTER_FRAME, loop);
+			
+			var myTimer:Timer = new Timer(3000, 1);
+			myTimer.addEventListener(TimerEvent.TIMER, timerListener);
+			function timerListener (e:TimerEvent):void{
+				option.visible = true;
+			}
+			myTimer.start();
 		}
 		
 		private function loop(e:EnterFrameEvent):void 
@@ -78,12 +82,12 @@ package  com.poddcorp.candyfactory.screens
 				grid.deleteAll();
 				destroy();
 			}
-			if (GameAPI.paused) {
+			/*if (GameAPI.paused) {
 				btn_options.visible = false;
 			}else 
 			{
 				btn_options.visible = true;
-			}
+			}*/
 		}
 		
 		private function destroy():void 

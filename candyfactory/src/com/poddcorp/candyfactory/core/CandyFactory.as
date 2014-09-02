@@ -36,8 +36,8 @@ package com.poddcorp.candyfactory.core
 			
 			/*[Embed(source="/../assets/splash.png")]
 			const Splash:Class
-			var bg:Image = Image.fromBitmap(new Splash(), false, 1);;
-			addChild(bg);*/
+			var bg:Image = Image.fromBitmap(new Splash(), false, 1);
+			addChild(bg);//*/
 			
             assets.loadQueue(function onProgress(ratio:Number):void
             {

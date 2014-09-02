@@ -10,7 +10,9 @@ package  com.poddcorp.candyfactory.popups
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
+	import starling.events.EnterFrameEvent;
 	import starling.events.Event;
+	import starling.filters.BlurFilter;
 	import starling.text.TextField;
 	
 	public class TabOption extends Sprite 
@@ -26,6 +28,7 @@ package  com.poddcorp.candyfactory.popups
 		private var _imgcheckbox2c:Button;
 		private var _DSelect:Button;
 		private var placeholder:Sprite;
+		private var btn_options:Button;
 		
 		public function TabOption() 
 		{
@@ -78,7 +81,7 @@ package  com.poddcorp.candyfactory.popups
 			}
 			
 			//var textField:TextField = new TextField(100, 20, "SFX", "Arista 2.0", 12, Color.RED);
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT / 10, "SFX", "Showcard Gothic", Constants.STAGE_HEIGHT / 12, 0x333333);
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT / 10, "SFX", "BubbleBud", Constants.STAGE_HEIGHT / 12, 0x333333);
 			txt_SFX.x = _imgcheckbox1.x + _imgcheckbox1.width;
 			txt_SFX.y = _imgcheckbox1.y;
 			txt_SFX.hAlign = "left";
@@ -106,7 +109,7 @@ package  com.poddcorp.candyfactory.popups
 				_imgcheckbox2.visible = true;
 			}
 			
-			var txt_BMG:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT / 10, "BMG", "Showcard Gothic", Constants.STAGE_HEIGHT / 12, 0x333333);
+			var txt_BMG:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT / 10, "BMG", "BubbleBud", Constants.STAGE_HEIGHT / 12, 0x333333);
 			txt_BMG.x = _imgcheckbox2.x + _imgcheckbox2.width;
 			txt_BMG.y = _imgcheckbox2.y;
 			txt_BMG.hAlign = "left";
@@ -135,8 +138,35 @@ package  com.poddcorp.candyfactory.popups
 				placeholder.addChild(_btnresume);
 			}
 			
-			this.visible = false;
+		//this.visible = false;
 			this.addChild(placeholder);
+			placeholder.visible = false;
+			_imgscreenmask.visible = false;
+			
+			
+			btn_options = new Button(CandyFactory.assets.getTexture("btn_option"));
+			btn_options.height = Constants.STAGE_WIDTH / 8;
+			btn_options.width = btn_options.height;
+            btn_options.x = this.width - btn_options.width;
+            btn_options.y = 0;
+			btn_options.filter = BlurFilter.createDropShadow();
+			this.addChild(btn_options);
+			btn_options.addEventListener(Event.TRIGGERED, onButtonClickOption);
+		}
+		
+		private function onButtonClickOption(e:Event):void 
+		{
+			GameAudio.playSound("pop");
+			popUp();
+			btn_options.visible = false;
+		}
+		
+		private function loop(e:EnterFrameEvent):void 
+		{
+			if (GameAPI.paused == false) {
+				removeEventListener(EnterFrameEvent.ENTER_FRAME, loop);
+				btn_options.visible = true;
+			}
 		}
 		
 		private function turnOnSFX(e:Event):void 
@@ -176,6 +206,7 @@ package  com.poddcorp.candyfactory.popups
 			if (GameAPI.GameState == 1) {
 				GameAPI.note("!", "Opened OptionsTab");
 				_imgcloseclipboard.alpha = 0.25;
+				GameAPI.paused = true;
 			}else {
 				GameAPI.note("!", "Game Paused");
 				GameAPI.paused = true;
@@ -221,15 +252,18 @@ package  com.poddcorp.candyfactory.popups
 		{
 			if (GameAPI.GameState == 1) {
 				GameAPI.note("!", "Closed OptionsTab");
+				GameAPI.paused = false;
 			}else {
 				GameAPI.note("!", "Game Unpaused");
 				GameAPI.paused = false;
 			}
+			GameAudio.playSound("pop");
 			var popup:Tween = new Tween(placeholder, 0.5, "easeOutBounce");
 			popup.moveTo(0, Constants.STAGE_HEIGHT);
 			popup.onComplete = function():void {
 				placeholder.y = 0;
 				placeholder.visible = false;
+				btn_options.visible = true;
 			 }
 			Starling.juggler.add(popup);
 			_imgscreenmask.visible = false;
