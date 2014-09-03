@@ -2,6 +2,7 @@ package  com.poddcorp.candyfactory.screens.ui
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.api.GameAudio;
 	import com.poddcorp.candyfactory.api.GameData;
 	import com.poddcorp.candyfactory.core.CandyFactory;
 	import flash.events.TimerEvent;
@@ -99,6 +100,7 @@ package  com.poddcorp.candyfactory.screens.ui
 		private function power2Triggered(e:Event):void 
 		{
 			if (GameData.timeMod == 1) {
+				GameAudio.playSound("ice");
 				GameData.timeMod = 0.1;
 				var myTimer:Timer = new Timer(10000, 1);
 				myTimer.addEventListener(TimerEvent.TIMER, timerListener);

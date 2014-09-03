@@ -31,8 +31,8 @@ package  com.poddcorp.candyfactory.screens
 		private var _btnbuy2:Button;
 		private var _imgscreenmask:Quad;
 		private var _imgcloseclipboard:Button;
-		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 25, 0x000000F);
-		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 25, 0x000000F);
+		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000F);
+		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000F);
 		
 		
 		public function ScreenShop() 
@@ -142,6 +142,8 @@ package  com.poddcorp.candyfactory.screens
 		
 		private function buyPower1(e:Event):void 
 		{
+			_btnbuy1.visible = false;
+			_btnbuy2.visible = false;
 			GameData.useTaster += 1;
 			GameData.saveData();
 			_power1txt.text = "" + (0 + GameData.useTaster);
@@ -154,6 +156,8 @@ package  com.poddcorp.candyfactory.screens
 		
 		private function buyPower2(e:Event):void 
 		{
+			_btnbuy1.visible = false;
+			_btnbuy2.visible = false;
 			GameData.useFreeze += 1;
 			GameData.saveData();
 			_power2txt.text = "" + GameData.useFreeze;
@@ -209,6 +213,8 @@ package  com.poddcorp.candyfactory.screens
 						
 						_imgscreenmask.removeFromParent(true);
 						placeholder.removeFromParent(true);
+						_btnbuy1.visible = true;
+						_btnbuy2.visible = true;
 					}
 				}
 			);

@@ -46,8 +46,8 @@ package com.poddcorp.candyfactory.api
 		[Embed(source="../../../../../../candyfactory_mobile/assets/audio/gameoverhigh.mp3")]
 		static private var SoundGameOverHighScore : Class;
 				
-		//[Embed(source="../../../../../../candyfactory_mobile/assets/audio/ding.mp3")]
-		//static private var SoundDing : Class;
+		[Embed(source="../../../../../../candyfactory_mobile/assets/audio/tick.mp3")]
+		static private var SoundTick : Class;
 		
 		
 		
@@ -135,12 +135,12 @@ package com.poddcorp.candyfactory.api
 				break;
 				
 				
-				/*case "ding":
+				case "tick":
 					if (SFX) {
-						sound = (new SoundDing) as Sound; 
+						sound = (new SoundTick) as Sound; 
 						sound.play();
 					}
-				break;*/
+				break;//*/
 				
 				default:
 			}

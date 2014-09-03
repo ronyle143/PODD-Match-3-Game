@@ -19,14 +19,15 @@ package  com.poddcorp.candyfactory.popups
 	
 	public class GameOver extends Sprite 
 	{
-		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 32, 0xFFFFFF);
-		private var _Score:TextField 	= new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.10, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 20, 0xFFFFFF);
+		
+		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Bubblebud", Constants.STAGE_HEIGHT / 32, 0xFFFFFF);
+		private var _Score:TextField 	= new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.10, "0", "Bubblebud", Constants.STAGE_HEIGHT / 20, 0xFFFFFF);
 		private var _imgscreenmask:Quad;
 		private var _imgclipboard:Image;
 		private var _btnmainmenu:Button;
 		private var _btnretry:Button;
-		private var _txtHScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 32, 0xFFFFFF);
-		private var _HScore:TextField 	= new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.10, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 20, 0xFFFFFF);
+		private var _txtHScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Bubblebud", Constants.STAGE_HEIGHT / 32, 0xFFFFFF);
+		private var _HScore:TextField 	= new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.10, "0", "Bubblebud", Constants.STAGE_HEIGHT / 20, 0xFFFFFF);
 		private var _gameover:Image;
 		private var placeholder:Sprite;
 		
@@ -96,9 +97,9 @@ package  com.poddcorp.candyfactory.popups
 			placeholder.addChild(_txtHScore);
 			
 			_gameover = new Image(CandyFactory.assets.getTexture("game_over"));
-			//_gameover.width = Constants.STAGE_WIDTH*0.8;
-			//_gameover.height = Constants.STAGE_HEIGHT * 0.8;
-			_gameover.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
+			_gameover.width = Constants.STAGE_WIDTH*0.8;
+			_gameover.height = _gameover.width/2;
+			_gameover.x = (Constants.STAGE_WIDTH - _gameover.width) / 2;
 			_gameover.y = -Constants.STAGE_HEIGHT * 0.05;
 			_gameover.filter = BlurFilter.createGlow(0xFFFFFF);
             placeholder.addChild(_gameover);
@@ -111,7 +112,12 @@ package  com.poddcorp.candyfactory.popups
 			this.visible = true;
 			placeholder.y = Constants.STAGE_HEIGHT;
 			_txtScore.text = "" + GameData.score ;
-			_txtHScore.text = "" + (0+GameData.saveDataObject.data.Highscore) ;
+			_txtHScore.text = "" + (0 + GameData.saveDataObject.data.Highscore) ;
+			if (GameData.score < GameData.saveDataObject.data.Highscore) {
+				GameAudio.playSound("gameover");
+			}else {
+				GameAudio.playSound("gameoverhighscore");
+			}
 			if (_txtHScore.text == "undefined") {
 				_txtHScore.text = "" + 0;
 			}

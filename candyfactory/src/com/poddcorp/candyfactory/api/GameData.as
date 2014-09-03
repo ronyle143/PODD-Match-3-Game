@@ -93,7 +93,7 @@ package com.poddcorp.candyfactory.api
 		public static function checkGauge():void 
 		{
 			//trace("checking goal: " + score + "/" + goal);
-			if (gauge >= 50*multiplier) {
+			if (gauge >= 50) {
 				increaseMultiplier();
 				gauge = 0;
 			}
@@ -102,6 +102,7 @@ package com.poddcorp.candyfactory.api
 		static private function increaseMultiplier():void 
 		{
 			multiplier++;
+			GameAudio.playSound("increase");
 		}
 		
 		public static function checkGoal():void 

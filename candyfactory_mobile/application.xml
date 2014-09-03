@@ -42,6 +42,7 @@
     <!-- required for 3D -->
     <systemChrome>standard</systemChrome>
     <aspectRatio>portrait</aspectRatio>
+    <autoOrients>true</autoOrients>
   </initialWindow>
   <icon>
     <image48x48>icons/icon_48.png</image48x48>

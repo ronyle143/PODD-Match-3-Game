@@ -17,6 +17,8 @@ set INTERPRETER=-interpreter
 set SCREEN_SIZE=NexusOne
 ::set SCREEN_SIZE=iPhoneRetina
 ::set SCREEN_SIZE=iPhone
+::set SCREEN_SIZE=iPad
+::set SCREEN_SIZE=QVGA
 
 :desktop-run
 echo.

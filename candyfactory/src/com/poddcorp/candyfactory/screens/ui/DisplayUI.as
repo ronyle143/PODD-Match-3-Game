@@ -6,6 +6,8 @@ package  com.poddcorp.candyfactory.screens.ui
 	import com.poddcorp.candyfactory.core.CandyFactory;
 	import feathers.controls.text.TextFieldTextRenderer;
 	import flash.text.TextFormat;
+	import starling.animation.Tween;
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
@@ -22,7 +24,7 @@ package  com.poddcorp.candyfactory.screens.ui
 		private var _imgscoregoal:Image;
 		private var _imgcpm:Image;
 		private var _imggauge:Image;
-		private var _imgscreenmask:Quad;
+		private var _imggaugefill:Image;
 		public var timeInit:int;
 		public var timeNow:Number;
 		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.058*8);
@@ -46,7 +48,7 @@ package  com.poddcorp.candyfactory.screens.ui
 			var gap:Number = Constants.STAGE_WIDTH * 0.166;
 			var objX:Number = Constants.STAGE_WIDTH * 0.673;
 			var objY:Number = Constants.STAGE_WIDTH * 0.04;
-			var baseY:Number = Constants.STAGE_HEIGHT -(Constants.STAGE_HEIGHT - (Constants.STAGE_WIDTH*1.5)) * 1.09;
+			var baseY:Number = Constants.STAGE_HEIGHT * 0.9;
 			_timebar = new Quad(objX, objY, 0xFF8888, true);
 			_timebar.x = gap;
 			_timebar.y = baseY ;
@@ -55,17 +57,18 @@ package  com.poddcorp.candyfactory.screens.ui
 			
 			_imggauge = new Image(CandyFactory.assets.getTexture("gauge"));
 			_imggauge.width = Constants.STAGE_HEIGHT * 0.070;
-			_imggauge.height = _imggauge.width * 8;
+			_imggauge.height =_imggauge.width * 8;
 			_imggauge.x = Constants.STAGE_WIDTH - _imggauge.width;
-			_imggauge.y = Constants.STAGE_HEIGHT * 0.9-  _imggauge.height;
+			_imggauge.y = Constants.STAGE_HEIGHT * 0.9 -  _imggauge.height;
 			addChild(_imggauge);
 			
-			_imgscreenmask = new Quad(objX, objY, 0xFF8888, true);
-			_imgscreenmask.width = Constants.STAGE_HEIGHT * 0.058;
-			_imgscreenmask.height = -_imgscreenmask.width*8;
-			_imgscreenmask.y = Constants.STAGE_HEIGHT * 0.808;
-			_imgscreenmask.x = (Constants.STAGE_WIDTH - Constants.STAGE_HEIGHT * 0.0655);
-			_imgscreenmask.color = Color.RED;
+			_imggaugefill = new Image(CandyFactory.assets.getTexture("timer_swirl"));
+			_imggaugefill.width = Constants.STAGE_HEIGHT * 0.070;
+			_imggaugefill.height = _imggaugefill.width;
+			_imggaugefill.x = Constants.STAGE_WIDTH - _imggaugefill.width;
+			_imggaugefill.y = Constants.STAGE_HEIGHT * 0.9 -  _imggaugefill.height;
+			_imggaugefill.visible = false;
+			this.addChild(_imggaugefill);
 			
 			txxt1.text = "x" + GameData.multiplier;
 			txxt1.x = Constants.STAGE_WIDTH - txxt1.width;
@@ -76,11 +79,14 @@ package  com.poddcorp.candyfactory.screens.ui
 			powerUpUI = new PowerUp();
 			addChild(powerUpUI);
 			
-			_imgscreenmask.alpha = 0.5;
-			addChild(_imgscreenmask);
 			
 			timeInit = 600;
 			timeNow = 0;
+			
+			_txtScore.filter = BlurFilter.createDropShadow();
+			txxt1.filter = BlurFilter.createDropShadow();
+			
+			//_imggaugefill.y += _imggaugefill.height;
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, time);
 		}
@@ -103,7 +109,11 @@ package  com.poddcorp.candyfactory.screens.ui
 				timeNow += GameData.timeMod;
 			}
 			GameData.checkGoal();
-			_imgscreenmask.height = gaugehieght / (50*GameData.multiplier) * GameData.gauge;
+			//_imggaugefill.pivotY = 0;
+			var tween1:Tween = new Tween(_imggaugefill, 0.2, "easeOut")
+				_imggaugefill.visible = true;
+				tween1.moveTo(Constants.STAGE_WIDTH - _imggaugefill.width, (gaugehieght / (50 * GameData.multiplier) * GameData.gauge)+Constants.STAGE_HEIGHT * 0.9 -  _imggaugefill.height);
+				Starling.juggler.add(tween1);
 			GameData.checkGauge();
 			txxt1.text = "x" + GameData.multiplier;
 			//trace(GameData.gauge);

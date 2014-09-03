@@ -1,50 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:24ea5b8d489f6f4daa686024ca495173:bde806c2b9ccf8f3fee3193fea16da32:6a6e6fa3f501222eca20c86df75dc199$ -->
+<!-- $TexturePacker:SmartUpdate:8f7a0a4c751f108b4aef24b2bea02715:7c96ee745cb1e242807f90c66f7dde75:6a6e6fa3f501222eca20c86df75dc199$ -->
 <TextureAtlas imagePath="atlas.png">
-    <SubTexture name="Crate" x="855" y="760" width="50" height="50"/>
-    <SubTexture name="New_background13" x="10" y="10" width="512" height="384"/>
-    <SubTexture name="all_white" x="915" y="727" width="50" height="50"/>
-    <SubTexture name="bg_sunburst_small" x="529" y="500" width="256" height="384"/>
-    <SubTexture name="bgm" x="795" y="740" width="50" height="50"/>
-    <SubTexture name="bgm_x" x="855" y="700" width="50" height="50"/>
-    <SubTexture name="bomb" x="473" y="460" width="46" height="48" frameX="-1" frameY="-1" frameWidth="50" frameHeight="50"/>
-    <SubTexture name="btn_blank" x="942" y="667" width="50" height="50"/>
-    <SubTexture name="btn_blank_blue" x="340" y="892" width="100" height="50"/>
-    <SubTexture name="btn_blank_green" x="340" y="832" width="100" height="50"/>
-    <SubTexture name="btn_blank_orange" x="340" y="772" width="100" height="50"/>
-    <SubTexture name="btn_cart" x="942" y="607" width="50" height="50"/>
-    <SubTexture name="btn_close" x="340" y="404" width="123" height="101" frameX="0" frameY="-1" frameWidth="125" frameHeight="105"/>
-    <SubTexture name="btn_highscore" x="340" y="712" width="100" height="50"/>
-    <SubTexture name="btn_mainmenu" x="862" y="70" width="130" height="48" frameX="-2" frameY="-1" frameWidth="138" frameHeight="50"/>
-    <SubTexture name="btn_option" x="795" y="800" width="50" height="48" frameX="0" frameY="-1" frameWidth="50" frameHeight="50"/>
-    <SubTexture name="btn_play" x="340" y="652" width="100" height="50"/>
-    <SubTexture name="btn_resume" x="862" y="128" width="128" height="48" frameX="-5" frameY="-1" frameWidth="138" frameHeight="50"/>
-    <SubTexture name="btn_retry" x="862" y="10" width="132" height="50" frameX="-4" frameY="0" frameWidth="138" frameHeight="50"/>
-    <SubTexture name="btn_shop" x="340" y="592" width="100" height="50"/>
-    <SubTexture name="candy_blue" x="795" y="680" width="50" height="50"/>
-    <SubTexture name="candy_green" x="795" y="620" width="50" height="50"/>
-    <SubTexture name="candy_orange" x="268" y="894" width="50" height="50"/>
-    <SubTexture name="candy_red" x="450" y="878" width="50" height="50"/>
-    <SubTexture name="candy_yellow" x="450" y="818" width="50" height="50"/>
-    <SubTexture name="clipboard" x="862" y="186" width="126" height="181" frameX="-2" frameY="-13" frameWidth="130" frameHeight="195"/>
-    <SubTexture name="clipboard_compact" x="862" y="492" width="124" height="105" frameX="-1" frameY="-19" frameWidth="130" frameHeight="195"/>
-    <SubTexture name="game_over" x="340" y="515" width="106" height="67" frameX="-71" frameY="-26" frameWidth="250" frameHeight="117"/>
-    <SubTexture name="gauge" x="975" y="783" width="25" height="150"/>
-    <SubTexture name="img_bg" x="10" y="404" width="320" height="480"/>
-    <SubTexture name="img_box_checked" x="450" y="758" width="50" height="50"/>
-    <SubTexture name="img_box_empty" x="450" y="698" width="50" height="50"/>
-    <SubTexture name="img_star" x="473" y="404" width="48" height="46" frameX="-1" frameY="-2" frameWidth="50" frameHeight="50"/>
-    <SubTexture name="img_title" x="510" y="894" width="225" height="168" frameX="-46" frameY="0" frameWidth="313" frameHeight="168"/>
-    <SubTexture name="logo" x="862" y="377" width="125" height="105"/>
-    <SubTexture name="mesh_candy_holder" x="450" y="638" width="50" height="50"/>
-    <SubTexture name="ok" x="456" y="578" width="50" height="50"/>
-    <SubTexture name="scoopUp" x="855" y="607" width="77" height="83" frameX="-2" frameY="0" frameWidth="79" frameHeight="83"/>
-    <SubTexture name="sfx" x="456" y="518" width="50" height="50"/>
-    <SubTexture name="sfx_x" x="795" y="560" width="50" height="50"/>
-    <SubTexture name="shuffle" x="795" y="500" width="50" height="50"/>
-    <SubTexture name="splash" x="532" y="10" width="320" height="480"/>
-    <SubTexture name="stage_container" x="10" y="894" width="248" height="390" frameX="-35" frameY="-71" frameWidth="320" frameHeight="480"/>
-    <SubTexture name="tank" x="975" y="727" width="30" height="46" frameX="0" frameY="-4" frameWidth="30" frameHeight="50"/>
-    <SubTexture name="timefreeze" x="915" y="787" width="46" height="44" frameX="-1" frameY="-5" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="Crate" x="868" y="529" width="50" height="50"/>
+    <SubTexture name="bgm" x="730" y="517" width="50" height="50"/>
+    <SubTexture name="bgm_x" x="670" y="517" width="50" height="50"/>
+    <SubTexture name="bomb" x="464" y="10" width="46" height="48" frameX="-1" frameY="-1" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="btn_cart" x="928" y="469" width="50" height="50"/>
+    <SubTexture name="btn_close" x="870" y="358" width="123" height="101" frameX="0" frameY="-1" frameWidth="125" frameHeight="105"/>
+    <SubTexture name="btn_highscore" x="672" y="278" width="141" height="42"/>
+    <SubTexture name="btn_mainmenu" x="520" y="121" width="130" height="48" frameX="-2" frameY="-1" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="btn_option" x="790" y="574" width="50" height="48" frameX="0" frameY="-1" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="btn_play" x="655" y="214" width="187" height="54"/>
+    <SubTexture name="btn_resume" x="672" y="330" width="128" height="48" frameX="-5" frameY="-1" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="btn_retry" x="520" y="61" width="132" height="50" frameX="-4" frameY="0" frameWidth="138" frameHeight="50"/>
+    <SubTexture name="btn_shop" x="520" y="10" width="139" height="41"/>
+    <SubTexture name="candy_blue" x="808" y="514" width="50" height="50"/>
+    <SubTexture name="candy_green" x="868" y="469" width="50" height="50"/>
+    <SubTexture name="candy_orange" x="808" y="454" width="50" height="50"/>
+    <SubTexture name="candy_red" x="808" y="394" width="50" height="50"/>
+    <SubTexture name="candy_yellow" x="810" y="334" width="50" height="50"/>
+    <SubTexture name="clipboard" x="404" y="298" width="124" height="181" frameX="-4" frameY="-14" frameWidth="130" frameHeight="195"/>
+    <SubTexture name="clipboard_compact" x="672" y="388" width="126" height="119" frameX="-2" frameY="-7" frameWidth="130" frameHeight="195"/>
+    <SubTexture name="clipboard_shop" x="538" y="298" width="124" height="175" frameX="-4" frameY="-19" frameWidth="130" frameHeight="195"/>
+    <SubTexture name="game_over" x="404" y="214" width="106" height="67" frameX="-71" frameY="-26" frameWidth="250" frameHeight="117"/>
+    <SubTexture name="gauge" x="955" y="138" width="25" height="150"/>
+    <SubTexture name="gauge_fill" x="993" y="10" width="17" height="148" frameX="-3" frameY="-1" frameWidth="25" frameHeight="150"/>
+    <SubTexture name="img_bg" x="10" y="10" width="384" height="512"/>
+    <SubTexture name="img_star" x="928" y="529" width="48" height="46" frameX="-1" frameY="-2" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="img_title" x="670" y="10" width="313" height="118" frameX="0" frameY="-24" frameWidth="313" frameHeight="168"/>
+    <SubTexture name="logo" x="520" y="179" width="125" height="105"/>
+    <SubTexture name="mesh_candy_holder" x="912" y="298" width="50" height="50"/>
+    <SubTexture name="ok" x="404" y="10" width="50" height="50"/>
+    <SubTexture name="scoopUp" x="404" y="121" width="77" height="83" frameX="-2" frameY="0" frameWidth="79" frameHeight="83"/>
+    <SubTexture name="sfx" x="852" y="274" width="50" height="50"/>
+    <SubTexture name="sfx_x" x="852" y="214" width="50" height="50"/>
+    <SubTexture name="splash" x="340" y="532" width="320" height="480"/>
+    <SubTexture name="stage_container" x="10" y="532" width="320" height="480"/>
+    <SubTexture name="tank" x="912" y="214" width="30" height="46" frameX="0" frameY="-4" frameWidth="30" frameHeight="50"/>
+    <SubTexture name="timefreeze" x="928" y="585" width="46" height="44" frameX="-1" frameY="-5" frameWidth="50" frameHeight="50"/>
+    <SubTexture name="timer_fill" x="670" y="184" width="263" height="20" frameX="-8" frameY="-10" frameWidth="275" frameHeight="40"/>
+    <SubTexture name="timer_frame" x="670" y="138" width="275" height="36" frameX="0" frameY="-3" frameWidth="275" frameHeight="40"/>
+    <SubTexture name="timer_swirl" x="404" y="489" width="29" height="30" frameX="-2" frameY="-5" frameWidth="35" frameHeight="40"/>
 </TextureAtlas>

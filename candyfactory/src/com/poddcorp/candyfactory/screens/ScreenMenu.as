@@ -60,7 +60,7 @@ package  com.poddcorp.candyfactory.screens
 			addChild(_spriteholdertitle)
 			
 			_btnstart = new Button(CandyFactory.assets.getTexture("btn_play"));
-			_btnstart.width = Constants.STAGE_WIDTH/3;
+			_btnstart.width = Constants.STAGE_WIDTH/2;
 			_btnstart.height = Constants.STAGE_WIDTH / 6;
             _btnstart.x = (Constants.STAGE_WIDTH - (_btnstart.width))*0.5;
             _btnstart.y = (Constants.STAGE_HEIGHT - _btnstart.height)*0.65;
@@ -71,7 +71,7 @@ package  com.poddcorp.candyfactory.screens
 			_btnshop.fontSize *= 1.8;
 			_btnshop.fontColor = 0xFFFFFF;
 			_btnshop.height = Constants.STAGE_WIDTH / 6;
-			_btnshop.width = Constants.STAGE_WIDTH / 3;
+			_btnshop.width = Constants.STAGE_WIDTH / 2;
             _btnshop.x = _btnstart.x;
             _btnshop.y = _btnstart.y + (_btnshop.height * 1.2);
 			this.addChild(_btnshop);
@@ -81,7 +81,7 @@ package  com.poddcorp.candyfactory.screens
 			_btnHighScore.fontSize *= 1.8;
 			_btnHighScore.fontColor = 0xFFFFFF;
 			_btnHighScore.height = Constants.STAGE_WIDTH / 6;
-			_btnHighScore.width = Constants.STAGE_WIDTH / 3;
+			_btnHighScore.width = Constants.STAGE_WIDTH / 2;
             _btnHighScore.x = _btnstart.x;
             _btnHighScore.y = _btnstart.y + (_btnHighScore.height * 2.2);
 			this.addChild(_btnHighScore);

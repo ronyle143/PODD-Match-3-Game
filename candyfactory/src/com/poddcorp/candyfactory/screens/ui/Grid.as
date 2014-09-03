@@ -33,12 +33,8 @@ package com.poddcorp.candyfactory.screens.ui
 		private var nullary:Array = [];
 		private var delivery:Array = [];
 		private var idle:Boolean = true;
-		private var clear:Button;
 		private var clearNull:Button;
-		private var rem:Button;
-		private var _imgtank:Image;
 		private var _imgscreenmask:Quad;
-		public var addd:Button;
 		private var _timerTxt:TextField = new TextField(Constants.STAGE_WIDTH*0.2,Constants.STAGE_HEIGHT*0.3, "3", "BubbleBud", Constants.STAGE_HEIGHT / 5, 0xFFFFFF);
 		private var timeEstaato:Number;
 		
@@ -55,44 +51,17 @@ package com.poddcorp.candyfactory.screens.ui
 			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			_imgtank = new Image(CandyFactory.assets.getTexture("tank"));
-			_imgtank.width = Constants.STAGE_HEIGHT * 0.1
-			_imgtank.height = _imgtank.width * 2;
-			this.addChild(_imgtank);
-			_imgtank.x = Constants.STAGE_WIDTH - _imgtank.width*1.5;
-			_imgtank.y = Constants.STAGE_HEIGHT * 0.87 -  _imgtank.height;
-			_imgtank.filter = BlurFilter.createDropShadow();
 			
 			_imgstagecontainer = new Image(CandyFactory.assets.getTexture("stage_container"));
-			_imgstagecontainer.width = Constants.STAGE_WIDTH;
-			_imgstagecontainer.height = _imgstagecontainer.width*1.5;
-			_imgstagecontainer.y = Constants.STAGE_HEIGHT - _imgstagecontainer.height;
+			_imgstagecontainer.width = Constants.STAGE_WIDTH * 0.74;
+			_imgstagecontainer.height = _imgstagecontainer.width * 1.4;
+			_imgstagecontainer.x = Constants.STAGE_WIDTH * 0.125;
+			_imgstagecontainer.y = (Constants.STAGE_HEIGHT * 0.9) - _imgstagecontainer.height;
 			this.addChild(_imgstagecontainer);
 			_imgstagecontainer.filter = BlurFilter.createDropShadow();
 			
 			//-----------------------------------------------------------
 			
-			addd = new Button(CandyFactory.assets.getTexture("btn_blank"));
-			addd.height = Constants.STAGE_WIDTH / 8;
-			addd.width = addd.height;
-			addd.text = "Add";
-			addd.fontSize *= 1.5;
-			addd.fontName = "Showcard Gothic";
-            addd.x = 0;
-            addd.y = this.height - addd.height;
-			//this.addChild(addd);
-			addd.addEventListener(Event.TRIGGERED, adddStack);
-			
-			rem = new Button(CandyFactory.assets.getTexture("btn_blank"));
-			rem.height = Constants.STAGE_WIDTH / 8;
-			rem.width = rem.height;
-			rem.text = "Del";
-			rem.fontSize *= 1.5;
-			rem.fontName = "Showcard Gothic";
-            rem.x = rem.width;
-            rem.y = this.height - addd.height;
-			//this.addChild(rem);
-			rem.addEventListener(Event.TRIGGERED, deleteAll);
 			
 			//--------------------------------------------------------------
 			
@@ -101,11 +70,11 @@ package com.poddcorp.candyfactory.screens.ui
 				ary[i] = [];
 			}
 			
-			/*addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-			/*addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
 			addCustomStack([ 1, 1, 2, 2, 3, 2, 2, 1, 1, 1]);
 			addCustomStack([ 1, 1, 1, 1, 3, 1, 1, 1, 1, 1]);//*/
@@ -360,6 +329,8 @@ package com.poddcorp.candyfactory.screens.ui
 					var min:int = 3;
 					if (picked.length >= 9) {
 							colorBomb(type);
+							GameAudio.playSound("kaboom");
+							GameAudio.playSound("scoop-up");
 							pointShow(delivery[0], delivery[1]+ 1, "COLOR BOMB!");
 							clearBlock(picked);
 					}
@@ -369,7 +340,9 @@ package com.poddcorp.candyfactory.screens.ui
 					}else{
 							if (GameData.multiplier > 1) {
 								GameData.multiplier--;
+								GameAudio.playSound("decrease");
 							};
+							GameAudio.playSound("tick");
 							GameData.gauge = 0;
 							_displayUI.timeNow += (((_displayUI.timeInit / GameData.production * 60)) * 0.5);
 					}
@@ -519,7 +492,7 @@ package com.poddcorp.candyfactory.screens.ui
 			}
 			arrange();
 			GameData.updateScore(((deleted - 2) * 10)*GameData.multiplier);
-			GameData.gauge += (deleted - 2)*GameData.multiplier;
+			GameData.gauge += (deleted - 2);
 			_displayUI.updateData();
 			trace("Deleted " + deleted + "/" + picked.length + " objects");
 			
@@ -586,7 +559,7 @@ package com.poddcorp.candyfactory.screens.ui
 				var total:int = 0;
 				var gap:Number = Constants.STAGE_WIDTH * 0.166;
 				var objSize:Number = Constants.STAGE_WIDTH / 13.5;
-				var baseY:Number = _imgstagecontainer.y+_imgstagecontainer.height * 0.77;
+				var baseY:Number = _imgstagecontainer.y+_imgstagecontainer.height * 0.894;
 				var x:int;
 				var y:int;
 				var str:String = "ary: [";

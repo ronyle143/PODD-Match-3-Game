@@ -271,6 +271,7 @@ package  com.poddcorp.candyfactory.popups
 		
 		private function optionMenu(e:Event):void 
 		{
+			GameAudio.playSound("pop");
 			_btnresume.visible = false;
 			_btnmainmenu.visible = false;
 			GameAPI.GameState = 1;
