@@ -55,9 +55,10 @@ package com.poddcorp.candyfactory.screens.ui
 			_imgstagecontainer = new Image(CandyFactory.assets.getTexture("stage_container"));
 			_imgstagecontainer.width = Constants.STAGE_WIDTH * 0.74;
 			_imgstagecontainer.height = _imgstagecontainer.width * 1.4;
-			_imgstagecontainer.x = Constants.STAGE_WIDTH * 0.125;
-			_imgstagecontainer.y = (Constants.STAGE_HEIGHT * 0.9) - _imgstagecontainer.height;
+			_imgstagecontainer.x = (Constants.STAGE_WIDTH - _imgstagecontainer.width) / 2;
+			_imgstagecontainer.y = (Constants.STAGE_HEIGHT - _imgstagecontainer.height) /2 ;
 			this.addChild(_imgstagecontainer);
+			GameData.gridgap = _imgstagecontainer.y
 			_imgstagecontainer.filter = BlurFilter.createDropShadow();
 			
 			//-----------------------------------------------------------
@@ -69,21 +70,12 @@ package com.poddcorp.candyfactory.screens.ui
 			{
 				ary[i] = [];
 			}
-			
-			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-			addCustomStack([ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
-			addCustomStack([ 1, 1, 1, 2, 3, 2, 1, 1, 1, 1]);
-			addCustomStack([ 1, 1, 2, 2, 3, 2, 2, 1, 1, 1]);
-			addCustomStack([ 1, 1, 1, 1, 3, 1, 1, 1, 1, 1]);//*/
+			addStack();
+			addStack();
 			addStack();
 			
-			addStack();
-			addStack();
-			addStack();
 			/*addStack();
+			addStack();
 			
 			addStack();
 			addStack();
@@ -97,7 +89,6 @@ package com.poddcorp.candyfactory.screens.ui
 			
 			_displayUI = new DisplayUI();
 			this.addChild(_displayUI);
-			_displayUI.init();
 						
 			_imgscreenmask = new Quad(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT, 0x000000, true);
 			_imgscreenmask.alpha = 0.5;

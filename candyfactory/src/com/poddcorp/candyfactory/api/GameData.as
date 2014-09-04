@@ -28,6 +28,8 @@ package com.poddcorp.candyfactory.api
 		public static var		useTaster		:int		= 3;
 		public static var		useFreeze		:int		= 3;
 		
+		public static var		gridgap			:Number		= 0;
+		
 		public static function init():void 
 		{
 
@@ -48,9 +50,9 @@ package com.poddcorp.candyfactory.api
 			multiplier = 1;
 			production = 160;
 			goal = 1600;
-			useTaster = 3;
+			useTaster = 500;
 			useTaster = 0+saveDataObject.data.UseTaster;
-			useFreeze = 3;
+			useFreeze = 200;
 			useFreeze = 0+saveDataObject.data.UseFreeze;
 			timeMod = Constants.GAME_TIME;
 		}
@@ -93,9 +95,10 @@ package com.poddcorp.candyfactory.api
 		public static function checkGauge():void 
 		{
 			//trace("checking goal: " + score + "/" + goal);
-			if (gauge >= 50) {
+			if (gauge >= 20 + (10*multiplier)) {
 				increaseMultiplier();
 				gauge = 0;
+				//gauge = 20 + (10*(multiplier-1));
 			}
 		}
 		

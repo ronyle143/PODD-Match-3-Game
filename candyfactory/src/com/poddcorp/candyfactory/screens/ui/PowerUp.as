@@ -18,9 +18,9 @@ package  com.poddcorp.candyfactory.screens.ui
 	public class PowerUp extends Sprite  
 	{
 		public var _power1:Button;
-		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT / 25, 0x000000F);
+		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0x000000F);
 		public var _power2:Button;
-		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT / 25, 0x000000F);
+		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0x000000F);
 		
 		public function PowerUp() 
 		{
@@ -46,8 +46,8 @@ package  com.poddcorp.candyfactory.screens.ui
 			_power1txt.touchable = false;
 			addChild(_power1txt);
 			_power1txt.x = 0;
-			//_power1txt.border = true;
-			_power1txt.hAlign = "right";
+		//_power1txt.border = true;
+			_power1txt.hAlign = "left";
 			_power1txt.y = _power1.y + _power1.height / 1.7;
 			_power1txt.filter = BlurFilter.createDropShadow(0, 0.785, 0xFFFFFF, 1);
 			
@@ -67,8 +67,8 @@ package  com.poddcorp.candyfactory.screens.ui
 			_power2txt.touchable = false;
 			addChild(_power2txt);
 			_power2txt.x = 0;
-			//_power2txt.border = true;
-			_power2txt.hAlign = "right";
+		//_power2txt.border = true;
+			_power2txt.hAlign = "left";
 			_power2txt.y = _power2.y + _power2.height / 1.7;
 			_power2txt.filter = BlurFilter.createDropShadow(0, 0.785, 0xFFFFFF, 1);
 			
@@ -93,13 +93,15 @@ package  com.poddcorp.candyfactory.screens.ui
 		
 		private function power1Triggered(e:Event):void 
 		{
-			GameAPI.powerType = "TASTER";
-			_power1.filter = BlurFilter.createGlow(Color.WHITE);
+			if (GameData.useTaster > 0) {
+				GameAPI.powerType = "TASTER";
+				_power1.filter = BlurFilter.createGlow(Color.WHITE);
+			}
 		}
 		
 		private function power2Triggered(e:Event):void 
 		{
-			if (GameData.timeMod == 1) {
+			if (GameData.timeMod == 1 && GameData.useFreeze > 0) {
 				GameAudio.playSound("ice");
 				GameData.timeMod = 0.1;
 				var myTimer:Timer = new Timer(10000, 1);

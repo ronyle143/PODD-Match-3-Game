@@ -125,15 +125,15 @@ package  com.poddcorp.candyfactory.popups
 			}else {	
 				_btnmainmenu = new Button(CandyFactory.assets.getTexture("btn_mainmenu"));
 				_btnmainmenu.height =_imgcheckbox1.height*1.2;
-				_btnmainmenu.width = _btnmainmenu.height*2.2;
+				_btnmainmenu.width = _btnmainmenu.height*3;
 				_btnmainmenu.x = (Constants.STAGE_WIDTH - _btnmainmenu.width)/2;
 				_btnmainmenu.y = Constants.STAGE_HEIGHT * 0.6;
 				placeholder.addChild(_btnmainmenu);
 				
 				_btnresume = new Button(CandyFactory.assets.getTexture("btn_resume"));
 				_btnresume.height =_imgcheckbox1.height*1.2;
-				_btnresume.width = _btnresume.height*2.2;
-				_btnresume.x = _btnmainmenu.x
+				_btnresume.width = _btnresume.height*3;
+				_btnresume.x = _btnmainmenu.x;
 				_btnresume.y = _btnmainmenu.y-_btnresume.height;
 				placeholder.addChild(_btnresume);
 			}

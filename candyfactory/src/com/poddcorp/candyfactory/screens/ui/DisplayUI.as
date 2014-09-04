@@ -18,17 +18,20 @@ package  com.poddcorp.candyfactory.screens.ui
 	
 	public class DisplayUI extends Sprite 
 	{		
-		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.1, "0", "BubbleBud", Constants.STAGE_HEIGHT / 24, 0xFFFFFF); //0xFF6666
-		private var txxt1:TextField = new TextField(Constants.STAGE_WIDTH / 8,Constants.STAGE_WIDTH / 6, "0", "BubbleBud", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
+		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFFFF); //0xFF6666
+		private var _txtmultiplier:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFFFF);
 		private var _timebar:Quad;
+		private var _imgtimebarframe:Image;
 		private var _imgscoregoal:Image;
 		private var _imgcpm:Image;
 		private var _imggauge:Image;
-		private var _imggaugefill:Image;
+		private var _imggaugeindicator:Image;
 		public var timeInit:int;
 		public var timeNow:Number;
-		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.058*8);
+		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.464);
+		private var timerDefault:Number;
 		private var txxt:TextField;
+		private var _imgtimerindicator:Image;
 		public var powerUpUI:PowerUp;
 		
 		public function DisplayUI() 
@@ -41,8 +44,6 @@ package  com.poddcorp.candyfactory.screens.ui
 			removeEventListeners();
 			
 			updateData();
-			_txtScore.x = Constants.STAGE_WIDTH * 0.1;
-			_txtScore.y = (Constants.STAGE_WIDTH * 0.1) * 0.5;
 			addChild(_txtScore);
 			
 			var gap:Number = Constants.STAGE_WIDTH * 0.166;
@@ -53,28 +54,58 @@ package  com.poddcorp.candyfactory.screens.ui
 			_timebar.x = gap;
 			_timebar.y = baseY ;
 			_timebar.alpha = 0.7;
-			this.addChild(_timebar);
+			//this.addChild(_timebar);
+			
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+			_imgtimebarframe = new Image(CandyFactory.assets.getTexture("timer_frame"));
+			_imgtimebarframe.width = Constants.STAGE_WIDTH * 0.74;
+			_imgtimebarframe.height = _imgtimebarframe.width / 8;
+			_imgtimebarframe.x = (Constants.STAGE_WIDTH - _imgtimebarframe.width) / 2;
+			_imgtimebarframe.y = Constants.STAGE_HEIGHT - ((GameData.gridgap+_imgtimebarframe.height)/2);
+			addChild(_imgtimebarframe);
+			
+			_imgtimerindicator = new Image(CandyFactory.assets.getTexture("timer_swirl"));
+			_imgtimerindicator.width = _imgtimebarframe.width / 8;
+			_imgtimerindicator.height = _imgtimebarframe.width / 8;
+			_imgtimerindicator.x = _imgtimebarframe.x;
+			timerDefault = _imgtimerindicator.x;
+			_imgtimerindicator.y = _imgtimebarframe.y;
+			this.addChild(_imgtimerindicator);
+			
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
 			_imggauge = new Image(CandyFactory.assets.getTexture("gauge"));
 			_imggauge.width = Constants.STAGE_HEIGHT * 0.070;
 			_imggauge.height =_imggauge.width * 8;
 			_imggauge.x = Constants.STAGE_WIDTH - _imggauge.width;
-			_imggauge.y = Constants.STAGE_HEIGHT * 0.9 -  _imggauge.height;
+			_imggauge.y = (Constants.STAGE_HEIGHT -  _imggauge.height +_txtmultiplier.height) /2;
 			addChild(_imggauge);
 			
-			_imggaugefill = new Image(CandyFactory.assets.getTexture("timer_swirl"));
-			_imggaugefill.width = Constants.STAGE_HEIGHT * 0.070;
-			_imggaugefill.height = _imggaugefill.width;
-			_imggaugefill.x = Constants.STAGE_WIDTH - _imggaugefill.width;
-			_imggaugefill.y = Constants.STAGE_HEIGHT * 0.9 -  _imggaugefill.height;
-			_imggaugefill.visible = false;
-			this.addChild(_imggaugefill);
+			_imggaugeindicator = new Image(CandyFactory.assets.getTexture("timer_swirl"));
+			_imggaugeindicator.width = _imggauge.width;
+			_imggaugeindicator.height = _imggaugeindicator.width;
+			_imggaugeindicator.x = Constants.STAGE_WIDTH - _imggaugeindicator.width;
+			_imggaugeindicator.y = Constants.STAGE_HEIGHT * 0.9 -  _imggaugeindicator.height;
+			_imggaugeindicator.visible = false;
+			this.addChild(_imggaugeindicator);
 			
-			txxt1.text = "x" + GameData.multiplier;
-			txxt1.x = Constants.STAGE_WIDTH - txxt1.width;
-			txxt1.y = Constants.STAGE_HEIGHT * 0.25;
-			//txxt1.filter = BlurFilter.createDropShadow();
-			addChild(txxt1);
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			var _multicase:Image = new Image(CandyFactory.assets.getTexture("box_100"));
+			_multicase.width = _imggauge.width;
+			_multicase.height = _txtmultiplier.height;
+			_multicase.x = Constants.STAGE_WIDTH - _multicase.width;
+			_multicase.y = _imggauge.y - _txtmultiplier.height;
+			this.addChild(_multicase);
+			
+			_txtmultiplier.text = "x" + GameData.multiplier;
+			_txtmultiplier.width = _imggauge.width;
+			_txtmultiplier.x = Constants.STAGE_WIDTH - _txtmultiplier.width;
+			_txtmultiplier.y = _imggauge.y - _txtmultiplier.height;
+			_txtmultiplier.hAlign = "center";
+			_txtmultiplier.filter = BlurFilter.createDropShadow();
+		//_txtmultiplier.border = true;
+			addChild(_txtmultiplier);
 			
 			powerUpUI = new PowerUp();
 			addChild(powerUpUI);
@@ -83,10 +114,14 @@ package  com.poddcorp.candyfactory.screens.ui
 			timeInit = 600;
 			timeNow = 0;
 			
-			_txtScore.filter = BlurFilter.createDropShadow();
-			txxt1.filter = BlurFilter.createDropShadow();
 			
-			//_imggaugefill.y += _imggaugefill.height;
+			_txtScore.x = (Constants.STAGE_WIDTH - _txtScore.width ) /2;
+			_txtScore.y = (GameData.gridgap - _txtScore.height) / 2 ;
+		//_txtScore.border = true;
+			_txtScore.filter = BlurFilter.createDropShadow();
+			_txtmultiplier.filter = BlurFilter.createDropShadow();
+			
+			//_imggaugeindicator.y += _imggaugeindicator.height;
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, time);
 		}
@@ -100,6 +135,7 @@ package  com.poddcorp.candyfactory.screens.ui
 					GameAPI.checktheBlock = true;
 				}
 				//_txtCPM.text = ""+GameData.production;
+				_imgtimerindicator.x = timerDefault + ((_imgtimebarframe.width - _imgtimerindicator.width) * (timeNow / timeneeded));
 				_timebar.width = (Constants.STAGE_WIDTH * 0.673) / (timeneeded / timeNow);
 				if (GameData.timeMod != 1) {
 					_timebar.color = 0xBFCFFE;
@@ -109,14 +145,13 @@ package  com.poddcorp.candyfactory.screens.ui
 				timeNow += GameData.timeMod;
 			}
 			GameData.checkGoal();
-			//_imggaugefill.pivotY = 0;
-			var tween1:Tween = new Tween(_imggaugefill, 0.2, "easeOut")
-				_imggaugefill.visible = true;
-				tween1.moveTo(Constants.STAGE_WIDTH - _imggaugefill.width, (gaugehieght / (50 * GameData.multiplier) * GameData.gauge)+Constants.STAGE_HEIGHT * 0.9 -  _imggaugefill.height);
+			//_imggaugeindicator.pivotY = 0;
+			var tween1:Tween = new Tween(_imggaugeindicator, 0.5, "easeOut")
+				_imggaugeindicator.visible = true;
+				tween1.moveTo(_imggauge.x, (gaugehieght / ((20 + (GameData.multiplier*10)) * GameData.multiplier) * GameData.gauge)+(_imggauge.y +_imggauge.height) -  _imggaugeindicator.height);
 				Starling.juggler.add(tween1);
 			GameData.checkGauge();
-			txxt1.text = "x" + GameData.multiplier;
-			//trace(GameData.gauge);
+			_txtmultiplier.text = "x" + GameData.multiplier;
 		}
 		
 		public function updateData():void {

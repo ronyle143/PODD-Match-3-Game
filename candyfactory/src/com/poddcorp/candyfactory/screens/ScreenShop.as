@@ -31,8 +31,8 @@ package  com.poddcorp.candyfactory.screens
 		private var _btnbuy2:Button;
 		private var _imgscreenmask:Quad;
 		private var _imgcloseclipboard:Button;
-		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000F);
-		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000F);
+		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000);
+		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000);
 		
 		
 		public function ScreenShop() 
@@ -52,7 +52,7 @@ package  com.poddcorp.candyfactory.screens
 			_imgbg.height = Constants.STAGE_HEIGHT;
             this.addChild(_imgbg);
 			
-			_clipboard = new Image(CandyFactory.assets.getTexture("clipboard"));
+			_clipboard = new Image(CandyFactory.assets.getTexture("clipboard_shop"));
 			_clipboard.width = Constants.STAGE_WIDTH;
 			_clipboard.height = Constants.STAGE_HEIGHT;
             this.addChild(_clipboard);
@@ -60,22 +60,22 @@ package  com.poddcorp.candyfactory.screens
 			_btnclose = new Button(CandyFactory.assets.getTexture("btn_close"));
 			_btnclose.width = Constants.STAGE_WIDTH / 6;
 			_btnclose.height = Constants.STAGE_WIDTH / 6;
-            _btnclose.x = (Constants.STAGE_WIDTH* 0.9) - _btnclose.width;
-            _btnclose.y = Constants.STAGE_HEIGHT * 0.1;
+            _btnclose.x = (Constants.STAGE_WIDTH* 0.95) - _btnclose.width;
+            _btnclose.y = Constants.STAGE_HEIGHT * 0.15;
 			this.addChild(_btnclose);
 			
 			_power1 = new Image(CandyFactory.assets.getTexture("scoopUp"));
 			_power1.width = Constants.STAGE_WIDTH / 5;
 			_power1.height = _power1.width;
-			_power1.x = Constants.STAGE_WIDTH * 0.25;
+			_power1.x = Constants.STAGE_WIDTH * 0.2;
 			_power1.y = Constants.STAGE_HEIGHT * 0.35;
             this.addChild(_power1);
 			
 			_btnbuy1 = new Button(CandyFactory.assets.getTexture("btn_cart"));
-			_btnbuy1.width = Constants.STAGE_WIDTH / 5;
-			_btnbuy1.height = _btnbuy1.width;
+			_btnbuy1.width = Constants.STAGE_WIDTH * 0.4;
+			_btnbuy1.height = _btnbuy1.width/2;
 			_btnbuy1.fontSize *= 1.3;
-            _btnbuy1.x = Constants.STAGE_WIDTH * 0.55;
+            _btnbuy1.x = Constants.STAGE_WIDTH * 0.5;
             _btnbuy1.y = _power1.y;
 			this.addChild(_btnbuy1);
 			
@@ -93,15 +93,15 @@ package  com.poddcorp.candyfactory.screens
 			_power2 = new Image(CandyFactory.assets.getTexture("timefreeze"));
 			_power2.width = Constants.STAGE_WIDTH / 5;
 			_power2.height = _power2.width;
-			_power2.x = Constants.STAGE_WIDTH * 0.25;
+			_power2.x = Constants.STAGE_WIDTH * 0.2;
 			_power2.y = Constants.STAGE_HEIGHT * 0.55;
             this.addChild(_power2);
 			
 			_btnbuy2 = new Button(CandyFactory.assets.getTexture("btn_cart"));
-			_btnbuy2.width = Constants.STAGE_WIDTH / 5;
-			_btnbuy2.height = _btnbuy2.width;
+			_btnbuy2.width = Constants.STAGE_WIDTH * 0.4;
+			_btnbuy2.height = _btnbuy2.width/2;
 			_btnbuy2.fontSize *= 1.3;
-            _btnbuy2.x = Constants.STAGE_WIDTH * 0.55;
+            _btnbuy2.x = Constants.STAGE_WIDTH * 0.5;
             _btnbuy2.y = _power2.y;
 			this.addChild(_btnbuy2);
 			
@@ -182,14 +182,14 @@ package  com.poddcorp.candyfactory.screens
 			placeholder = new Sprite();
 			this.addChild(placeholder);
 			
-			_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard_compact"));
+			_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard_blank"));
 			_imgclipboard.width = Constants.STAGE_WIDTH*0.8;
 			_imgclipboard.height = Constants.STAGE_HEIGHT * 0.8;
 			_imgclipboard.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
 			_imgclipboard.y = 0;
             placeholder.addChild(_imgclipboard);
 			
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Item has been added into your inventory", "Showcard Gothic", Constants.STAGE_HEIGHT * 0.03, 0xFFFFFF);
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Item has been added into your inventory", "Bubblebud", Constants.STAGE_HEIGHT * 0.03, 0x000000);
 			txt_SFX.x = ((Constants.STAGE_WIDTH) - txt_SFX.width)/2;
 			txt_SFX.y = Constants.STAGE_HEIGHT * 0.3 - (txt_SFX.height/2);
 			placeholder.addChild(txt_SFX);

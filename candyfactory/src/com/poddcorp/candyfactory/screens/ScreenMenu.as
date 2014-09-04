@@ -57,34 +57,34 @@ package  com.poddcorp.candyfactory.screens
 			txt_SFX.hAlign = "right";
 			//txt_SFX.border = true;
 			_spriteholdertitle.addChild(txt_SFX);
-			addChild(_spriteholdertitle)
-			
-			_btnstart = new Button(CandyFactory.assets.getTexture("btn_play"));
-			_btnstart.width = Constants.STAGE_WIDTH/2;
-			_btnstart.height = Constants.STAGE_WIDTH / 6;
-            _btnstart.x = (Constants.STAGE_WIDTH - (_btnstart.width))*0.5;
-            _btnstart.y = (Constants.STAGE_HEIGHT - _btnstart.height)*0.65;
-            this.addChild(_btnstart);
-			
-			_btnshop = new Button(CandyFactory.assets.getTexture("btn_shop"));
-			_btnshop.fontName = "BubbleBud";
-			_btnshop.fontSize *= 1.8;
-			_btnshop.fontColor = 0xFFFFFF;
-			_btnshop.height = Constants.STAGE_WIDTH / 6;
-			_btnshop.width = Constants.STAGE_WIDTH / 2;
-            _btnshop.x = _btnstart.x;
-            _btnshop.y = _btnstart.y + (_btnshop.height * 1.2);
-			this.addChild(_btnshop);
+			addChild(_spriteholdertitle);
 			
 			_btnHighScore = new Button(CandyFactory.assets.getTexture("btn_highscore"));
 			_btnHighScore.fontName = "BubbleBud"
 			_btnHighScore.fontSize *= 1.8;
 			_btnHighScore.fontColor = 0xFFFFFF;
-			_btnHighScore.height = Constants.STAGE_WIDTH / 6;
-			_btnHighScore.width = Constants.STAGE_WIDTH / 2;
-            _btnHighScore.x = _btnstart.x;
-            _btnHighScore.y = _btnstart.y + (_btnHighScore.height * 2.2);
+			_btnHighScore.width = Constants.STAGE_WIDTH * 0.425;
+			_btnHighScore.height = Constants.STAGE_WIDTH * 0.132;
+			_btnHighScore.x = (Constants.STAGE_WIDTH - _btnHighScore.width) / 2;
+			_btnHighScore.y = (Constants.STAGE_HEIGHT - _btnHighScore.height) / 2;
 			this.addChild(_btnHighScore);
+			
+			_btnshop = new Button(CandyFactory.assets.getTexture("btn_shop"));
+			_btnshop.fontName = "BubbleBud";
+			_btnshop.fontSize *= 1.8;
+			_btnshop.fontColor = 0xFFFFFF;
+			_btnshop.width = Constants.STAGE_WIDTH * 0.425;
+			_btnshop.height = Constants.STAGE_WIDTH * 0.132;
+			_btnshop.x = (Constants.STAGE_WIDTH - _btnshop.width) / 2;
+			_btnshop.y = (Constants.STAGE_HEIGHT - _btnshop.height) / 2;
+			this.addChild(_btnshop);
+			
+			_btnstart = new Button(CandyFactory.assets.getTexture("btn_play"));
+			_btnstart.width = Constants.STAGE_WIDTH * 0.7;
+			_btnstart.height = Constants.STAGE_WIDTH * 0.20;
+			_btnstart.x = (Constants.STAGE_WIDTH - _btnstart.width) / 3;
+			_btnstart.y = (Constants.STAGE_HEIGHT - _btnstart.height) / 2;
+            this.addChild(_btnstart);
 			
 			_option = new TabOption();
 			this.addChild(_option);
@@ -103,9 +103,9 @@ package  com.poddcorp.candyfactory.screens
 			Starling.juggler.add(popup0);
 			
 			_btnstart.alpha = 0;
-			_btnstart.y = Constants.STAGE_HEIGHT/2;
+			_btnstart.y = Constants.STAGE_HEIGHT / 2;
 			var popup1:Tween = new Tween(_btnstart, 1, "easeOut");
-			popup1.moveTo(Constants.STAGE_WIDTH * 0.05, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.65);
+			popup1.moveTo((Constants.STAGE_WIDTH - _btnstart.width) * 0.5, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.65);
 			popup1.fadeTo(1);
 			_btnstart.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup1);
@@ -115,7 +115,7 @@ package  com.poddcorp.candyfactory.screens
 			_btnshop.alpha = 0;
 			_btnshop.y = Constants.STAGE_HEIGHT/2;
 			var popup3:Tween = new Tween(_btnshop, 1, "easeOut");
-			popup3.moveTo(Constants.STAGE_WIDTH * 0.05, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.80);
+			popup3.moveTo(Constants.STAGE_WIDTH - _btnshop.width - _btnHighScore.width - (Constants.STAGE_WIDTH*0.1), (Constants.STAGE_HEIGHT - _btnstart.height) * 0.90);
 			popup3.fadeTo(1);
 			_btnstart.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup3);
@@ -123,7 +123,7 @@ package  com.poddcorp.candyfactory.screens
 			_btnHighScore.alpha = 0;
 			_btnHighScore.y = Constants.STAGE_HEIGHT/2;
 			var popup4:Tween = new Tween(_btnHighScore, 1, "easeOut");
-			popup4.moveTo(Constants.STAGE_WIDTH * 0.05, (Constants.STAGE_HEIGHT - _btnstart.height) * 0.95);
+			popup4.moveTo(Constants.STAGE_WIDTH - _btnHighScore.width - (Constants.STAGE_WIDTH*0.05), (Constants.STAGE_HEIGHT - _btnstart.height) * 0.90);
 			popup4.fadeTo(1);
 			_btnHighScore.filter = BlurFilter.createDropShadow();
 			Starling.juggler.add(popup4);
@@ -167,14 +167,14 @@ package  com.poddcorp.candyfactory.screens
 			
 			///////score
 			
-			var _clip:Image = new Image(CandyFactory.assets.getTexture("clipboard_compact"));
+			var _clip:Image = new Image(CandyFactory.assets.getTexture("clipboard_blank"));
 			_clip.width = Constants.STAGE_WIDTH*0.8;
 			_clip.height = Constants.STAGE_HEIGHT * 0.8;
 			_clip.x = (Constants.STAGE_WIDTH - _clip.width) / 2;
 			_clip.y = 0;
             placeholder.addChild(_clip);
 			
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Your High score is: "+((1+GameData.saveDataObject.data.Highscore)-1), "BubbleBud", Constants.STAGE_HEIGHT * 0.03, 0xFFFFFF);
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Your High score is: "+((1+GameData.saveDataObject.data.Highscore)-1), "BubbleBud", Constants.STAGE_HEIGHT * 0.03, 0x000000);
 			txt_SFX.x = ((Constants.STAGE_WIDTH) - txt_SFX.width)/2;
 			txt_SFX.y = Constants.STAGE_HEIGHT * 0.3 - (txt_SFX.height/2);
 			placeholder.addChild(txt_SFX);
