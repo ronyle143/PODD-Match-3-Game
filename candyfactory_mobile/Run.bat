@@ -13,12 +13,20 @@ set INTERPRETER=-interpreter
 
 :desktop
 :: http://help.adobe.com/en_US/air/build/WSfffb011ac560372f-6fa6d7e0128cca93d31-8000.html
+echo [1]   NexusOne
+echo [2]   QVGA
+echo [3]   iPhone
+echo [4]   iPad
+echo [5]   iPhoneRetina
 
-set SCREEN_SIZE=NexusOne
-::set SCREEN_SIZE=iPhoneRetina
-::set SCREEN_SIZE=iPhone
-::set SCREEN_SIZE=iPad
-::set SCREEN_SIZE=QVGA
+set C=1
+
+echo.
+if "%c%"=="1" set SCREEN_SIZE=NexusOne
+if "%c%"=="2" set SCREEN_SIZE=QVGA
+if "%c%"=="3" set SCREEN_SIZE=iPhone
+if "%c%"=="4" set SCREEN_SIZE=iPad
+if "%c%"=="5" set SCREEN_SIZE=iPhoneRetina
 
 :desktop-run
 echo.

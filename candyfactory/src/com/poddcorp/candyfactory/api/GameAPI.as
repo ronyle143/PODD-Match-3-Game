@@ -16,6 +16,7 @@ package com.poddcorp.candyfactory.api
 		public static var		checktheMax		:Boolean	= false;
 		public static var		checktheBlock	:Boolean	= false;
 		public static var		difficulty		:int		= 3;
+		public static var		timechange		:Boolean	= false;
 		
 		public static function init():void 
 		{

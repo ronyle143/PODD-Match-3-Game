@@ -9,6 +9,7 @@ package  com.poddcorp.candyfactory.screens.ui
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Image;
+	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
@@ -18,7 +19,7 @@ package  com.poddcorp.candyfactory.screens.ui
 	
 	public class DisplayUI extends Sprite 
 	{		
-		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFFFF); //0xFF6666
+		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFF11); //0xFF6666 0xFFFFFF
 		private var _txtmultiplier:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFFFF);
 		private var _timebar:Quad;
 		private var _imgtimebarframe:Image;
@@ -31,7 +32,12 @@ package  com.poddcorp.candyfactory.screens.ui
 		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.464);
 		private var timerDefault:Number;
 		private var txxt:TextField;
-		private var _imgtimerindicator:Image;
+		
+		private var _imgtimerindicator:MovieClip;
+		
+		private var _timerswirl:Image;
+		private var _timerfill:Quad;
+		private var _gaugefill:Quad;
 		public var powerUpUI:PowerUp;
 		
 		public function DisplayUI() 
@@ -62,15 +68,30 @@ package  com.poddcorp.candyfactory.screens.ui
 			_imgtimebarframe.width = Constants.STAGE_WIDTH * 0.74;
 			_imgtimebarframe.height = _imgtimebarframe.width / 8;
 			_imgtimebarframe.x = (Constants.STAGE_WIDTH - _imgtimebarframe.width) / 2;
-			_imgtimebarframe.y = Constants.STAGE_HEIGHT - ((GameData.gridgap+_imgtimebarframe.height)/2);
-			addChild(_imgtimebarframe);
+			_imgtimebarframe.y = Constants.STAGE_HEIGHT - ((GameData.gridgap + _imgtimebarframe.height) / 2);
 			
-			_imgtimerindicator = new Image(CandyFactory.assets.getTexture("timer_swirl"));
-			_imgtimerindicator.width = _imgtimebarframe.width / 8;
-			_imgtimerindicator.height = _imgtimebarframe.width / 8;
-			_imgtimerindicator.x = _imgtimebarframe.x;
+			_timerfill = new Quad(_imgtimebarframe.width * 0.05, _imgtimebarframe.height * 0.5, 0xFFA526);
+			//_timerfill.width = _imgtimebarframe.width;
+			//_timerfill.height = _imgtimebarframe.height;
+			_timerfill.x = _imgtimebarframe.x + (_timerfill.height * 0.5);
+			_timerfill.y = _imgtimebarframe.y + (_timerfill.height * 1);
+			_timerfill.pivotY = _timerfill.height / 2;
+			
+			//_imgtimerindicator = new Quad(_imgtimebarframe.width / 8, _imgtimebarframe.width / 8, 0xFFA526); _imgtimerindicator.alpha = 0.5;
+			_imgtimerindicator = new MovieClip(CandyFactory.assets.getTextures("swirl_0"), 18);
+			_imgtimerindicator.width = _imgtimebarframe.height;
+			_imgtimerindicator.height = _imgtimebarframe.height;
+			_imgtimerindicator.x = _imgtimebarframe.x + (_imgtimerindicator.width / 2);
 			timerDefault = _imgtimerindicator.x;
 			_imgtimerindicator.y = _imgtimebarframe.y;
+			_imgtimerindicator.pivotX = (_imgtimerindicator.width / 2);
+			//_imgtimerindicator.pivotY = (_imgtimerindicator.height / 2);
+			
+			
+//_imgtimerindicator.alpha = 0.2;
+			
+			this.addChild(_timerfill);
+			this.addChild(_imgtimebarframe);
 			this.addChild(_imgtimerindicator);
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,15 +101,27 @@ package  com.poddcorp.candyfactory.screens.ui
 			_imggauge.height =_imggauge.width * 8;
 			_imggauge.x = Constants.STAGE_WIDTH - _imggauge.width;
 			_imggauge.y = (Constants.STAGE_HEIGHT -  _imggauge.height +_txtmultiplier.height) /2;
-			addChild(_imggauge);
+			
+			_gaugefill = new Quad(_imggauge.width * 0.6, _imggauge.height * 0.05, 0x1B3060);
+			//_gaugefill.width = _imggauge.width;
+			//_gaugefill.height = _imggauge.height;
+			_gaugefill.pivotX = _gaugefill.width / 2;
+			_gaugefill.x = _imggauge.x + (_imggauge.width / 2);
+			_gaugefill.y = _imggauge.y + (_imggauge.height * 0.97);
+			
+			gaugehieght = -_imggauge.height + (_imggauge.width);
 			
 			_imggaugeindicator = new Image(CandyFactory.assets.getTexture("timer_swirl"));
 			_imggaugeindicator.width = _imggauge.width;
 			_imggaugeindicator.height = _imggaugeindicator.width;
-			_imggaugeindicator.x = Constants.STAGE_WIDTH - _imggaugeindicator.width;
-			_imggaugeindicator.y = Constants.STAGE_HEIGHT * 0.9 -  _imggaugeindicator.height;
+			_imggaugeindicator.x = (Constants.STAGE_WIDTH - _imggaugeindicator.width);
+			_imggaugeindicator.y = (Constants.STAGE_HEIGHT * 0.9 -  _imggaugeindicator.height);
 			_imggaugeindicator.visible = false;
+			
+			this.addChild(_gaugefill);
+			this.addChild(_imggauge);
 			this.addChild(_imggaugeindicator);
+			//_imggaugeindicator.alpha = 0.5;
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var _multicase:Image = new Image(CandyFactory.assets.getTexture("box_100"));
@@ -135,12 +168,18 @@ package  com.poddcorp.candyfactory.screens.ui
 					GameAPI.checktheBlock = true;
 				}
 				//_txtCPM.text = ""+GameData.production;
-				_imgtimerindicator.x = timerDefault + ((_imgtimebarframe.width - _imgtimerindicator.width) * (timeNow / timeneeded));
-				_timebar.width = (Constants.STAGE_WIDTH * 0.673) / (timeneeded / timeNow);
-				if (GameData.timeMod != 1) {
-					_timebar.color = 0xBFCFFE;
-				}else {
-					_timebar.color = 0xFF8888;
+				//_imgtimerindicator.rotation += 0.1;
+				Starling.juggler.add(_imgtimerindicator);
+				//_imgtimerindicator.x = timerDefault + ((_imgtimebarframe.width - (_imgtimerindicator.width)) * (timeNow / timeneeded)) ;
+				_timerfill.width = (_imgtimebarframe.width - (_imgtimerindicator.width / 2)) * (timeNow / timeneeded);
+				_imgtimerindicator.x = (_timerfill.x + _timerfill.width);
+				if (GameAPI.timechange) {
+					if (GameData.timeMod != 1) {
+						_timerfill.color = 0xA5B1FF;
+					}else {
+						_timerfill.color = 0xFFA526;
+					}
+					GameAPI.timechange = false;
 				}
 				timeNow += GameData.timeMod;
 			}
@@ -148,7 +187,8 @@ package  com.poddcorp.candyfactory.screens.ui
 			//_imggaugeindicator.pivotY = 0;
 			var tween1:Tween = new Tween(_imggaugeindicator, 0.5, "easeOut")
 				_imggaugeindicator.visible = true;
-				tween1.moveTo(_imggauge.x, (gaugehieght / ((20 + (GameData.multiplier*10)) * GameData.multiplier) * GameData.gauge)+(_imggauge.y +_imggauge.height) -  _imggaugeindicator.height);
+				tween1.moveTo(_imggauge.x, (gaugehieght / ((20 + (GameData.multiplier*10)) ) * GameData.gauge)+(_imggauge.y +_imggauge.height) -  _imggaugeindicator.height);
+				_gaugefill.height = -((_imggauge.y + _imggauge.height) - (_imggaugeindicator.y+(_imggaugeindicator.height*0.75)));
 				Starling.juggler.add(tween1);
 			GameData.checkGauge();
 			_txtmultiplier.text = "x" + GameData.multiplier;

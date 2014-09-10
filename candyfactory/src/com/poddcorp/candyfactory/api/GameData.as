@@ -48,13 +48,18 @@ package com.poddcorp.candyfactory.api
 			score = 0;
 			gauge = 0;
 			multiplier = 1;
-			production = 160;
+			production = 240;
 			goal = 1600;
 			useTaster = 500;
 			useTaster = 0+saveDataObject.data.UseTaster;
 			useFreeze = 200;
 			useFreeze = 0+saveDataObject.data.UseFreeze;
 			timeMod = Constants.GAME_TIME;
+			Constants.CANDY1 = 70;
+			Constants.CANDY2 = 70;
+			Constants.CANDY3 = 70;
+			Constants.CANDY4 = 0;
+			Constants.CANDY5 = 0;
 		}
 		
 		public static function getHS():int 
@@ -125,9 +130,12 @@ package com.poddcorp.candyfactory.api
 		
 		public static function increaseProduction():int 
 		{
-			production += increment;
-			
-			//trace(goalIncrement);
+			if (production < 600) {
+				production += increment;
+				Constants.CANDY4 += 3;
+				Constants.CANDY5 += 1;
+				//trace(goalIncrement);
+			}
 			return production;
 		}
 	}

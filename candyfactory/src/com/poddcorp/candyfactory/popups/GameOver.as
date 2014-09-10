@@ -30,6 +30,7 @@ package  com.poddcorp.candyfactory.popups
 		private var _HScore:TextField 	= new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.10, "0", "Bubblebud", Constants.STAGE_HEIGHT / 20, 0x000000);
 		private var _gameover:Image;
 		private var placeholder:Sprite;
+		private var _header:Image;
 		
 		
 		public function GameOver() 
@@ -51,12 +52,19 @@ package  com.poddcorp.candyfactory.popups
 			_imgscreenmask.alpha = 0.5;
 			this.addChild(_imgscreenmask);
 			
-			_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard"));
+			_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard_blank_big"));
 			_imgclipboard.width = Constants.STAGE_WIDTH*0.8;
-			_imgclipboard.height = Constants.STAGE_HEIGHT * 0.8;
-			_imgclipboard.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
-			_imgclipboard.y = 0;
+				_imgclipboard.height = _imgclipboard.width * 1.5;;
+				_imgclipboard.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
+				_imgclipboard.y = (Constants.STAGE_HEIGHT - _imgclipboard.height) / 2;
             placeholder.addChild(_imgclipboard);
+			
+			_header = new Image(CandyFactory.assets.getTexture("header_gameover"));
+			_header.width = _imgclipboard.width / 2;
+			_header.height = _header.width / 1.6;
+			_header.x = (Constants.STAGE_WIDTH - _header.width)/2;
+			_header.y = _imgclipboard.y - _header.height/2;
+            placeholder.addChild(_header);
 			
 			_btnmainmenu = new Button(CandyFactory.assets.getTexture("btn_mainmenu"));
 			_btnmainmenu.height = (Constants.STAGE_WIDTH / 6)*1.2;
@@ -122,7 +130,7 @@ package  com.poddcorp.candyfactory.popups
 				GameAPI.paused = true;
 			}
 			var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
-			popup.moveTo(0,Constants.STAGE_HEIGHT*0.1);
+			popup.moveTo(0,0);
 			Starling.juggler.add(popup);
 			_imgscreenmask.visible = true;
 			
@@ -132,6 +140,7 @@ package  com.poddcorp.candyfactory.popups
 		
 		private function optionRetry(e:Event):void 
 		{
+			GameAudio.playSound("pop");
 			_btnmainmenu.visible = false;
 			_btnretry.visible = false;
 			GameAPI.StateChange = true;
@@ -139,6 +148,7 @@ package  com.poddcorp.candyfactory.popups
 		
 		private function optionMenu(e:Event):void 
 		{
+			GameAudio.playSound("pop");
 			_btnretry.visible = false;
 			_btnmainmenu.visible = false;
 			GameAPI.GameState = 1;

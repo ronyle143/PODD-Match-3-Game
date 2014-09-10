@@ -628,7 +628,7 @@ package com.poddcorp.candyfactory.screens.ui
 			var yy:Number = x.y;
 			var size:Number = x.size;*/
 			
-			var star:Image = new Image(CandyFactory.assets.getTexture("img_star"));
+			var star:Image = new Image(CandyFactory.assets.getTexture("img_candies"));
 			star.width = x.size;
 			star.height = x.size;
 			star.x = x.x;
@@ -638,7 +638,7 @@ package com.poddcorp.candyfactory.screens.ui
 			
 			var starTween:Tween = new Tween(star, 0.5, "easeOut");
 			starTween.fadeTo(0);
-			starTween.moveTo(star.x - (star.width*1.5), star.y - (star.height *1.5));
+			starTween.moveTo(star.x - (star.width*1), star.y - (star.height *1));
 			starTween.scaleTo(2);
 			Starling.juggler.add(starTween);
 			

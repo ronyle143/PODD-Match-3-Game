@@ -103,10 +103,12 @@ package  com.poddcorp.candyfactory.screens.ui
 		{
 			if (GameData.timeMod == 1 && GameData.useFreeze > 0) {
 				GameAudio.playSound("ice");
+				GameAPI.timechange = true;
 				GameData.timeMod = 0.1;
 				var myTimer:Timer = new Timer(10000, 1);
 				myTimer.addEventListener(TimerEvent.TIMER, timerListener);
-				function timerListener (e:TimerEvent):void{
+				function timerListener (e:TimerEvent):void {
+					GameAPI.timechange = true;
 					GameData.timeMod = 1;
 					_power2.filter = BlurFilter.createDropShadow();
 				}

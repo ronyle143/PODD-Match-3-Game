@@ -12,13 +12,13 @@ package com.poddcorp.candyfactory.api
 		public static const STATE_CHANGE:Boolean = true;
 		public static const GAME_SFX:Boolean = true;
 		public static const GAME_BMG:Boolean = true;
-		public static const GAME_VERSION:String = "v0.8.5"
+		public static const GAME_VERSION:String = "v0.8.8";
 		public static const GAME_TIME:Number = 1;
 		
-		public static const CANDY1:int = 6;
-		public static const CANDY2:int = 6;
-		public static const CANDY3:int = 6;
-		public static const CANDY4:int = 3;
-		public static const CANDY5:int = 1;
+		public static var CANDY1:int = 70;
+		public static var CANDY2:int = 70;
+		public static var CANDY3:int = 70;
+		public static var CANDY4:int = 0;
+		public static var CANDY5:int = 0;
     }
 }

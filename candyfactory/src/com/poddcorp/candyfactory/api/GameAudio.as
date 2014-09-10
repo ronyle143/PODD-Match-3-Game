@@ -1,6 +1,8 @@
 package com.poddcorp.candyfactory.api
 {
+	import flash.events.Event;
 	import flash.media.Sound;
+	import flash.media.SoundChannel;
 	import starling.errors.AbstractClassError;
 	public class GameAudio 
 	{
@@ -49,11 +51,34 @@ package com.poddcorp.candyfactory.api
 		[Embed(source="../../../../../../candyfactory_mobile/assets/audio/tick.mp3")]
 		static private var SoundTick : Class;
 		
+		[Embed(source="../../../../../../candyfactory_mobile/assets/audio/FreedomDance.mp3")]
+		static private var SoundMain : Class;
 		
 		
 		static private var sound:Sound;
+		static private var bgm:Sound;
+		static private var myChannel:SoundChannel = new SoundChannel();
+		static private var lastPosition:Number = 0;
 		
-		public static function playSound(snd:String,loop:Boolean = false):void 
+		public static function playBGM():void {
+			if(BGM){
+				bgm = (new SoundMain) as Sound; 
+				myChannel = bgm.play(lastPosition);
+				myChannel.addEventListener(Event.SOUND_COMPLETE, loopsound)
+			}
+		}
+		
+		static private function loopsound(e:Event):void 
+		{
+			playBGM();
+		}
+		
+		public static function stopBGM():void {
+			lastPosition = myChannel.position;
+			myChannel.stop();
+		}
+		
+		public static function playSound(snd:String):void 
 		{
 			switch (snd) 
 			{

@@ -29,6 +29,7 @@ package  com.poddcorp.candyfactory.screens
 		private var _spriteholdertitle:Sprite;
 		private var _btnshop:Button;
 		private var _btnHighScore:Button;
+		private var _btnCred:Button;
 		
 		public function ScreenMenu() 
 		{
@@ -39,6 +40,8 @@ package  com.poddcorp.candyfactory.screens
 		private function init(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			GameAudio.stopBGM();
+			GameAudio.playBGM();
 			
 			_imgmenubg = new Image(CandyFactory.assets.getTexture("img_bg"));
 			_imgmenubg.width = Constants.STAGE_WIDTH;
@@ -67,6 +70,7 @@ package  com.poddcorp.candyfactory.screens
 			_btnHighScore.height = Constants.STAGE_WIDTH * 0.132;
 			_btnHighScore.x = (Constants.STAGE_WIDTH - _btnHighScore.width) / 2;
 			_btnHighScore.y = (Constants.STAGE_HEIGHT - _btnHighScore.height) / 2;
+			_btnHighScore.filter = BlurFilter.createDropShadow();
 			this.addChild(_btnHighScore);
 			
 			_btnshop = new Button(CandyFactory.assets.getTexture("btn_shop"));
@@ -77,6 +81,7 @@ package  com.poddcorp.candyfactory.screens
 			_btnshop.height = Constants.STAGE_WIDTH * 0.132;
 			_btnshop.x = (Constants.STAGE_WIDTH - _btnshop.width) / 2;
 			_btnshop.y = (Constants.STAGE_HEIGHT - _btnshop.height) / 2;
+			_btnshop.filter = BlurFilter.createDropShadow();
 			this.addChild(_btnshop);
 			
 			_btnstart = new Button(CandyFactory.assets.getTexture("btn_play"));
@@ -84,12 +89,23 @@ package  com.poddcorp.candyfactory.screens
 			_btnstart.height = Constants.STAGE_WIDTH * 0.20;
 			_btnstart.x = (Constants.STAGE_WIDTH - _btnstart.width) / 3;
 			_btnstart.y = (Constants.STAGE_HEIGHT - _btnstart.height) / 2;
+			_btnstart.filter = BlurFilter.createDropShadow();
             this.addChild(_btnstart);
 			
 			_option = new TabOption();
+			_option.x = 0;
+			_option.y = 0;
 			this.addChild(_option);
 			
 			animateMenu();
+			
+			_btnCred = new Button(CandyFactory.assets.getTexture("info_button"));
+			_btnCred.width = Constants.STAGE_WIDTH / 8;
+			_btnCred.height = _btnCred.width;
+			_btnCred.x = Constants.STAGE_WIDTH - _btnCred.width;
+			_btnCred.y = Constants.STAGE_HEIGHT - _btnCred.height;
+			_btnCred.filter = BlurFilter.createDropShadow();
+			this.addChild(_btnCred);
 		}
 		
 		public function animateMenu():void 
@@ -132,6 +148,7 @@ package  com.poddcorp.candyfactory.screens
 				_btnstart.addEventListener(Event.TRIGGERED, onButtonClickStart);
 				_btnshop.addEventListener(Event.TRIGGERED, onButtonClickShop);
 				_btnHighScore.addEventListener(Event.TRIGGERED, animateHS);
+				_btnCred.addEventListener(Event.TRIGGERED, animateCredits);
 			}
 			
 		}
@@ -168,22 +185,24 @@ package  com.poddcorp.candyfactory.screens
 			///////score
 			
 			var _clip:Image = new Image(CandyFactory.assets.getTexture("clipboard_blank"));
-			_clip.width = Constants.STAGE_WIDTH*0.8;
-			_clip.height = Constants.STAGE_HEIGHT * 0.8;
+			_clip.height = Constants.STAGE_HEIGHT * 0.4;
+			_clip.width = _clip.height*1.5;
 			_clip.x = (Constants.STAGE_WIDTH - _clip.width) / 2;
-			_clip.y = 0;
+			_clip.y = (Constants.STAGE_HEIGHT - _clip.height) / 2;
             placeholder.addChild(_clip);
 			
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Your High score is: "+((1+GameData.saveDataObject.data.Highscore)-1), "BubbleBud", Constants.STAGE_HEIGHT * 0.03, 0x000000);
+			var temp:int =  0+GameData.saveDataObject.data.Highscore;
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.7, Constants.STAGE_HEIGHT * 0.3, "Your High score is: \n"+(temp), "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0x000000);
 			txt_SFX.x = ((Constants.STAGE_WIDTH) - txt_SFX.width)/2;
-			txt_SFX.y = Constants.STAGE_HEIGHT * 0.3 - (txt_SFX.height/2);
+			txt_SFX.y =_clip.y;
+	//txt_SFX.border = true;
 			placeholder.addChild(txt_SFX);
 			
-			var _imgcloseclipboard:Button = new Button(CandyFactory.assets.getTexture("btn_close"));
+			var _imgcloseclipboard:Button = new Button(CandyFactory.assets.getTexture("ok"));
 			_imgcloseclipboard.height = Constants.STAGE_WIDTH / 8;
 			_imgcloseclipboard.width = _imgcloseclipboard.height;
-			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width)*0.8
-			_imgcloseclipboard.y = _imgcloseclipboard.width*1.3;
+			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width) / 2;
+			_imgcloseclipboard.y = txt_SFX.y + txt_SFX.height;
 			placeholder.addChild(_imgcloseclipboard);
 			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
 				{
@@ -205,7 +224,64 @@ package  com.poddcorp.candyfactory.screens
 			/////////////////////////////////
 			placeholder.y = Constants.STAGE_HEIGHT
 			var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
-			popup.moveTo(0,Constants.STAGE_HEIGHT*0.1);
+			popup.moveTo(0,0);
+			Starling.juggler.add(popup);
+			_imgcloseclipboard.alpha = 0.25;
+			popup.onComplete = function():void {
+				_imgcloseclipboard.alpha = 1;
+			}
+		}
+		
+		private function animateCredits():void 
+		{
+			GameAudio.playSound("pop");
+			var _mask:Quad;
+			var placeholder:Sprite;
+			
+			_mask = new Quad(Constants.STAGE_WIDTH, Constants.STAGE_HEIGHT, 0x000000, true);
+			_mask.alpha = 0.5;
+			this.addChild(_mask);
+			
+			placeholder = new Sprite();
+			this.addChild(placeholder);
+			
+			///////score
+			
+			var _clip:Image = new Image(CandyFactory.assets.getTexture("credit_board"));
+			
+			_clip.height = Constants.STAGE_WIDTH;
+			_clip.width = _clip.height*0.8;
+			_clip.x = (Constants.STAGE_WIDTH - _clip.width) / 2;
+			_clip.y = 0;
+            placeholder.addChild(_clip);
+			
+			var _imgcloseclipboard:Button = new Button(CandyFactory.assets.getTexture("ok"));
+			_imgcloseclipboard.height = Constants.STAGE_WIDTH / 8;
+			_imgcloseclipboard.width = _imgcloseclipboard.height;
+			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width) / 2;
+			_imgcloseclipboard.y = _imgcloseclipboard.y + (_clip.height * 0.8);
+			placeholder.addChild(_imgcloseclipboard);
+			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
+				{
+					GameAudio.playSound("pop");
+					_mask.visible = false;
+					var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
+					popup.moveTo(0,Constants.STAGE_HEIGHT);
+					Starling.juggler.add(popup);
+					popup.onComplete = function():void {
+						placeholder.visible = false;
+						placeholder.y = 0;
+						
+						_mask.removeFromParent(true);
+						placeholder.removeFromParent(true);
+					}
+				}
+			);
+			
+			/////////////////////////////////
+			placeholder.y = Constants.STAGE_HEIGHT
+			var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
+			popup.moveTo(0,(Constants.STAGE_HEIGHT-placeholder.height)/2);
 			Starling.juggler.add(popup);
 			_imgcloseclipboard.alpha = 0.25;
 			popup.onComplete = function():void {

@@ -31,6 +31,7 @@ package  com.poddcorp.candyfactory.screens
 		private var _btnbuy2:Button;
 		private var _imgscreenmask:Quad;
 		private var _imgcloseclipboard:Button;
+		private var _header:Image;
 		public var _power1txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000);
 		public var _power2txt:TextField = new TextField(Constants.STAGE_WIDTH*0.16,Constants.STAGE_HEIGHT*0.05, "0", "Bubblebud", Constants.STAGE_HEIGHT / 25, 0x000000);
 		
@@ -44,7 +45,7 @@ package  com.poddcorp.candyfactory.screens
 		{
 			
 			ghostui = new TabOption();
-			addChild(ghostui);
+			//addChild(ghostui);
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			_imgbg = new Image(CandyFactory.assets.getTexture("img_bg"));
@@ -52,16 +53,25 @@ package  com.poddcorp.candyfactory.screens
 			_imgbg.height = Constants.STAGE_HEIGHT;
             this.addChild(_imgbg);
 			
-			_clipboard = new Image(CandyFactory.assets.getTexture("clipboard_shop"));
-			_clipboard.width = Constants.STAGE_WIDTH;
-			_clipboard.height = Constants.STAGE_HEIGHT;
+			_clipboard = new Image(CandyFactory.assets.getTexture("clipboard_blank_big"));
+			_clipboard.width = Constants.STAGE_WIDTH * 0.9;
+			_clipboard.height = Constants.STAGE_HEIGHT * 0.7;
+			_clipboard.x = (Constants.STAGE_WIDTH - _clipboard.width)/2;
+			_clipboard.y = (Constants.STAGE_HEIGHT - _clipboard.height)/2;
             this.addChild(_clipboard);
+			
+			_header = new Image(CandyFactory.assets.getTexture("header_shop"));
+			_header.width = _clipboard.width / 2;
+			_header.height = _header.width / 2.5;
+			_header.x = (Constants.STAGE_WIDTH - _header.width)/2;
+			_header.y = _clipboard.y - _header.height/2;
+            this.addChild(_header);
 			
 			_btnclose = new Button(CandyFactory.assets.getTexture("btn_close"));
 			_btnclose.width = Constants.STAGE_WIDTH / 6;
 			_btnclose.height = Constants.STAGE_WIDTH / 6;
-            _btnclose.x = (Constants.STAGE_WIDTH* 0.95) - _btnclose.width;
-            _btnclose.y = Constants.STAGE_HEIGHT * 0.15;
+            _btnclose.x = (_clipboard.x + _clipboard.width - _btnclose.width) * 0.95;
+            _btnclose.y = _clipboard.y + ((_clipboard.height - _btnclose.height) * 0.04);
 			this.addChild(_btnclose);
 			
 			_power1 = new Image(CandyFactory.assets.getTexture("scoopUp"));
@@ -142,8 +152,10 @@ package  com.poddcorp.candyfactory.screens
 		
 		private function buyPower1(e:Event):void 
 		{
-			_btnbuy1.visible = false;
-			_btnbuy2.visible = false;
+			_btnbuy1.removeEventListener(Event.TRIGGERED, buyPower1);
+			_btnbuy2.removeEventListener(Event.TRIGGERED, buyPower2);
+		//	_btnbuy1.visible = false;
+		//	_btnbuy2.visible = false;
 			GameData.useTaster += 1;
 			GameData.saveData();
 			_power1txt.text = "" + (0 + GameData.useTaster);
@@ -156,8 +168,10 @@ package  com.poddcorp.candyfactory.screens
 		
 		private function buyPower2(e:Event):void 
 		{
-			_btnbuy1.visible = false;
-			_btnbuy2.visible = false;
+			_btnbuy1.removeEventListener(Event.TRIGGERED, buyPower1);
+			_btnbuy2.removeEventListener(Event.TRIGGERED, buyPower2);
+		//	_btnbuy1.visible = false;
+		//	_btnbuy2.visible = false;
 			GameData.useFreeze += 1;
 			GameData.saveData();
 			_power2txt.text = "" + GameData.useFreeze;
@@ -183,38 +197,44 @@ package  com.poddcorp.candyfactory.screens
 			this.addChild(placeholder);
 			
 			_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard_blank"));
-			_imgclipboard.width = Constants.STAGE_WIDTH*0.8;
-			_imgclipboard.height = Constants.STAGE_HEIGHT * 0.8;
+			_imgclipboard.height = Constants.STAGE_HEIGHT * 0.4;
+			_imgclipboard.width = _imgclipboard.height * 1.5;
 			_imgclipboard.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
-			_imgclipboard.y = 0;
+			_imgclipboard.y = Constants.STAGE_HEIGHT * 0.1;
             placeholder.addChild(_imgclipboard);
 			
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.6, Constants.STAGE_HEIGHT * 0.25, "Item has been added into your inventory", "Bubblebud", Constants.STAGE_HEIGHT * 0.03, 0x000000);
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.7, Constants.STAGE_HEIGHT * 0.3, "Item has been added into your inventory", "Bubblebud", Constants.STAGE_HEIGHT * 0.04, 0x000000);
 			txt_SFX.x = ((Constants.STAGE_WIDTH) - txt_SFX.width)/2;
-			txt_SFX.y = Constants.STAGE_HEIGHT * 0.3 - (txt_SFX.height/2);
+			txt_SFX.y = Constants.STAGE_HEIGHT * 0.25 - (txt_SFX.height / 2);
+	//txt_SFX.border = true;
 			placeholder.addChild(txt_SFX);
 			
-			_imgcloseclipboard = new Button(CandyFactory.assets.getTexture("btn_close"));
+			_imgcloseclipboard = new Button(CandyFactory.assets.getTexture("ok"));
 			_imgcloseclipboard.height = Constants.STAGE_WIDTH / 8;
 			_imgcloseclipboard.width = _imgcloseclipboard.height;
-			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width)*0.8
-			_imgcloseclipboard.y = _imgcloseclipboard.width*1.3;
+			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width) / 2;
+			_imgcloseclipboard.y = Constants.STAGE_HEIGHT * 0.41;
 			placeholder.addChild(_imgcloseclipboard);
 			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
 				{
 					GameAudio.playSound("pop");
-					_imgscreenmask.visible = false;
 					var popup:Tween = new Tween(placeholder, 0.5, "easeOutBack");
 					popup.moveTo(0,Constants.STAGE_HEIGHT);
 					Starling.juggler.add(popup);
+					var fademask:Tween = new Tween(_imgscreenmask, 0.5, "easeOutBack");
+					fademask.fadeTo(0);
+					Starling.juggler.add(fademask);
 					popup.onComplete = function():void {
+						//_imgscreenmask.visible = false;
 						placeholder.visible = false;
 						placeholder.y = 0;
 						
 						_imgscreenmask.removeFromParent(true);
 						placeholder.removeFromParent(true);
-						_btnbuy1.visible = true;
-						_btnbuy2.visible = true;
+						//_btnbuy1.visible = true;
+						//_btnbuy2.visible = true;
+						_btnbuy1.addEventListener(Event.TRIGGERED, buyPower1);
+						_btnbuy2.addEventListener(Event.TRIGGERED, buyPower2);
 					}
 				}
 			);
