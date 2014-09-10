@@ -213,7 +213,7 @@ package  com.poddcorp.candyfactory.screens
 			_imgcloseclipboard.height = Constants.STAGE_WIDTH / 8;
 			_imgcloseclipboard.width = _imgcloseclipboard.height;
 			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width) / 2;
-			_imgcloseclipboard.y = Constants.STAGE_HEIGHT * 0.41;
+			_imgcloseclipboard.y = _imgclipboard.y + (_imgclipboard.height * 0.9) - _imgcloseclipboard.width;
 			placeholder.addChild(_imgcloseclipboard);
 			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
 				{
@@ -256,7 +256,7 @@ package  com.poddcorp.candyfactory.screens
 		}
 		
 		private function pointShow(x:Image,str:String):void {
-			var txxt:TextField = new TextField(Constants.STAGE_WIDTH/2,(Constants.STAGE_WIDTH / 13.5)*2, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0xFFFFFF);
+			var txxt:TextField = new TextField(Constants.STAGE_WIDTH / 2, (Constants.STAGE_WIDTH / 13.5) * 2, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0x000000);
 			txxt.x = x.x - (x.width/2);
 			//txxt.border = true;
 			txxt.y = x.y

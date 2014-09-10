@@ -20,13 +20,13 @@ package  com.poddcorp.candyfactory.popups
 	public class GameOver extends Sprite 
 	{
 		
-		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Bubblebud", Constants.STAGE_HEIGHT / 32, 0x000000);
+		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.06, "0", "Bubblebud", Constants.STAGE_HEIGHT / 32, 0x000000);
 		private var _Score:TextField 	= new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.10, "0", "Bubblebud", Constants.STAGE_HEIGHT / 20, 0x000000);
 		private var _imgscreenmask:Quad;
 		private var _imgclipboard:Image;
 		private var _btnmainmenu:Button;
 		private var _btnretry:Button;
-		private var _txtHScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.07, "0", "Bubblebud", Constants.STAGE_HEIGHT / 32, 0x000000);
+		private var _txtHScore:TextField = new TextField(Constants.STAGE_WIDTH*0.4,Constants.STAGE_HEIGHT*0.06, "0", "Bubblebud", Constants.STAGE_HEIGHT / 32, 0x000000);
 		private var _HScore:TextField 	= new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.10, "0", "Bubblebud", Constants.STAGE_HEIGHT / 20, 0x000000);
 		private var _gameover:Image;
 		private var placeholder:Sprite;
@@ -53,8 +53,8 @@ package  com.poddcorp.candyfactory.popups
 			this.addChild(_imgscreenmask);
 			
 			_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard_blank_big"));
-			_imgclipboard.width = Constants.STAGE_WIDTH*0.8;
-				_imgclipboard.height = _imgclipboard.width * 1.5;;
+			_imgclipboard.width = Constants.STAGE_WIDTH*0.7;
+				_imgclipboard.height = _imgclipboard.width * 1.3;
 				_imgclipboard.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
 				_imgclipboard.y = (Constants.STAGE_HEIGHT - _imgclipboard.height) / 2;
             placeholder.addChild(_imgclipboard);
@@ -66,43 +66,48 @@ package  com.poddcorp.candyfactory.popups
 			_header.y = _imgclipboard.y - _header.height/2;
             placeholder.addChild(_header);
 			
-			_btnmainmenu = new Button(CandyFactory.assets.getTexture("btn_mainmenu"));
-			_btnmainmenu.height = (Constants.STAGE_WIDTH / 6)*1.2;
-			_btnmainmenu.width = _btnmainmenu.height*3;
-			_btnmainmenu.x = (Constants.STAGE_WIDTH - _btnmainmenu.width)/2;
-			_btnmainmenu.y = Constants.STAGE_HEIGHT * 0.6;
-			placeholder.addChild(_btnmainmenu);
-			
-			_btnretry = new Button(CandyFactory.assets.getTexture("btn_retry"));
-			_btnretry.height =Constants.STAGE_WIDTH / 6*1.2;
-			_btnretry.width = _btnretry.height*3;
-			_btnretry.x = (Constants.STAGE_WIDTH - _btnretry.width)/2;
-			_btnretry.y = _btnmainmenu.y - _btnmainmenu.height;
-			placeholder.addChild(_btnretry);
-			
 			_Score.text = "Score:" ;
 			_Score.x = (Constants.STAGE_WIDTH - _Score.width)/2;
-			_Score.y = Constants.STAGE_HEIGHT/2 * 0.35;
+			_Score.y = _imgclipboard.y + (_imgclipboard.height * 0.1);
 			_Score.filter = BlurFilter.createDropShadow();
 			placeholder.addChild(_Score);
 			
 			_txtScore.text = "" + GameData.score ;
 			_txtScore.x = (this.width - _txtScore.width)/2;
-			_txtScore.y = Constants.STAGE_HEIGHT/2 * 0.5;
+			_txtScore.y = _Score.y + _txtScore.height;
 			_txtScore.filter = BlurFilter.createDropShadow();
 			placeholder.addChild(_txtScore);
 			
 			_HScore.text = "High Score:" ;
 			_HScore.x = (Constants.STAGE_WIDTH - _HScore.width)/2;
-			_HScore.y = Constants.STAGE_HEIGHT/2 * 0.6;
+			_HScore.y = _txtScore.y + _txtScore.height;
 			_HScore.filter = BlurFilter.createDropShadow();
 			placeholder.addChild(_HScore);
 			
-			_txtHScore.text = "" + GameData.saveDataObject.data.Highscore ;
+			var temp:int = GameData.saveDataObject.data.Highscore;
+			
+			_txtHScore.text = "" +  temp;
 			_txtHScore.x = (this.width - _txtHScore.width)/2;
 			_txtHScore.y = _HScore.y + _txtHScore.height;
 			_txtHScore.filter = BlurFilter.createDropShadow();
 			placeholder.addChild(_txtHScore);
+			
+			var sizeY:Number = ((_imgclipboard.y + _imgclipboard.height) - (_txtHScore.y + _txtHScore.height))/4;
+			trace(sizeY);
+			
+			_btnretry = new Button(CandyFactory.assets.getTexture("btn_retry"));
+			_btnretry.height = sizeY*1.5;
+			_btnretry.width = _btnretry.height*3;
+			_btnretry.x = (Constants.STAGE_WIDTH - _btnretry.width)/2;
+			_btnretry.y = (_txtHScore.y + _txtHScore.height) + (sizeY*0.5);
+			placeholder.addChild(_btnretry);
+			
+			_btnmainmenu = new Button(CandyFactory.assets.getTexture("btn_mainmenu"));
+			_btnmainmenu.height = sizeY;
+			_btnmainmenu.width = _btnmainmenu.height*3;
+			_btnmainmenu.x = (Constants.STAGE_WIDTH - _btnmainmenu.width)/2;
+			_btnmainmenu.y = _btnretry.y + _btnretry.height + (sizeY * 0.25);
+			placeholder.addChild(_btnmainmenu);
 			
 			this.visible = false;
 			placeholder.y=Constants.STAGE_HEIGHT * 0.1;

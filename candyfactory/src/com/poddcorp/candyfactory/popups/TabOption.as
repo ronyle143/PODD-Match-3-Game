@@ -50,13 +50,13 @@ package  com.poddcorp.candyfactory.popups
 			if (GameAPI.GameState == 1) {
 				_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard_blank"));
 				_imgclipboard.width = Constants.STAGE_WIDTH*0.8;
-				_imgclipboard.height = _imgclipboard.width * 0.8;
+				_imgclipboard.height = _imgclipboard.width * 0.7;
 				_imgclipboard.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
 				_imgclipboard.y = (Constants.STAGE_HEIGHT - _imgclipboard.height) / 2;
 			}else {
 				_imgclipboard = new Image(CandyFactory.assets.getTexture("clipboard_blank_big"));
 				_imgclipboard.width = Constants.STAGE_WIDTH*0.8;
-				_imgclipboard.height = _imgclipboard.width * 1.5;
+				_imgclipboard.height = _imgclipboard.width * 1.3;
 				_imgclipboard.x = (Constants.STAGE_WIDTH - _imgclipboard.width) / 2;
 				_imgclipboard.y = (Constants.STAGE_HEIGHT - _imgclipboard.height) / 2;
 			}			
@@ -73,7 +73,7 @@ package  com.poddcorp.candyfactory.popups
 			_imgcheckbox1c.height = (_imgclipboard.width/5);
 			_imgcheckbox1c.width = _imgcheckbox1c.height;
 			_imgcheckbox1c.x = _imgclipboard.width /5;
-			_imgcheckbox1c.y = _imgclipboard.y + (_imgcheckbox1c.height * 1);
+			_imgcheckbox1c.y = _imgclipboard.y + (_imgcheckbox1c.height * 0.75);
 			placeholder.addChild(_imgcheckbox1c);
 			
 			_imgcheckbox1 = new Button(CandyFactory.assets.getTexture("sfx_x"));
@@ -103,7 +103,7 @@ package  com.poddcorp.candyfactory.popups
 			_imgcheckbox2c.height =_imgcheckbox1.height;
 			_imgcheckbox2c.width = _imgcheckbox2c.height;
 			_imgcheckbox2c.x = _imgcheckbox1.x;
-			_imgcheckbox2c.y = _imgcheckbox1c.y + (_imgcheckbox2c.height * 1.5);
+			_imgcheckbox2c.y = _imgcheckbox1c.y + (_imgcheckbox2c.height * 1.25);
 			placeholder.addChild(_imgcheckbox2c);
 			
 			_imgcheckbox2 = new Button(CandyFactory.assets.getTexture("bgm_x"));
@@ -136,15 +136,17 @@ package  com.poddcorp.candyfactory.popups
 				_imgcloseclipboard.y = _imgclipboard.y+(_imgcloseclipboard.height*0.2);
 				placeholder.addChild(_imgcloseclipboard);
 			}else {	
+				var sizeY:int = ((_imgclipboard.y + _imgclipboard.height) - (_imgcheckbox2c.y + _imgcheckbox2c.height))/3;
+				
 				_btnresume = new Button(CandyFactory.assets.getTexture("btn_resume"));
-				_btnresume.height =_imgcheckbox1.height*1.3;
+				_btnresume.height = sizeY;
 				_btnresume.width = _btnresume.height*3;
 				_btnresume.x = (Constants.STAGE_WIDTH - _btnresume.width)/2;
-				_btnresume.y = _imgcheckbox2c.y + (_imgcheckbox2c.height * 1.5);
+				_btnresume.y = _imgcheckbox2c.y + _imgcheckbox2c.height + (sizeY * 0.5);
 				placeholder.addChild(_btnresume);
 				
 				_btnmainmenu = new Button(CandyFactory.assets.getTexture("btn_mainmenu"));
-				_btnmainmenu.height =_imgcheckbox1.height*1.3;
+				_btnmainmenu.height = sizeY;
 				_btnmainmenu.width = _btnmainmenu.height*3;
 				_btnmainmenu.x = (Constants.STAGE_WIDTH - _btnmainmenu.width)/2;
 				_btnmainmenu.y = _btnresume.y + _btnresume.height;

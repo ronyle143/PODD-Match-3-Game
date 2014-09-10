@@ -4,8 +4,10 @@ package  com.poddcorp.candyfactory.screens.ui
 	import com.poddcorp.candyfactory.api.GameAPI;
 	import com.poddcorp.candyfactory.api.GameData;
 	import com.poddcorp.candyfactory.core.CandyFactory;
+	import feathers.controls.ImageLoader;
 	import feathers.controls.text.TextFieldTextRenderer;
-	import flash.text.TextFormat;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -20,7 +22,7 @@ package  com.poddcorp.candyfactory.screens.ui
 	public class DisplayUI extends Sprite 
 	{		
 		private var _txtScore:TextField = new TextField(Constants.STAGE_WIDTH*0.8,Constants.STAGE_HEIGHT*0.05, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFF11); //0xFF6666 0xFFFFFF
-		private var _txtmultiplier:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFFFF);
+		public var _txtmultiplier:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0xFFFFFF);
 		private var _timebar:Quad;
 		private var _imgtimebarframe:Image;
 		private var _imgscoregoal:Image;
@@ -38,6 +40,7 @@ package  com.poddcorp.candyfactory.screens.ui
 		private var _timerswirl:Image;
 		private var _timerfill:Quad;
 		private var _gaugefill:Quad;
+		private var _multicase:Image;
 		public var powerUpUI:PowerUp;
 		
 		public function DisplayUI() 
@@ -124,7 +127,7 @@ package  com.poddcorp.candyfactory.screens.ui
 			//_imggaugeindicator.alpha = 0.5;
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			var _multicase:Image = new Image(CandyFactory.assets.getTexture("box_100"));
+			_multicase = new Image(CandyFactory.assets.getTexture("box_100"));
 			_multicase.width = _imggauge.width;
 			_multicase.height = _txtmultiplier.height;
 			_multicase.x = Constants.STAGE_WIDTH - _multicase.width;
@@ -172,7 +175,7 @@ package  com.poddcorp.candyfactory.screens.ui
 				Starling.juggler.add(_imgtimerindicator);
 				//_imgtimerindicator.x = timerDefault + ((_imgtimebarframe.width - (_imgtimerindicator.width)) * (timeNow / timeneeded)) ;
 				_timerfill.width = (_imgtimebarframe.width - (_imgtimerindicator.width / 2)) * (timeNow / timeneeded);
-				_imgtimerindicator.x = (_timerfill.x + _timerfill.width);
+				_imgtimerindicator.x = ((_imgtimebarframe.x + (_imgtimerindicator.width / 2)) + _timerfill.width);
 				if (GameAPI.timechange) {
 					if (GameData.timeMod != 1) {
 						_timerfill.color = 0xA5B1FF;
@@ -182,15 +185,28 @@ package  com.poddcorp.candyfactory.screens.ui
 					GameAPI.timechange = false;
 				}
 				timeNow += GameData.timeMod;
+			}else {
+				Starling.juggler.remove(_imgtimerindicator);
 			}
 			GameData.checkGoal();
 			//_imggaugeindicator.pivotY = 0;
 			var tween1:Tween = new Tween(_imggaugeindicator, 0.5, "easeOut")
-				_imggaugeindicator.visible = true;
-				tween1.moveTo(_imggauge.x, (gaugehieght / ((20 + (GameData.multiplier*10)) ) * GameData.gauge)+(_imggauge.y +_imggauge.height) -  _imggaugeindicator.height);
-				_gaugefill.height = -((_imggauge.y + _imggauge.height) - (_imggaugeindicator.y+(_imggaugeindicator.height*0.75)));
-				Starling.juggler.add(tween1);
-			GameData.checkGauge();
+			_imggaugeindicator.visible = true;
+			tween1.moveTo(_imggauge.x, (gaugehieght / ((20 + (GameData.multiplier*10)) ) * GameData.gauge)+(_imggauge.y +_imggauge.height) -  _imggaugeindicator.height);
+			_gaugefill.height = -((_imggauge.y + _imggauge.height) - (_imggaugeindicator.y+(_imggaugeindicator.height*0.75)));
+			Starling.juggler.add(tween1);
+			//GameData.checkGauge();
+			
+			//  #######
+			//  #  X  #
+			//  #######
+			if (GameData.gauge >= 20 + (10*GameData.multiplier)) {
+			//if (GameData.gauge >= 1) {	
+				GameData.increaseMultiplier();						
+				GameData.gauge = 0;	
+				popper(_txtmultiplier, "+1");
+			}
+			
 			_txtmultiplier.text = "x" + GameData.multiplier;
 		}
 		
@@ -199,6 +215,27 @@ package  com.poddcorp.candyfactory.screens.ui
 			//_txtScore.text = ""+GameData.score;
 		}
 		
+		private function popper(x:Object,str:String):void {
+			var txxt:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.05, 0xFFFF00);
+			txxt.x = x.x + ((x.width - txxt.width)/2);
+			//txxt.border = true;
+			txxt.y = x.y
+			txxt.text = "" + str;
+			trace(txxt.text);
+			this.addChild(txxt);
+			var popup0:Tween = new Tween(txxt, 2, "easeOut");
+			popup0.fadeTo(0);
+			popup0.moveTo(txxt.x,txxt.y - (txxt.height * 2));
+			Starling.juggler.add(popup0);
+			txxt.touchable = false;
+			
+			var pointkill:Timer = new Timer(1500, 1);
+			pointkill.addEventListener(TimerEvent.TIMER, PKtimer);
+			function PKtimer (e:TimerEvent):void{
+				txxt.removeFromParent(true);
+			}
+			pointkill.start();
+		}
 	}
 
 }

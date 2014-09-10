@@ -97,7 +97,7 @@ package com.poddcorp.candyfactory.api
 			return score;
 		}
 		
-		public static function checkGauge():void 
+		/*public static function checkGauge():void 
 		{
 			//trace("checking goal: " + score + "/" + goal);
 			if (gauge >= 20 + (10*multiplier)) {
@@ -105,9 +105,9 @@ package com.poddcorp.candyfactory.api
 				gauge = 0;
 				//gauge = 20 + (10*(multiplier-1));
 			}
-		}
+		}*/
 		
-		static private function increaseMultiplier():void 
+		static public function increaseMultiplier():void 
 		{
 			multiplier++;
 			GameAudio.playSound("increase");

@@ -202,7 +202,7 @@ package  com.poddcorp.candyfactory.screens
 			_imgcloseclipboard.height = Constants.STAGE_WIDTH / 8;
 			_imgcloseclipboard.width = _imgcloseclipboard.height;
 			_imgcloseclipboard.x = (Constants.STAGE_WIDTH - _imgcloseclipboard.width) / 2;
-			_imgcloseclipboard.y = txt_SFX.y + txt_SFX.height;
+			_imgcloseclipboard.y = _clip.y + (_clip.height * 0.9) - _imgcloseclipboard.width;
 			placeholder.addChild(_imgcloseclipboard);
 			_imgcloseclipboard.addEventListener(Event.TRIGGERED, function closeBuy():void 
 				{

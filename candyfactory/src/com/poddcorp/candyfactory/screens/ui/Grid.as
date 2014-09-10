@@ -212,7 +212,9 @@ package com.poddcorp.candyfactory.screens.ui
 				{
 					var g:int = 0;
 					for (g = 0; g < ary[xx].length; g++) {
-						picked.push([xx,g]);
+						if (yy != g) {
+							picked.push([xx,g]);
+						}
 					}
 					for (g = 0; g < 9; g++) {
 						if (ary[g].length - 1 >= yy) {
@@ -331,7 +333,9 @@ package com.poddcorp.candyfactory.screens.ui
 					}else{
 							if (GameData.multiplier > 1) {
 								GameData.multiplier--;
+							popper(_displayUI._txtmultiplier, "-1");
 								GameAudio.playSound("decrease");
+								trace(_displayUI._txtmultiplier.x, _displayUI._txtmultiplier.y, "-1");
 							};
 							GameAudio.playSound("tick");
 							GameData.gauge = 0;
@@ -349,6 +353,28 @@ package com.poddcorp.candyfactory.screens.ui
 					}*/
 				trace("[" + picked.length + "] " + picked);
 			}
+		}
+		
+		private function popper(x:Object,str:String):void {
+			var txxt:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.05, 0xFF0000);
+			txxt.x = x.x + ((x.width - txxt.width)/2);
+			//txxt.border = true;
+			txxt.y = x.y
+			txxt.text = "" + str;
+			trace(txxt.text);
+			this.addChild(txxt);
+			var popup0:Tween = new Tween(txxt, 2, "easeOut");
+			popup0.fadeTo(0);
+			popup0.moveTo(txxt.x,txxt.y - (txxt.height * 2));
+			Starling.juggler.add(popup0);
+			txxt.touchable = false;
+			
+			var pointkill:Timer = new Timer(1500, 1);
+			pointkill.addEventListener(TimerEvent.TIMER, PKtimer);
+			function PKtimer (e:TimerEvent):void{
+				txxt.removeFromParent(true);
+			}
+			pointkill.start();
 		}
 		
 		private function check(xx:int, yy:int, type:String):Array
@@ -496,7 +522,7 @@ package com.poddcorp.candyfactory.screens.ui
 			if (thalos) {
 				trace("trigger",delivery[0], delivery[1]);
 				pointShow(delivery[0], delivery[1]+ 1, "EXCELLENT!");
-				addStack();
+				//addStack();
 				GameAPI.checktheBlock = false;
 			}
 		}
