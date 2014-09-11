@@ -21,7 +21,7 @@ package com.poddcorp.candyfactory.api
 		public static var		production		:int		= 60;
 		public static var		goal			:int		= 500;
 		
-		public static var		increment		:int		= 20;
+		public static var		increment		:int		= 25;
 		public static var		goalIncrement	:Number		= 1.5;
 		public static var		timeMod			:Number		= Constants.GAME_TIME;
 		

@@ -256,7 +256,7 @@ package  com.poddcorp.candyfactory.screens
 		}
 		
 		private function pointShow(x:Image,str:String):void {
-			var txxt:TextField = new TextField(Constants.STAGE_WIDTH / 2, (Constants.STAGE_WIDTH / 13.5) * 2, "0", "Showcard Gothic", Constants.STAGE_HEIGHT / 24, 0x000000);
+			var txxt:TextField = new TextField(Constants.STAGE_WIDTH / 2, (Constants.STAGE_WIDTH / 13.5) * 2, "0", "Bubblebud", Constants.STAGE_HEIGHT / 24, 0x000000);
 			txxt.x = x.x - (x.width/2);
 			//txxt.border = true;
 			txxt.y = x.y

@@ -84,7 +84,7 @@ package  com.poddcorp.candyfactory.popups
 			_HScore.filter = BlurFilter.createDropShadow();
 			placeholder.addChild(_HScore);
 			
-			var temp:int = GameData.saveDataObject.data.Highscore;
+			var temp:int = 0+ GameData.saveDataObject.data.Highscore;
 			
 			_txtHScore.text = "" +  temp;
 			_txtHScore.x = (this.width - _txtHScore.width)/2;
@@ -93,7 +93,7 @@ package  com.poddcorp.candyfactory.popups
 			placeholder.addChild(_txtHScore);
 			
 			var sizeY:Number = ((_imgclipboard.y + _imgclipboard.height) - (_txtHScore.y + _txtHScore.height))/4;
-			trace(sizeY);
+			//trace(sizeY);
 			
 			_btnretry = new Button(CandyFactory.assets.getTexture("btn_retry"));
 			_btnretry.height = sizeY*1.5;
@@ -118,7 +118,8 @@ package  com.poddcorp.candyfactory.popups
 			this.visible = true;
 			placeholder.y = Constants.STAGE_HEIGHT;
 			_txtScore.text = "" + GameData.score ;
-			_txtHScore.text = "" + (0 + GameData.saveDataObject.data.Highscore) ;
+			var temp:int =  0+GameData.saveDataObject.data.Highscore;
+			_txtHScore.text = "" + (temp) ;
 			if (GameData.score < GameData.saveDataObject.data.Highscore) {
 				GameAudio.playSound("gameover");
 			}else {

@@ -24,6 +24,7 @@ package  com.poddcorp.candyfactory.screens
 		private var option:TabOption;
 		private var grid:Grid;
 		private var gameOver:GameOver;
+		private var btn_options:Image;
 		
 		public function ScreenPlay() 
 		{
@@ -46,7 +47,14 @@ package  com.poddcorp.candyfactory.screens
 			grid = new Grid();
 			addChild(grid);
 			
-			
+			btn_options = new Image(CandyFactory.assets.getTexture("btn_option"));
+			btn_options.height = Constants.STAGE_WIDTH / 8;
+			btn_options.width = btn_options.height;
+            btn_options.x = this.width - btn_options.width;
+            btn_options.y = 0;
+			btn_options.alpha = 0.5;
+			btn_options.filter = BlurFilter.createDropShadow();
+			this.addChild(btn_options);
 			
 			
 			option = new TabOption();
@@ -61,7 +69,8 @@ package  com.poddcorp.candyfactory.screens
 			
 			var myTimer:Timer = new Timer(3000, 1);
 			myTimer.addEventListener(TimerEvent.TIMER, timerListener);
-			function timerListener (e:TimerEvent):void{
+			function timerListener (e:TimerEvent):void {
+				btn_options.visible = false;
 				option.visible = true;
 			}
 			myTimer.start();

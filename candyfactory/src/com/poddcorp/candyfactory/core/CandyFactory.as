@@ -2,6 +2,7 @@ package com.poddcorp.candyfactory.core
 {
 	import com.poddcorp.candyfactory.api.Constants;
 	import com.poddcorp.candyfactory.api.GameAPI;
+	import com.poddcorp.candyfactory.api.GameAudio;
 	import com.poddcorp.candyfactory.screens.ScreenMenu;
 	import com.poddcorp.candyfactory.screens.ScreenPlay;
 	import com.poddcorp.candyfactory.screens.ScreenShop;
@@ -40,7 +41,7 @@ package com.poddcorp.candyfactory.core
 			bg.width = stage.stageWidth;
 			bg.height = stage.stageHeight;
 			addChild(bg);//*/
-			
+			GameAudio.init();
             assets.loadQueue(function onProgress(ratio:Number):void
             {
                 if (ratio == 1)

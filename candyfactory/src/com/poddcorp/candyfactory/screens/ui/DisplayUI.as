@@ -33,7 +33,6 @@ package  com.poddcorp.candyfactory.screens.ui
 		public var timeNow:Number;
 		private var gaugehieght:Number = -(Constants.STAGE_HEIGHT * 0.464);
 		private var timerDefault:Number;
-		private var txxt:TextField;
 		
 		private var _imgtimerindicator:MovieClip;
 		
@@ -41,7 +40,10 @@ package  com.poddcorp.candyfactory.screens.ui
 		private var _timerfill:Quad;
 		private var _gaugefill:Quad;
 		private var _multicase:Image;
+		private var _swirlX:Number;
 		public var powerUpUI:PowerUp;
+		
+		private var _casehider:Array = [];
 		
 		public function DisplayUI() 
 		{
@@ -71,23 +73,25 @@ package  com.poddcorp.candyfactory.screens.ui
 			_imgtimebarframe.width = Constants.STAGE_WIDTH * 0.74;
 			_imgtimebarframe.height = _imgtimebarframe.width / 8;
 			_imgtimebarframe.x = (Constants.STAGE_WIDTH - _imgtimebarframe.width) / 2;
-			_imgtimebarframe.y = Constants.STAGE_HEIGHT - ((GameData.gridgap + _imgtimebarframe.height) / 2);
-			
-			_timerfill = new Quad(_imgtimebarframe.width * 0.05, _imgtimebarframe.height * 0.5, 0xFFA526);
+			_imgtimebarframe.y =Constants.STAGE_HEIGHT - ((GameData.gridgap + _imgtimebarframe.height) / 2);
+			//Constants.STAGE_HEIGHT * 0.1 ;//
+			_timerfill = new Quad(_imgtimebarframe.width * 0.01, _imgtimebarframe.height * 0.5, 0xFFA526);
 			//_timerfill.width = _imgtimebarframe.width;
 			//_timerfill.height = _imgtimebarframe.height;
 			_timerfill.x = _imgtimebarframe.x + (_timerfill.height * 0.5);
 			_timerfill.y = _imgtimebarframe.y + (_timerfill.height * 1);
 			_timerfill.pivotY = _timerfill.height / 2;
 			
+			_swirlX = _imgtimebarframe.x - (_imgtimebarframe.height / 2);
+			
 			//_imgtimerindicator = new Quad(_imgtimebarframe.width / 8, _imgtimebarframe.width / 8, 0xFFA526); _imgtimerindicator.alpha = 0.5;
 			_imgtimerindicator = new MovieClip(CandyFactory.assets.getTextures("swirl_0"), 18);
 			_imgtimerindicator.width = _imgtimebarframe.height;
 			_imgtimerindicator.height = _imgtimebarframe.height;
-			_imgtimerindicator.x = _imgtimebarframe.x + (_imgtimerindicator.width / 2);
+			_imgtimerindicator.x = _swirlX;
 			timerDefault = _imgtimerindicator.x;
 			_imgtimerindicator.y = _imgtimebarframe.y;
-			_imgtimerindicator.pivotX = (_imgtimerindicator.width / 2);
+			//_imgtimerindicator.pivotX = (_imgtimerindicator.width / 2);
 			//_imgtimerindicator.pivotY = (_imgtimerindicator.height / 2);
 			
 			
@@ -128,19 +132,19 @@ package  com.poddcorp.candyfactory.screens.ui
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			_multicase = new Image(CandyFactory.assets.getTexture("box_100"));
-			_multicase.width = _imggauge.width;
+			_multicase.width = _imggauge.width*1.1;
 			_multicase.height = _txtmultiplier.height;
 			_multicase.x = Constants.STAGE_WIDTH - _multicase.width;
 			_multicase.y = _imggauge.y - _txtmultiplier.height;
 			this.addChild(_multicase);
 			
 			_txtmultiplier.text = "x" + GameData.multiplier;
-			_txtmultiplier.width = _imggauge.width;
+			_txtmultiplier.width = _imggauge.width*1.1;
 			_txtmultiplier.x = Constants.STAGE_WIDTH - _txtmultiplier.width;
 			_txtmultiplier.y = _imggauge.y - _txtmultiplier.height;
 			_txtmultiplier.hAlign = "center";
 			_txtmultiplier.filter = BlurFilter.createDropShadow();
-		//_txtmultiplier.border = true;
+	//_txtmultiplier.border = true;
 			addChild(_txtmultiplier);
 			
 			powerUpUI = new PowerUp();
@@ -175,7 +179,14 @@ package  com.poddcorp.candyfactory.screens.ui
 				Starling.juggler.add(_imgtimerindicator);
 				//_imgtimerindicator.x = timerDefault + ((_imgtimebarframe.width - (_imgtimerindicator.width)) * (timeNow / timeneeded)) ;
 				_timerfill.width = (_imgtimebarframe.width - (_imgtimerindicator.width / 2)) * (timeNow / timeneeded);
-				_imgtimerindicator.x = ((_imgtimebarframe.x + (_imgtimerindicator.width / 2)) + _timerfill.width);
+				
+				
+				_imgtimerindicator.x = _timerfill.x + _timerfill.width - (_imgtimerindicator.width/2);
+				
+				
+				//_imgtimerindicator.x = ((_imgtimebarframe.x + (_imgtimerindicator.width / 2)) + _timerfill.width);
+				
+				//trace(_imgtimerindicator.x);
 				if (GameAPI.timechange) {
 					if (GameData.timeMod != 1) {
 						_timerfill.color = 0xA5B1FF;
@@ -204,7 +215,8 @@ package  com.poddcorp.candyfactory.screens.ui
 			//if (GameData.gauge >= 1) {	
 				GameData.increaseMultiplier();						
 				GameData.gauge = 0;	
-				popper(_txtmultiplier, "+1");
+				var timp:String = "x" + GameData.multiplier;
+				popper(_txtmultiplier, timp,0xFFFF00);
 			}
 			
 			_txtmultiplier.text = "x" + GameData.multiplier;
@@ -215,26 +227,49 @@ package  com.poddcorp.candyfactory.screens.ui
 			//_txtScore.text = ""+GameData.score;
 		}
 		
-		private function popper(x:Object,str:String):void {
-			var txxt:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.05, 0xFFFF00);
-			txxt.x = x.x + ((x.width - txxt.width)/2);
-			//txxt.border = true;
+		public function popper(x:Object, str:String, col:uint = 0xFFFFFF, duration:int = 2 ):void {
+			if (_casehider.length > 0) {
+				_casehider[0].visible = 0;
+			}
+			var txxt:TextField = new TextField(Constants.STAGE_WIDTH * 0.5,Constants.STAGE_HEIGHT*0.16, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.15, col);
+			txxt.x = ((x.x + x.width) - (txxt.width * 0.1) / 2);
+	//txxt.border = true;
 			txxt.y = x.y
 			txxt.text = "" + str;
-			trace(txxt.text);
-			this.addChild(txxt);
-			var popup0:Tween = new Tween(txxt, 2, "easeOut");
-			popup0.fadeTo(0);
-			popup0.moveTo(txxt.x,txxt.y - (txxt.height * 2));
-			Starling.juggler.add(popup0);
 			txxt.touchable = false;
+			txxt.filter = BlurFilter.createGlow(Color.BLACK);
+			_casehider.unshift(txxt);
+			this.addChild(txxt);
 			
-			var pointkill:Timer = new Timer(1500, 1);
-			pointkill.addEventListener(TimerEvent.TIMER, PKtimer);
-			function PKtimer (e:TimerEvent):void{
-				txxt.removeFromParent(true);
+			var temp:Number = txxt.width;
+			
+			var popup:Tween = new Tween(txxt, 0.01, "easeOut");
+			popup.scaleTo(0.1);
+			Starling.juggler.add(popup);
+			popup.onComplete = function():void {
+				
+				var popup0:Tween = new Tween(txxt, duration/2, "easeOut");
+				//popup0.moveTo(txxt.x,txxt.y - (txxt.height * 2));
+				popup0.moveTo((Constants.STAGE_WIDTH - (temp))/2, txxt.y - (txxt.height));
+				popup0.scaleTo(1);
+				Starling.juggler.add(popup0);
+				
+				popup0.onComplete = function():void {
+					
+					var popup1:Tween = new Tween(txxt, duration, "easeOut");
+					popup1.fadeTo(0);
+					Starling.juggler.add(popup1);
+				
+					var pointkill:Timer = new Timer(duration * 750, 1);
+					pointkill.addEventListener(TimerEvent.TIMER, PKtimer);
+					function PKtimer (e:TimerEvent):void {
+						_casehider.pop();
+						txxt.removeFromParent(true);
+						trace(_casehider.length);
+					}
+					pointkill.start();
+				}
 			}
-			pointkill.start();
 		}
 	}
 

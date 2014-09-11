@@ -333,7 +333,8 @@ package com.poddcorp.candyfactory.screens.ui
 					}else{
 							if (GameData.multiplier > 1) {
 								GameData.multiplier--;
-							popper(_displayUI._txtmultiplier, "-1");
+								var timp:String = "x" + GameData.multiplier;
+							_displayUI.popper(_displayUI._txtmultiplier, timp, 0xFF0000);
 								GameAudio.playSound("decrease");
 								trace(_displayUI._txtmultiplier.x, _displayUI._txtmultiplier.y, "-1");
 							};
@@ -355,7 +356,7 @@ package com.poddcorp.candyfactory.screens.ui
 			}
 		}
 		
-		private function popper(x:Object,str:String):void {
+		/*private function popper(x:Object,str:String):void {
 			var txxt:TextField = new TextField(Constants.STAGE_WIDTH * 0.125,Constants.STAGE_HEIGHT*0.08, "0", "BubbleBud", Constants.STAGE_HEIGHT * 0.05, 0xFF0000);
 			txxt.x = x.x + ((x.width - txxt.width)/2);
 			//txxt.border = true;
@@ -375,7 +376,7 @@ package com.poddcorp.candyfactory.screens.ui
 				txxt.removeFromParent(true);
 			}
 			pointkill.start();
-		}
+		}//*/
 		
 		private function check(xx:int, yy:int, type:String):Array
 		{

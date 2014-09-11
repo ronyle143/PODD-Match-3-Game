@@ -1,9 +1,12 @@
 package com.poddcorp.candyfactory.api
 {
-	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import starling.errors.AbstractClassError;
+	import starling.events.Event;
+	import starling.events.EnterFrameEvent;
+	import starling.extensions.SoundManager;
+	
 	public class GameAudio 
 	{
 		public function GameAudio() { 
@@ -59,8 +62,112 @@ package com.poddcorp.candyfactory.api
 		static private var bgm:Sound;
 		static private var myChannel:SoundChannel = new SoundChannel();
 		static private var lastPosition:Number = 0;
+		static private var soundManager:SoundManager;
 		
-		public static function playBGM():void {
+		public static function init():void 
+		{
+			soundManager = new SoundManager();
+			var music1:Sound = (new SoundMain) as Sound; 
+			soundManager.addSound("music1", music1 );
+			soundManager.playSound("music1", 1, 9999);
+			
+			GameAPI.note("!", "SoundManager initialized");
+			
+			sound = (new SoundPop) as Sound;
+				soundManager.addSound("pop", sound );
+			sound = (new SoundPlop) as Sound;
+				soundManager.addSound("plop", sound );
+			sound = (new SoundScoopUp) as Sound; 
+				soundManager.addSound("scoop-up", sound );
+			sound = (new SoundSwoosh) as Sound; 
+				soundManager.addSound("swoosh", sound );
+			sound = (new SoundKaboom) as Sound; 
+				soundManager.addSound("kaboom", sound );
+			sound = (new SoundIce) as Sound; 
+				soundManager.addSound("ice", sound );
+			sound = (new SoundIncrease) as Sound; 
+				soundManager.addSound("increase", sound );
+			sound = (new SoundDecrease) as Sound; 
+				soundManager.addSound("decrease", sound );
+			sound = (new SoundBuy) as Sound; 
+				soundManager.addSound("buy", sound );
+			sound = (new SoundGameOver) as Sound; 
+				soundManager.addSound("gameover", sound );
+			sound = (new SoundGameOverHighScore) as Sound;
+				soundManager.addSound("gameoverhighscore", sound );
+			sound = (new SoundTick) as Sound;
+				soundManager.addSound("tick", sound );
+		}
+		
+		public static function playBGM():void 
+		{
+			soundManager.setVolume("music1", 1);
+		}
+		
+		public static function stopBGM():void 
+		{
+			soundManager.setVolume("music1", 0);
+		}
+		
+		public static function playSound(snd:String):void 
+		{
+			if(SFX){
+				switch (snd) 
+				{
+					case "pop":
+						soundManager.playSound("pop", 1, 1);
+					break;
+					
+					case "plop":
+						soundManager.playSound("plop", 1, 1);
+					break;
+					
+					case "scoop-up":
+						soundManager.playSound("scoop-up", 1, 1);
+					break;
+					
+					case "swoosh":
+						soundManager.playSound("swoosh", 1, 1);
+					break;
+					
+					case "kaboom":
+						soundManager.playSound("kaboom", 1, 1);
+					break;
+					
+					case "ice":
+						soundManager.playSound("ice", 1, 1);
+					break;
+					
+					case "increase":
+						soundManager.playSound("increase", 1, 1);
+					break;
+					
+					case "decrease":
+						soundManager.playSound("decrease", 1, 1);
+					break;
+					
+					case "buy":
+						soundManager.playSound("buy", 1, 1);
+					break;
+					
+					case "gameover":
+						soundManager.playSound("gameover", 1, 1);
+					break;
+					
+					case "gameoverhighscore":
+						soundManager.playSound("gameoverhighscore", 1, 1);
+					break;
+					
+					case "tick":
+						soundManager.playSound("tick", 1, 1);
+					break;
+					
+					default:
+				}
+			}
+		}
+		
+		/*public static function playBGM():void {
 			if(BGM){
 				bgm = (new SoundMain) as Sound; 
 				myChannel = bgm.play(lastPosition);
@@ -165,11 +272,11 @@ package com.poddcorp.candyfactory.api
 						sound = (new SoundTick) as Sound; 
 						sound.play();
 					}
-				break;//*/
+				break;
 				
 				default:
 			}
-		}
+		}*/
 	}
 
 }

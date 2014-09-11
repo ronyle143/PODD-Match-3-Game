@@ -40,8 +40,9 @@ package  com.poddcorp.candyfactory.screens
 		private function init(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			GameAudio.stopBGM();
-			GameAudio.playBGM();
+			//GameAudio.stopBGM();
+			//GameAudio.playBGM();
+			//GameAudio.init();
 			
 			_imgmenubg = new Image(CandyFactory.assets.getTexture("img_bg"));
 			_imgmenubg.width = Constants.STAGE_WIDTH;
@@ -192,7 +193,7 @@ package  com.poddcorp.candyfactory.screens
             placeholder.addChild(_clip);
 			
 			var temp:int =  0+GameData.saveDataObject.data.Highscore;
-			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.7, Constants.STAGE_HEIGHT * 0.3, "Your High score is: \n"+(temp), "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0x000000);
+			var txt_SFX:TextField = new TextField(Constants.STAGE_WIDTH * 0.7, Constants.STAGE_HEIGHT * 0.3, "Highscore: \n"+(temp), "BubbleBud", Constants.STAGE_HEIGHT * 0.04, 0x000000);
 			txt_SFX.x = ((Constants.STAGE_WIDTH) - txt_SFX.width)/2;
 			txt_SFX.y =_clip.y;
 	//txt_SFX.border = true;

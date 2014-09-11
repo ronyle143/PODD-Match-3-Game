@@ -173,7 +173,9 @@ package  com.poddcorp.candyfactory.popups
 		{
 			GameAudio.playSound("pop");
 			popUp();
-			btn_options.visible = false;
+			//btn_options.visible = false;
+			btn_options.alpha = 0.5;
+			btn_options.removeEventListener(Event.TRIGGERED, onButtonClickOption);
 		}
 		
 		private function loop(e:EnterFrameEvent):void 
@@ -285,6 +287,8 @@ package  com.poddcorp.candyfactory.popups
 				placeholder.visible = false;
 				btn_options.visible = true;
 				_imgscreenmask.visible = false;
+				btn_options.addEventListener(Event.TRIGGERED, onButtonClickOption);
+				btn_options.alpha = 1;
 			 }
 			Starling.juggler.add(popup);
 			var fademask:Tween = new Tween(_imgscreenmask, 0.5, "easeOutBack");
